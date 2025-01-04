@@ -1,9 +1,10 @@
-import BasicTextFields from "./BasicTextFields";
+import { useState } from "react";
+import SearchField from "./SearchField";
 
 export default function Homepage() {
   return (
     <>
-      <BasicTextFields></BasicTextFields>
+      <SearchField />
     </>
   );
 }
