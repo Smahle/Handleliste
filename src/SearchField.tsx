@@ -1,86 +1,48 @@
-import { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { fetchProducts } from "./hooks/api"; // Import the fetch function.
+import React, { useState } from "react";
+import { useFetchProducts } from "./hooks/api";
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [sort, setSort] = useState<string>("price_desc");
+  const { data: products, error, loading } = useFetchProducts(searchTerm, sort);
 
-  // Fetch products on component mount
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const fetchedProducts = await fetchProducts();
-        setProducts(fetchedProducts);
-      } catch (err) {
-        setError("Failed to load products");
-        console.error(err);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
-  // Handle search input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Filter products by name
-    const filtered = products.filter((product) =>
-      product.name?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredProducts(filtered);
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSort(e.target.value);
   };
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Box
-        component="form"
-        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-        onSubmit={handleSubmit}
-      >
-        <Input
-          value={searchTerm}
-          onChange={handleChange}
-          placeholder="Search for a product"
-        />
-        <Button type="submit" variant="contained">
-          Search
-        </Button>
-      </Box>
+    <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search for a product"
+      />
+      <select value={sort} onChange={handleSortChange}>
+        <option value="price_desc">Price Descending</option>
+        <option value="price_asc">Price Ascending</option>
+      </select>
+      <button onClick={() => console.log("Search triggered!")}>Search</button>
 
-      {error && (
-        <Typography color="error" sx={{ mt: 2 }}>
-          {error}
-        </Typography>
-      )}
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {filteredProducts.length > 0 && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="h6">Search Results:</Typography>
-          <ul>
-            {filteredProducts.map((product) => (
-              <li key={product.id}>
-                <Typography>{product.name}</Typography>
-              </li>
-            ))}
-          </ul>
-        </Box>
-      )}
-
-      {filteredProducts.length === 0 && searchTerm && (
-        <Typography sx={{ mt: 2 }}>No products found.</Typography>
-      )}
-    </Box>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            <img
+              src={product.image}
+              alt={product.name}
+              style={{ width: "50px", height: "50px", marginRight: "10px" }}
+            />
+            {product.name} - {product.current_price} NOK
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

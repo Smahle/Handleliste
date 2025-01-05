@@ -1,24 +1,46 @@
+import { useEffect, useState } from "react";
+
 const BASE_URL = "https://kassal.app/api/v1/";
 const TOKEN = "Vc6oCV3QeMen3keN2bYlk27LUGtXVQQiUVmLZhoj";
 
-export async function fetchProducts(searchTerm?: string, sort?: string) {
-  const url = new URL(`${BASE_URL}products`);
+export function useFetchProducts(searchTerm?: string, sort?: string) {
+  const [data, setData] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Add query parameters if provided
-  if (searchTerm) url.searchParams.append("search", searchTerm);
-  if (sort) url.searchParams.append("sort", sort);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true); // Set loading state
+      const url = new URL(`${BASE_URL}products`);
 
-  const response = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  });
+      if (searchTerm) url.searchParams.append("search", searchTerm);
+      if (sort) url.searchParams.append("sort", sort);
 
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
+      try {
+        const response = await fetch(url.toString(), {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        });
 
-  const data = await response.json();
-  return data.data; // Assuming the products are in "data"
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        setData(result.data || []); // Update state with fetched data
+        setError(null); // Clear any previous errors
+      } catch (err: any) {
+        setError(err.message || "An error occurred");
+        setData([]); // Clear data on error
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchProducts();
+  }, [searchTerm, sort]); // Re-run when searchTerm or sort changes
+
+  return { data, error, loading };
 }
