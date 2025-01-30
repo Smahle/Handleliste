@@ -19,7 +19,7 @@ export default function SearchControls({
   return (
     <Box sx={{
       display: 'flex',
-      justifyContent: 'space-between', // Pushes items to the edges
+      justifyContent: '', // Pushes items to the edges
       
     }}>
       {/* TextField for search input */}
@@ -28,6 +28,7 @@ export default function SearchControls({
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
         placeholder="Search for a product"
+        fullWidth
       />
 
       {/* Select component for sorting */}
