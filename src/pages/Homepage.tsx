@@ -1,4 +1,4 @@
-import SearchField from "../components/SearchField";
+import SearchField from "../components/ProductSearch";
 
 export default function Homepage() {
   return (
