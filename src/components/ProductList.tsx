@@ -9,12 +9,24 @@ type Product = {
     products: Product[];
     loading: boolean;
     error: string | null;
+    onRetry: () => void;
   };
   
-  export default function ProductList({ products, loading, error }: ProductListProps) {
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
-    if (products.length === 0) return <p>No products found.</p>;
+  export default function ProductList({ products, loading, error, onRetry }: ProductListProps) {
+    if (loading) return <p>Loading products...</p>;
+  
+    if (error) {
+      return (
+        <div>
+          <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>
+          <button onClick={onRetry}>Retry</button>
+        </div>
+      );
+    }
+  
+    if (products.length === 0) {
+      return <p style={{ fontWeight: "bold" }}>No products found.</p>;
+    }
   
     return (
       <ul>
