@@ -6,3 +6,10 @@
     height: 100vh;
   }
   
+  .productList{
+    width: 60vh;
+  }
+
+  .searchControls{
+    width: 60vh;
+  }

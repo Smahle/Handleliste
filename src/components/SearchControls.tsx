@@ -18,7 +18,11 @@ export default function SearchControls({
   onSortChange,
 }: SearchControlsProps) {
   return (
-    <Box>
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'space-between', // Pushes items to the edges
+      
+    }}>
       {/* TextField for search input */}
       <TextField
         type="text"
