@@ -1,6 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Button from '@mui/material/Button';
 import ProductImage from './ProductImage'; // Import the ProductImage component
 
 type Product = {
@@ -24,7 +25,7 @@ export default function ProductList({ products, loading, error, onRetry }: Produ
     return (
       <div>
         <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>
-        <button onClick={onRetry}>Retry</button>
+        <Button onClick={onRetry} variant="contained">Retry</Button>
       </div>
     );
   }

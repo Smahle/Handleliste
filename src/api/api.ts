@@ -25,7 +25,12 @@ export function useFetchProducts(searchTerm?: string, sort?: string) {
         });
 
         if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
+          if (response.status === 422) {
+            setError("The request could not be processed. Please check your input.");
+          } else {
+            setError("Something went wrong! Please try again later.");
+          }
+          return;
         }
 
         const result = await response.json();
