@@ -13,7 +13,7 @@ export default function ProductSearch() {
   };
 
   return (
-    <div>
+    <div className="container">
       <SearchControls
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
