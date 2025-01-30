@@ -1,3 +1,5 @@
+import CircularProgress from '@mui/material/CircularProgress';
+
 type Product = {
     id: number;
     name: string;
@@ -13,7 +15,7 @@ type Product = {
   };
   
   export default function ProductList({ products, loading, error, onRetry }: ProductListProps) {
-    if (loading) return <p>Loading products...</p>;
+    if (loading) return  <CircularProgress />
   
     if (error) {
       return (
