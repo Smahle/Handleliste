@@ -2,7 +2,6 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
 
 type SearchControlsProps = {
   searchTerm: string;
@@ -41,9 +40,6 @@ export default function SearchControls({
         <MenuItem value="price_desc">Price Descending</MenuItem>
         <MenuItem value="price_asc">Price Ascending</MenuItem>
       </Select>
-
-      {/* Button for triggering search */}
-      <Button variant="contained" onClick={() => console.log("Search triggered!")}>Search</Button>
     </Box>
   );
 }

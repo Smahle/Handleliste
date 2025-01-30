@@ -1,5 +1,5 @@
 // ProductImage.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import boysImage from '../assets/images/boys.jpg';
 
 type ProductImageProps = {
