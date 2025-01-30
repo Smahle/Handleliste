@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProductList from "./ProductList";
 import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
+import styles from './ProductSearch.module.css';
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -13,7 +14,7 @@ export default function ProductSearch() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <SearchControls
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}

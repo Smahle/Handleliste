@@ -1,4 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import styles from './ProductList.module.css';
 
 type Product = {
     id: number;
@@ -31,18 +34,18 @@ type Product = {
     }
   
     return (
-      <ul>
+      <List>
         {products.map((product) => (
-          <li key={product.id}>
+          <ListItem key={product.id}>
             <img
               src={product.image}
               alt={product.name}
               style={{ width: "50px", height: "50px", marginRight: "10px" }}
             />
             {product.name} - {product.current_price} NOK
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     );
   }
   
