@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFetchProducts } from "./hooks/api";
+import { useFetchProducts } from "../api/api";
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState<string>("");
