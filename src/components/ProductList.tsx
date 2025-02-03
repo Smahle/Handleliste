@@ -1,47 +1,30 @@
-import CircularProgress from '@mui/material/CircularProgress';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Button from '@mui/material/Button';
-import ProductImage from './ProductImage'; // Import the ProductImage component
+import { List, ListItem } from "@mui/material";
+import ProductImage from "./ProductImage";
 
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  current_price: number;
-};
 
 type ProductListProps = {
   products: Product[];
   loading: boolean;
   error: string | null;
   onRetry: () => void;
+  onDoubleClick: (product: Product) => void; // Update to expect Product type
 };
 
-export default function ProductList({ products, loading, error, onRetry }: ProductListProps) {
-  if (loading) return <CircularProgress />;
-
-  if (error) {
-    return (
-      <div>
-        <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>
-        <Button onClick={onRetry} variant="contained">Retry</Button>
-      </div>
-    );
-  }
-
-  if (products.length === 0) {
-    return <p style={{ fontWeight: 'bold' }}>No products found.</p>;
-  }
+export default function ProductList({ products, loading, error, onRetry, onDoubleClick }: ProductListProps) {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error} <button onClick={onRetry}>Retry</button></p>;
 
   return (
     <List>
       {products.map((product) => (
-        <ListItem key={product.id}>
-          {/* Use ProductImage component here */}
-          <ProductImage imageSrc={product.image} altText={product.name} />
-          {product.name} - {product.current_price} NOK
-        </ListItem>
+      <ListItem
+      key={product.id} 
+      onDoubleClick={() => onDoubleClick(product)}
+      style={{ cursor: "pointer", padding: "10px", border: "1px solid gray", margin: "5px" }}
+    >
+      <ProductImage imageSrc={product.image} altText={product.name} />
+      {product.name}
+    </ListItem>
       ))}
     </List>
   );
