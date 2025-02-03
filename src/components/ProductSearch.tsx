@@ -5,8 +5,14 @@ import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
 import ShoppingCart from "./ShoppingCart";
 
+// TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)
 // TODO: La brukere dele handleliste med hverandre
 // TODO: followe andre bruke (public, friends og private)
+// TODO: kunne hake av ting du har
+// TODO: TEMAER: TACO/PIZZA/SNACKS som har samlinger av oppskrifter
+// TODO: filter på butikker - pris match på oppskrifter
+// TODO: favoritte lister
+// TODO: PROFILE: se alle lagrede handlelister, friends, followers(siste)
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState<string>("");
