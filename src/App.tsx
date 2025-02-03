@@ -76,7 +76,7 @@ function Navbar() {
 
 function App() {
   return (
-    <Router> {/* ✅ Move Router here */}
+    <Router>
       <Box sx={{ flexGrow: 1 }}>
         <Navbar />
       </Box>
