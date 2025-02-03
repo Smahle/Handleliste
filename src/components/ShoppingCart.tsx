@@ -11,15 +11,13 @@ export default function ShoppingCart({
   onDoubleClick,
 }: ShoppingCartProps) {
   return (
-    <List>
+    <List sx={{ padding: 0, margin: 0 }}>
       {products.map((product) => (
         <ListItem
           key={product.id}
           style={{
             cursor: "pointer",
-            padding: "10px",
             border: "1px solid gray",
-            margin: "5px",
           }}
           onDoubleClick={() => onDoubleClick(product)}
         >

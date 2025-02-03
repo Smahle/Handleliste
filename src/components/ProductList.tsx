@@ -25,16 +25,14 @@ export default function ProductList({
     );
 
   return (
-    <List>
+    <List sx={{ padding: 0, margin: 0 }}>
       {products.map((product) => (
         <ListItem
           key={product.id}
           onDoubleClick={() => onDoubleClick(product)}
           style={{
             cursor: "pointer",
-            padding: "10px",
             border: "1px solid gray",
-            margin: "5px",
           }}
         >
           <ProductImage imageSrc={product.image} altText={product.name} />
