@@ -28,27 +28,50 @@ export default function ProductSearch() {
   function clearCart(){
     setCart([]);
   }
+
+  const incrementQuantity = (product: Product) => {
+    setCart((prev) => {
+      const index = prev.findIndex(cartProduct => cartProduct.id === product.id);
+      if (index !== -1) {
+        const updatedCart = [...prev];
+        updatedCart[index] = { ...updatedCart[index], quantity: updatedCart[index].quantity + 1 };
+        return updatedCart;
+      }
+      return prev;
+    });
+  };
+  
+  const decrementQuantity = (product: Product) => {
+    setCart((prev) => {
+      const index = prev.findIndex(cartProduct => cartProduct.id === product.id);
+      if (index === -1) return prev;
+  
+      if (prev[index].quantity <= 1) {
+        return prev.filter((_, i) => i !== index); // Remove item if quantity is 1
+      } else {
+        const updatedCart = [...prev];
+        updatedCart[index] = { ...updatedCart[index], quantity: updatedCart[index].quantity - 1 };
+        return updatedCart;
+      }
+    });
+  };
+  
   // Add to cart on double click
   const handleDoubleClickAddiction = (product: Product) => {
     const index = cart.findIndex(cartProduct => cartProduct.id === product.id);
   
     if (index !== -1) {
-      setCart((prev) => {
-        const updatedCart = [...prev];
-        updatedCart[index].quantity += 1;
-        return updatedCart;
-      });
+      incrementQuantity
     } else {
       setCart((prev) => [...prev, { ...product, quantity: 1 }]);
     }
   };
   
 
-  const handleDoubleClickSubtraction = (product: Product) => {
+  const removeProduct = (product: Product) => {
     setCart((prevProducts) =>
       prevProducts.filter((cartProduct) => cartProduct.id !== product.id)
     );
-    console.log("After update:", cart);
   };
 
   return (
@@ -76,8 +99,10 @@ export default function ProductSearch() {
         <div className={styles.shoppingCart}>
           <ShoppingCart
             products={cart}
-            onDoubleClick={handleDoubleClickSubtraction}
+            removeProduct={removeProduct}
             onRemoveClick={clearCart}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
           />
         </div>
       </div>
