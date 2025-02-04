@@ -4,6 +4,7 @@ import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
 import ShoppingCart from "./ShoppingCart";
+import { useLocalStorage, useRemoveLocalStorage } from "../hooks/useLocalStorage";
 
 // TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)
 // TODO: La brukere dele handleliste med hverandre
@@ -18,24 +19,27 @@ export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sort, setSort] = useState<string>("price_desc");
   const { data: products, error, loading } = useFetchProducts(searchTerm, sort);
-  const [shoppingCartProducts, setShoppingCartProducts] = useState<Product[]>(
-    []
-  );
-
+  const [cart, setCart] = useLocalStorage<Product[]>("shoppingCart", []);
+  const removeShoppingCart = useRemoveLocalStorage("shoppingCart");
+  
   const retryFetch = () => {
     setSearchTerm((prev) => prev + " "); // Forces re-fetch by changing state
   };
-
+  
+  function clearCart(){
+    removeShoppingCart();
+    setCart([]);
+  }
   // Add to cart on double click
   const handleDoubleClickAddiction = (product: Product) => {
-    setShoppingCartProducts((prev) => [...prev, product]);
+    setCart((prev) => [...prev, product]);
   };
 
   const handleDoubleClickSubtraction = (product: Product) => {
-    setShoppingCartProducts((prevProducts) =>
+    setCart((prevProducts) =>
       prevProducts.filter((cartProduct) => cartProduct.id !== product.id)
     );
-    console.log("After update:", shoppingCartProducts);
+    console.log("After update:", cart);
   };
 
   return (
@@ -62,8 +66,9 @@ export default function ProductSearch() {
 
         <div className={styles.shoppingCart}>
           <ShoppingCart
-            products={shoppingCartProducts}
+            products={cart}
             onDoubleClick={handleDoubleClickSubtraction}
+            onRemoveClick={clearCart}
           />
         </div>
       </div>

@@ -1,14 +1,16 @@
-import { List, ListItem } from "@mui/material";
+import { Button, List, ListItem } from "@mui/material";
 import ProductImage from "./ProductImage";
 
 type ShoppingCartProps = {
   products: Product[];
   onDoubleClick: (product: Product) => void;
+  onRemoveClick: () => void;
 };
 
 export default function ShoppingCart({
   products,
   onDoubleClick,
+  onRemoveClick
 }: ShoppingCartProps) {
   return (
     <List sx={{ padding: 0, margin: 0 }}>
@@ -25,6 +27,7 @@ export default function ShoppingCart({
           {product.name}
         </ListItem>
       ))}
+      <Button onClick={() => onRemoveClick()}>Clear cart</Button>
     </List>
   );
 }
