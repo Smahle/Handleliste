@@ -30,8 +30,19 @@ export default function ProductSearch() {
   }
   // Add to cart on double click
   const handleDoubleClickAddiction = (product: Product) => {
-    setCart((prev) => [...prev, product]);
+    const index = cart.findIndex(cartProduct => cartProduct.id === product.id);
+  
+    if (index !== -1) {
+      setCart((prev) => {
+        const updatedCart = [...prev];
+        updatedCart[index].quantity += 1;
+        return updatedCart;
+      });
+    } else {
+      setCart((prev) => [...prev, { ...product, quantity: 1 }]);
+    }
   };
+  
 
   const handleDoubleClickSubtraction = (product: Product) => {
     setCart((prevProducts) =>

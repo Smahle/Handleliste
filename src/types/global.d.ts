@@ -11,6 +11,7 @@ declare global {
     name: string;
     image: string;
     current_price: number;
+    quantity: number;
   };
 }
 

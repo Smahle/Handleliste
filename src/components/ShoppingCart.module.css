@@ -5,10 +5,20 @@
 
 .item{
     display: flex;
-    align-items: center; /* Vertically aligns content (image and name) */
+    align-items: center;
     justify-content: center;
 }
 
-.itemQuantity{
+.itemQuantityContainer{
+    display: flex;
     margin-left: auto;
+}
+
+.itemQuantity{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px 10px 15px;
+    margin-right: 3px;
+    border: 1px solid gray
 }

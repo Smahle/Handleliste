@@ -27,7 +27,8 @@ export default function ShoppingCart({
         <ProductImage imageSrc={product.image} altText={product.name} />
         {product.name}
       </div>
-      <div className={styles.itemQuantity}>
+      <div className={styles.itemQuantityContainer}>
+        <div className={styles.itemQuantity}>{product.quantity}</div>
         <button><ArrowDropUp /></button>
         <button><ArrowDropDown /></button>
       </div>
