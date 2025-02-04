@@ -1,0 +1,14 @@
+.itemContainer{
+    display: flex;
+    width: 100%;
+}
+
+.item{
+    display: flex;
+    align-items: center; /* Vertically aligns content (image and name) */
+    justify-content: center;
+}
+
+.itemQuantity{
+    margin-left: auto;
+}

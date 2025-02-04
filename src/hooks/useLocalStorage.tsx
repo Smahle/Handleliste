@@ -17,10 +17,3 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   return [storedValue, setStoredValue] as const;
 }
-export function useRemoveLocalStorage(key: string) {
-    const removeItem = () => {
-      localStorage.removeItem(key);
-    };
-  
-    return removeItem;
-  }

@@ -4,7 +4,7 @@ import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
 import ShoppingCart from "./ShoppingCart";
-import { useLocalStorage, useRemoveLocalStorage } from "../hooks/useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 // TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)
 // TODO: La brukere dele handleliste med hverandre
@@ -20,14 +20,12 @@ export default function ProductSearch() {
   const [sort, setSort] = useState<string>("price_desc");
   const { data: products, error, loading } = useFetchProducts(searchTerm, sort);
   const [cart, setCart] = useLocalStorage<Product[]>("shoppingCart", []);
-  const removeShoppingCart = useRemoveLocalStorage("shoppingCart");
   
   const retryFetch = () => {
     setSearchTerm((prev) => prev + " "); // Forces re-fetch by changing state
   };
   
   function clearCart(){
-    removeShoppingCart();
     setCart([]);
   }
   // Add to cart on double click
