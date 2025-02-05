@@ -1,11 +1,4 @@
 declare global {
-  type Person = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    email: string;
-  };
   type Product = {
     id: number;
     name: string;
@@ -17,7 +10,16 @@ declare global {
     id: string;
     name: string;
     products: Product[];
+    owner: User;
   };
+  type User = {
+    username: string;
+    carts?: Cart[];
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    email?: string;
+  }
 }
 
 export {}; // Prevents this from becoming a module

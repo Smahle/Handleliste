@@ -4,7 +4,11 @@ import ProductSearch from "./ProductSearch";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import styles from "./ProductManager.module.css";
 
-export default function ProductManager() {
+type ProductManagerProps = {
+  user: User;
+};
+
+export default function ProductManager({user}: ProductManagerProps) {
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
  
@@ -16,7 +20,7 @@ export default function ProductManager() {
         cart.id === activeCartId
           ? {
               ...cart,
-              products: updateProductCart(cart.products, product),
+              products: updateProductCart(cart.products, product)
             }
           : cart
       )
@@ -44,6 +48,7 @@ export default function ProductManager() {
         </div>
         <div className={styles.shoppingCart}>
             <ShoppingCartManager
+                user={user}
                 carts={carts}
                 setCarts={setCarts}
                 activeCartId={activeCartId}

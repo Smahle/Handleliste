@@ -1,9 +1,14 @@
 import ProductManager from "../components/ProductManager";
 
-export default function Home() {
+type HomeProps = {
+  user: User;
+};
+
+
+export default function Home({user}: HomeProps) {
   return (
     <>
-      <ProductManager />
+      <ProductManager user={user}/>
     </>
   );
 }

@@ -3,6 +3,7 @@ import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 
 type ShoppingCartManagerProps = {
+  user: User;
   carts: Cart[];
   setCarts: React.Dispatch<React.SetStateAction<Cart[]>>;
   activeCartId: string | null;
@@ -10,6 +11,7 @@ type ShoppingCartManagerProps = {
 };
 
 export default function ShoppingCartManager({
+  user,
   carts,
   setCarts,
   activeCartId,
@@ -20,7 +22,7 @@ const activeCart = carts.find((cart) => cart.id === activeCartId);
     const name = prompt("Enter cart name")?.trim();
     if (!name) return;
 
-    const newCart = { id: crypto.randomUUID(), name, products: [] };
+    const newCart = { id: crypto.randomUUID(), name, products: [], owner:user };
     setCarts((prev) => [...prev, newCart]);
     setActiveCartId(newCart.id);
   };

@@ -20,7 +20,7 @@ function Navbar() {
   ];
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate(); // ✅ useNavigate inside a component inside Router
+  const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -75,15 +75,16 @@ function Navbar() {
 }
 
 function App() {
+  const user = { username: "Stian" } as User;
   return (
     <Router>
       <Box sx={{ flexGrow: 1 }}>
         <Navbar />
       </Box>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home user={user}/>} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile user={user}/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
