@@ -12,7 +12,7 @@ export default function User({ user }: UserProps) {
 
   return (
     <div>
-      <h2>{user.username}'s Shopping Carts</h2>
+      <h2>My Shopping Carts</h2>
       {userCarts.length > 0 ? (
         <ul>
           {userCarts.map((cart) => (
