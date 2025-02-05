@@ -1,9 +1,9 @@
-import ProductSearch from "../components/ProductSearch";
+import ProductManager from "../components/ProductManager";
 
 export default function Home() {
   return (
     <>
-      <ProductSearch />
+      <ProductManager />
     </>
   );
 }

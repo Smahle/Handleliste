@@ -13,6 +13,11 @@ declare global {
     current_price: number;
     quantity: number;
   };
+  type Cart = {
+    id: string;
+    name: string;
+    products: Product[];
+  };
 }
 
 export {}; // Prevents this from becoming a module

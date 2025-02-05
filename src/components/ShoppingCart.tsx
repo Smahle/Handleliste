@@ -22,7 +22,10 @@ export default function ShoppingCart({
 
 }: ShoppingCartProps) {
   return (
-    <List sx={{ padding: 0, margin: 0 }}>
+    <div >
+
+
+    <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
       {products.map((product) => (
      <ListItem   key={product.id}
      style={{
@@ -41,7 +44,8 @@ export default function ShoppingCart({
       </div>
     </ListItem>
       ))}
-      <Button onClick={onRemoveClick}>Clear cart</Button>
     </List>
+          <Button onClick={onRemoveClick}>Clear cart</Button>
+          </div>
   );
 }
