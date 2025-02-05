@@ -7,9 +7,8 @@ import styles from "./ProductManager.module.css";
 export default function ProductManager() {
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
-
  
- 
+  //takes a product and updates the products for the active cart
   const addToCart = (product: Product) => {
     if (!activeCartId) return;
     setCarts((prev) =>
@@ -17,14 +16,15 @@ export default function ProductManager() {
         cart.id === activeCartId
           ? {
               ...cart,
-              products: updateProductList(cart.products, product),
+              products: updateProductCart(cart.products, product),
             }
           : cart
       )
     );
   };
 
-  const updateProductList = (products: Product[], product: Product) => {
+  //checks if a product is in a list, updates its quantity if not
+  const updateProductCart = (products: Product[], product: Product) => {
     const index = products.findIndex((p) => p.id === product.id);
     if (index !== -1) {
       const updatedProducts = [...products];

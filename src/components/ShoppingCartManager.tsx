@@ -1,3 +1,4 @@
+import { Button, List, ListItem } from "@mui/material";
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 
@@ -14,6 +15,7 @@ export default function ShoppingCartManager({
   activeCartId,
   setActiveCartId,
 }: ShoppingCartManagerProps) {
+const activeCart = carts.find((cart) => cart.id === activeCartId);
   const createCart = () => {
     const name = prompt("Enter cart name")?.trim();
     if (!name) return;
@@ -82,24 +84,24 @@ export default function ShoppingCartManager({
     );
   };
 
-  const activeCart = carts.find((cart) => cart.id === activeCartId);
+
 
   return (
     <div className={styles.container}>
         <div className={styles.cartManagement}>
         <h2>Shopping Carts</h2>
-      <button onClick={createCart}>Create New Cart</button>
+      <Button onClick={createCart}>Create New Cart</Button>
 
-      <ul>
+      <List>
         {carts.map((cart) => (
-          <li key={cart.id}>
+          <ListItem key={cart.id}>
             <button onClick={() => setActiveCartId(cart.id)}>
               {cart.name} {activeCartId === cart.id && "(Active)"}
             </button>
             <button onClick={() => deleteCart(cart.id)}>❌</button>
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
         </div>
 
 <div className={styles.shoppingCart}>
