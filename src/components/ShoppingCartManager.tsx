@@ -9,7 +9,7 @@ type ShoppingCartManagerProps = {
   activeCartId: string | null;
   setActiveCartId: React.Dispatch<React.SetStateAction<string | null>>;
 };
-
+// lag custom hooks fer create cart, delete, remove, increment etc
 export default function ShoppingCartManager({
   user,
   carts,
