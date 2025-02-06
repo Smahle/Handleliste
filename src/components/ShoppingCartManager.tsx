@@ -21,7 +21,6 @@ export default function ShoppingCartManager({
 
 const {createCart, deleteCart, addProduct, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart} = useCart({ user, carts, setCarts, activeCartId, setActiveCartId })
 
-
   return (
     <div className={styles.container}>
         <div className={styles.cartManagement}>
@@ -40,17 +39,17 @@ const {createCart, deleteCart, addProduct, removeProduct, incrementProduct, decr
       </List>
         </div>
 
-<div className={styles.shoppingCart}>
-{activeCart && (
+    <div className={styles.shoppingCart}>
+      {activeCart && (
         <ShoppingCart
-          cart={activeCart}
-          removeProduct={removeProduct}
-          clearCart={clearCart}
-          incrementQuantity={incrementProduct}
-          decrementQuantity={decrementProduct}
-        />
-      )}
-</div>
+              cart={activeCart}
+              removeProduct={removeProduct}
+              clearCart={clearCart}
+              incrementQuantity={incrementProduct}
+              decrementQuantity={decrementProduct}
+            />
+          )}
+    </div>
     
     </div>
   );
