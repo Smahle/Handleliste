@@ -1,22 +1,17 @@
 import { toUnitless } from "@mui/material/styles/cssUtils";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 
 type UseCartProps = {
   user: User;
-  carts: Cart[];
-  setCarts: React.Dispatch<React.SetStateAction<Cart[]>>;
-  activeCartId: string | null;
-  setActiveCartId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export default function useCart({
-  user,
-  carts,
-  setCarts,
-  activeCartId,
-  setActiveCartId,
+  user
 }: UseCartProps) {
-  
+  const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
+  const [activeCartId, setActiveCartId] = useState<string | null>(null);
+ 
   const activeCart = carts.find((cart) => cart.id === activeCartId);
   const createCart = useCallback(() => {
     const name = prompt("Enter cart name")?.trim();
@@ -87,5 +82,5 @@ export default function useCart({
     );
 }, [setCarts]);
 
-  return { createCart, deleteCart, addProduct, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart};
+  return { createCart, deleteCart, addProduct, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart, carts, setCarts, activeCartId, setActiveCartId};
 }

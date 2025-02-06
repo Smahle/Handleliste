@@ -22,7 +22,6 @@ export default function SearchControls({
       justifyContent: '', // Pushes items to the edges
       
     }}>
-      {/* TextField for search input */}
       <TextField
         type="text"
         value={searchTerm}
@@ -31,7 +30,6 @@ export default function SearchControls({
         fullWidth
       />
 
-      {/* Select component for sorting */}
       <Select
         value={sort}
         onChange={(e) => onSortChange(e.target.value)}

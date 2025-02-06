@@ -5,26 +5,17 @@ import useCart from "../hooks/useCart";
 
 type ShoppingCartManagerProps = {
   user: User;
-  carts: Cart[];
-  setCarts: React.Dispatch<React.SetStateAction<Cart[]>>;
-  activeCartId: string | null;
-  setActiveCartId: React.Dispatch<React.SetStateAction<string | null>>;
 };
-// lag custom hooks fer create cart, delete, remove, increment etc
 export default function ShoppingCartManager({
-  user,
-  carts,
-  setCarts,
-  activeCartId,
-  setActiveCartId,
+  user
 }: ShoppingCartManagerProps) {
 
-const {createCart, deleteCart, addProduct, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart} = useCart({ user, carts, setCarts, activeCartId, setActiveCartId })
+const {createCart, deleteCart, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart, carts, setCarts, activeCartId, setActiveCartId} = useCart({ user})
 
-  return (
-    <div className={styles.container}>
-        <div className={styles.cartManagement}>
-        <h2>Shopping Carts</h2>
+return (
+  <div className={styles.container}>
+    <div className={styles.cartManagement}>
+      <h2>Shopping Carts</h2>
       <Button onClick={createCart}>Create New Cart</Button>
 
       <List>
@@ -37,20 +28,20 @@ const {createCart, deleteCart, addProduct, removeProduct, incrementProduct, decr
           </ListItem>
         ))}
       </List>
-        </div>
+    </div>
 
     <div className={styles.shoppingCart}>
       {activeCart && (
         <ShoppingCart
-              cart={activeCart}
-              removeProduct={removeProduct}
-              clearCart={clearCart}
-              incrementQuantity={incrementProduct}
-              decrementQuantity={decrementProduct}
-            />
-          )}
+          cart={activeCart}
+          removeProduct={removeProduct}
+          clearCart={clearCart}
+          incrementQuantity={incrementProduct}
+          decrementQuantity={decrementProduct}
+        />
+      )}
     </div>
-    
-    </div>
-  );
+  </div>
+);
+
 }
