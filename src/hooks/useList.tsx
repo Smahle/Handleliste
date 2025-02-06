@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import useCart from "./useCart";
 
 type UseListProps = {
@@ -9,7 +10,7 @@ export default function useList({user}: UseListProps){
     const {setCarts, activeCartId} = useCart({user})
 
   //takes a product and updates the products for the active cart
-  const addToCart = (product: Product) => {
+  const addToCart = useCallback((product: Product) => {
     if (!activeCartId) return;
     setCarts((prev) =>
       prev.map((cart) =>
@@ -21,7 +22,7 @@ export default function useList({user}: UseListProps){
           : cart
       )
     );
-  };
+  }, [setCarts, activeCartId]);
 
   //checks if a product is in a list, updates its quantity if not
   const updateProductCart = (products: Product[], product: Product) => {

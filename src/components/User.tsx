@@ -1,20 +1,18 @@
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import useCart from "../hooks/useCart";
 
 type UserProps = {
   user: User;
 };
 
 export default function User({ user }: UserProps) {
-  const [carts] = useLocalStorage<Cart[]>("shoppingCarts", []);
-
-  const userCarts = carts.filter(cart => cart.owner.username === user.username);
+  const {carts, ownedCarts} = useCart({user});
 
   return (
     <div>
       <h2>My Shopping Carts</h2>
-      {userCarts.length > 0 ? (
+      {ownedCarts.length > 0 ? (
         <ul>
-          {userCarts.map((cart) => (
+          {ownedCarts.map((cart) => (
             <li key={cart.id}>{cart.name}</li>
           ))}
         </ul>
