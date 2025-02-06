@@ -7,7 +7,6 @@ type UserProps = {
 export default function User({ user }: UserProps) {
   const [carts] = useLocalStorage<Cart[]>("shoppingCarts", []);
 
-  // Filter carts owned by the user
   const userCarts = carts.filter(cart => cart.owner.username === user.username);
 
   return (

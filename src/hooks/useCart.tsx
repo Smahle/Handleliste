@@ -1,0 +1,91 @@
+import { toUnitless } from "@mui/material/styles/cssUtils";
+import { useCallback } from "react";
+
+type UseCartProps = {
+  user: User;
+  carts: Cart[];
+  setCarts: React.Dispatch<React.SetStateAction<Cart[]>>;
+  activeCartId: string | null;
+  setActiveCartId: React.Dispatch<React.SetStateAction<string | null>>;
+};
+
+export default function useCart({
+  user,
+  carts,
+  setCarts,
+  activeCartId,
+  setActiveCartId,
+}: UseCartProps) {
+  
+  const activeCart = carts.find((cart) => cart.id === activeCartId);
+  const createCart = useCallback(() => {
+    const name = prompt("Enter cart name")?.trim();
+    if (!name) return;
+
+    const newCart: Cart = { id: crypto.randomUUID(), name, products: [], owner: user };
+    setCarts((prev) => [...prev, newCart]);
+    setActiveCartId(newCart.id);
+  }, [user, setCarts, setActiveCartId]);
+
+  const deleteCart = useCallback((id: string) => {
+    setCarts((prev) => prev.filter((cart) => cart.id !== id));
+    if (id === activeCartId) setActiveCartId(null);
+  }, [setCarts, activeCartId, setActiveCartId]);
+
+  const addProduct = useCallback((cartId: string, product: Product) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId ? { ...cart, products: [...cart.products, product] } : cart
+      )
+    );
+  }, [setCarts]);
+
+  const removeProduct = useCallback((cartId: string, productId: string) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId ? { ...cart, products: cart.products.filter((p) => p.id !== productId) } : cart
+      )
+    );
+  }, [setCarts]);
+
+  const incrementProduct = useCallback((cartId: string, productId: string) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId
+          ? {
+              ...cart,
+              products: cart.products.map((p) =>
+                p.id === productId ? { ...p, quantity: p.quantity + 1 } : p
+              ),
+            }
+          : cart
+      )
+    );
+  }, [setCarts]);
+
+  const decrementProduct = useCallback((cartId: string, productId: string) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId
+          ? {
+              ...cart,
+              products: cart.products.map((p) =>
+                p.id === productId ? { ...p, quantity: Math.max(1, p.quantity - 1) } : p
+              ),
+            }
+          : cart
+      )
+    );
+  }, [setCarts]);
+
+  const clearCart = useCallback((cartId: string) => {
+    if (!activeCartId) return;
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cartId === activeCartId ? { ...cart, products: [] } : cart
+      )
+    );
+}, [setCarts]);
+
+  return { createCart, deleteCart, addProduct, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart};
+}

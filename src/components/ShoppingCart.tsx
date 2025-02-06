@@ -6,16 +6,16 @@ import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import { Delete } from "@mui/icons-material";
 
 type ShoppingCartProps = {
-  products: Product[];
-  removeProduct: (product: Product) => void;
-  onRemoveClick: () => void;
-  incrementQuantity: (product: Product) => void;
-  decrementQuantity: (product: Product) => void;
+  cart: Cart;
+  removeProduct: (cartId: string, productId: string) => void;
+  clearCart: (cartId: string) => void;
+  incrementQuantity: (cartId: string, productId: string) => void;
+  decrementQuantity: (cartId: string, productId: string) => void;
 };
 
 export default function ShoppingCart({
-  products,
-  onRemoveClick,
+  cart,
+  clearCart,
   removeProduct,
   incrementQuantity,
   decrementQuantity
@@ -23,29 +23,27 @@ export default function ShoppingCart({
 }: ShoppingCartProps) {
   return (
     <div >
-
-
-    <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
-      {products.map((product) => (
-     <ListItem   key={product.id}
-     style={{
-       cursor: "pointer",
-       border: "1px solid gray",
-     }}className={styles.itemContainer}>
-      <div className={styles.item}>
-        <ProductImage imageSrc={product.image} altText={product.name} />
-        {product.name}
-      </div>
-      <div className={styles.itemQuantityContainer}>
-        <div className={styles.itemQuantity}>{product.quantity}</div>
-        <button onClick={() => incrementQuantity(product)}><ArrowDropUp /></button>
-        <button onClick={() => decrementQuantity(product)}><ArrowDropDown /></button>
-        <button onClick={() => removeProduct(product)}><Delete /></button>
-      </div>
-    </ListItem>
-      ))}
-    </List>
-          <Button onClick={onRemoveClick}>Clear cart</Button>
-          </div>
+      <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
+        {cart.products.map((product) => (
+      <ListItem   key={product.id}
+      style={{
+        cursor: "pointer",
+        border: "1px solid gray",
+      }}className={styles.itemContainer}>
+        <div className={styles.item}>
+          <ProductImage imageSrc={product.image} altText={product.name} />
+          {product.name}
+        </div>
+        <div className={styles.itemQuantityContainer}>
+          <div className={styles.itemQuantity}>{product.quantity}</div>
+          <button onClick={() => incrementQuantity(cart.id, product.id)}><ArrowDropUp /></button>
+          <button onClick={() => decrementQuantity(cart.id, product.id)}><ArrowDropDown /></button>
+          <button onClick={() => removeProduct(cart.id, product.id)}><Delete /></button>
+        </div>
+      </ListItem>
+        ))}
+      </List>
+          <Button onClick={() =>clearCart(cart.id)}>Clear cart</Button>
+    </div>
   );
 }

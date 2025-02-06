@@ -1,6 +1,6 @@
 declare global {
   type Product = {
-    id: number;
+    id: string;
     name: string;
     image: string;
     current_price: number;
