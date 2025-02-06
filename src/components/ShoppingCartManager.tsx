@@ -10,7 +10,7 @@ export default function ShoppingCartManager({
   user
 }: ShoppingCartManagerProps) {
 
-const {createCart, deleteCart, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart, carts, setCarts, activeCartId, setActiveCartId} = useCart({ user})
+const {createCart, deleteCart, removeProduct, incrementProduct, decrementProduct, activeCart, clearCart, carts, activeCartId, setActiveCartId} = useCart({ user})
 
 return (
   <div className={styles.container}>

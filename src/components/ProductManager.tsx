@@ -1,7 +1,5 @@
-import { useState } from "react";
 import ShoppingCartManager from "./ShoppingCartManager";
 import ProductSearch from "./ProductSearch";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import styles from "./ProductManager.module.css";
 
 type ProductManagerProps = {

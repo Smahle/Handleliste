@@ -5,7 +5,7 @@ type UserProps = {
 };
 
 export default function User({ user }: UserProps) {
-  const {carts, ownedCarts} = useCart({user});
+  const {ownedCarts} = useCart({user});
 
   return (
     <div>

@@ -3,8 +3,6 @@ import ProductList from "./ProductList";
 import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
-import ShoppingCartManager from "./ShoppingCartManager";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import useList from "../hooks/useList";
 
 // TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)

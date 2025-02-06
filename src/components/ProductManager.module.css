@@ -4,9 +4,6 @@
     justify-content: center; /* Vertically centers the child elements */
     height: 100vh;
   }
-  .productList{
-
-  }
   .shoppingCart{
     display: flex;
     align-items: flex-start;
