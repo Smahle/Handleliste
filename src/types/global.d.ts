@@ -33,7 +33,6 @@ declare global {
     setActiveCartId: (id: string | null) => void;
     ownedCarts: Cart[];
     addProduct: (cartId: string, product: Product) => void;
-    selectCart: (id: string) => void;
   };
   type UserAndCartsProps = {
     cartProps: CartProps;

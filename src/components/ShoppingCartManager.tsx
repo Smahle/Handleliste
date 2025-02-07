@@ -2,6 +2,7 @@ import { Button, FormControl, List, ListItem, MenuItem, Select, SelectChangeEven
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 
+
 export default function ShoppingCartManager({
   createCart,
   deleteCart,
@@ -11,11 +12,11 @@ export default function ShoppingCartManager({
   activeCart,
   clearCart,
   carts,
-  selectCart
+  setActiveCartId
 }: CartProps) {
 
   const handleChange = (event: SelectChangeEvent)=>{
-    selectCart(event.target.value)
+    setActiveCartId(event.target.value)
   }
 
   return (

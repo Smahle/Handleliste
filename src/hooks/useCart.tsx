@@ -27,9 +27,7 @@ export default function useCart({ user }: UseCartProps) {
     },
     [setCarts, activeCartId, setActiveCartId]
   );
-  const selectCart = (id: string | null) => {
-    setActiveCartId(id);
-  };
+  
   const addProduct = useCallback(
     (cartId: string, product: Product) => {
       setCarts((prev) =>
@@ -123,7 +121,6 @@ export default function useCart({ user }: UseCartProps) {
     setCarts,
     activeCartId,
     setActiveCartId,
-    ownedCarts,
-    selectCart
+    ownedCarts
   };
 }
