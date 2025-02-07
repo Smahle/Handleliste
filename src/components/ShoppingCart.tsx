@@ -9,6 +9,7 @@ type ShoppingCartProps = {
   cart: Cart;
   removeProduct: (cartId: string, productId: string) => void;
   clearCart: (cartId: string) => void;
+  deleteCart: (cartId: string) => void;
   incrementQuantity: (cartId: string, productId: string) => void;
   decrementQuantity: (cartId: string, productId: string) => void;
 };
@@ -18,7 +19,8 @@ export default function ShoppingCart({
   clearCart,
   removeProduct,
   incrementQuantity,
-  decrementQuantity
+  decrementQuantity,
+  deleteCart
 
 }: ShoppingCartProps) {
   return (
@@ -44,6 +46,7 @@ export default function ShoppingCart({
         ))}
       </List>
           <Button onClick={() =>clearCart(cart.id)}>Clear cart</Button>
+          <Button onClick={() => deleteCart(cart.id)}>Delete cart</Button>
     </div>
   );
 }
