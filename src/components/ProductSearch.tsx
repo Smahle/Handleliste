@@ -3,33 +3,21 @@ import ProductList from "./ProductList";
 import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
-import useList from "../hooks/useList";
 
-// TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)
-// TODO: La brukere dele handleliste med hverandre
-// TODO: followe andre bruke (public, friends og private)
-// TODO: kunne hake av ting du har
-// TODO: TEMAER: TACO/PIZZA/SNACKS som har samlinger av oppskrifter
-// TODO: filter på butikker - pris match på oppskrifter
-// TODO: favoritte lister
-// TODO: PROFILE: se alle lagrede handlelister, friends, followers(siste)
 type ProductSearchProps = {
   user: User;
+  activeCartId: string | null;
+  addProduct: (cartId: string, product: Product) => void;
 };
 
-export default function ProductSearch({
-  user
-
-}: ProductSearchProps) {
+export default function ProductSearch({ user, activeCartId, addProduct }: ProductSearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sort, setSort] = useState<string>("price_desc");
   const { data: products, error, loading } = useFetchProducts(searchTerm, sort);
-  const {addToCart} = useList({user})
-  
-  const retryFetch = () => {
-    setSearchTerm((prev) => prev + " "); // Forces re-fetch by changing state
-  };
 
+  const retryFetch = () => {
+    setSearchTerm((prev) => prev + " ");
+  };
 
   return (
     <div className={styles.container}>
@@ -44,13 +32,19 @@ export default function ProductSearch({
 
       <div className={styles.listsContainer}>
         <div className={styles.productList}>
-          <ProductList
-            products={products}
-            loading={loading}
-            error={error}
-            onRetry={retryFetch}
-            onDoubleClick={addToCart}
-          />
+        <ProductList
+  products={products}
+  loading={loading}
+  error={error}
+  onRetry={retryFetch}
+  onDoubleClick={(product) => {
+    if (activeCartId) {
+      addProduct(activeCartId, product);
+    } else {
+      alert("No cart selected")
+    }
+  }}
+/>
         </div>
       </div>
     </div>

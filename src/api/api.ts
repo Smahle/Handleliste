@@ -10,7 +10,7 @@ export function useFetchProducts(searchTerm?: string, sort?: string) {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true); // Set loading state
+      setLoading(true); 
       const url = new URL(`${BASE_URL}products`);
 
       if (searchTerm) url.searchParams.append("search", searchTerm);
@@ -34,18 +34,18 @@ export function useFetchProducts(searchTerm?: string, sort?: string) {
         }
 
         const result = await response.json();
-        setData(result.data || []); // Update state with fetched data
-        setError(null); // Clear any previous errors
+        setData(result.data || []);
+        setError(null);
       } catch (err: any) {
         setError(err.message || "An error occurred");
-        setData([]); // Clear data on error
+        setData([]);
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [searchTerm, sort]); // Re-run when searchTerm or sort changes
+  }, [searchTerm, sort]);
 
   return { data, error, loading };
 }

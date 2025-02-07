@@ -1,4 +1,3 @@
-// ProductImage.tsx
 import { useState } from 'react';
 import boysImage from '../assets/images/boys.jpg';
 

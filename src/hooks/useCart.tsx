@@ -32,12 +32,22 @@ export default function useCart({ user }: UseCartProps) {
     (cartId: string, product: Product) => {
       setCarts((prev) =>
         prev.map((cart) =>
-          cart.id === cartId ? { ...cart, products: [...cart.products, product] } : cart
+          cart.id === cartId
+            ? {
+                ...cart,
+                products: cart.products.some((p) => p.id === product.id)
+                  ? cart.products.map((p) =>
+                      p.id === product.id ? { ...p, quantity: (p.quantity ?? 1) + 1 } : p
+                    )
+                  : [...cart.products, { ...product, quantity: 1 }],
+              }
+            : cart
         )
       );
     },
     [setCarts]
   );
+  
 
   const removeProduct = useCallback(
     (cartId: string, productId: string) => {
@@ -95,7 +105,7 @@ export default function useCart({ user }: UseCartProps) {
         prev.map((cart) => (cartId === activeCartId ? { ...cart, products: [] } : cart))
       );
     },
-    [setCarts, activeCartId] // Added `activeCartId` to the dependency array
+    [setCarts, activeCartId]
   );
 
   return {
