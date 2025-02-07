@@ -4,13 +4,8 @@ import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/api";
 import styles from "./ProductSearch.module.css";
 
-type ProductSearchProps = {
-  user: User;
-  activeCartId: string | null;
-  addProduct: (cartId: string, product: Product) => void;
-};
 
-export default function ProductSearch({ user, activeCartId, addProduct }: ProductSearchProps) {
+export default function ProductSearch({activeCartId, addProduct }: CartProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sort, setSort] = useState<string>("price_desc");
   const { data: products, error, loading } = useFetchProducts(searchTerm, sort);

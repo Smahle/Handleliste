@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile"; // ✅ Keep this import
 import NotFound from "./pages/NotFound";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,14 +12,8 @@ import Button from '@mui/material/Button';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
-// TODO: lagre handlelister og gi de navn FEKS TACOLESTÅ/FREDAGSLESTÅ (local storage fer handleleste)
-// TODO: La brukere dele handleliste med hverandre
-// TODO: followe andre bruke (public, friends og private)
-// TODO: kunne hake av ting du har
-// TODO: TEMAER: TACO/PIZZA/SNACKS som har samlinger av oppskrifter
-// TODO: filter på butikker - pris match på oppskrifter
-// TODO: favoritte lister
-// TODO: PROFILE: se alle lagrede handlelister, friends, followers(siste)
+import useCart from "./hooks/useCart";
+
 function Navbar() {
   const pages = [
     { name: 'Home', path: '/' },
@@ -83,15 +77,17 @@ function Navbar() {
 
 function App() {
   const user = { username: "Stian" } as User;
+  const cartProps = useCart({ user });
+
   return (
     <Router>
       <Box sx={{ flexGrow: 1 }}>
         <Navbar />
       </Box>
       <Routes>
-        <Route path="/" element={<Home user={user}/>} />
+        <Route path="/" element={<Home cartProps={cartProps} user={user} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile user={user}/>} />
+        <Route path="/profile" element={<Profile cartProps={cartProps} user={user} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

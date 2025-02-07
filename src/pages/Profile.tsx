@@ -1,13 +1,18 @@
-import User from "../components/User";
+;
+export default function Profile({ cartProps, user }: UserAndCartsProps) {
 
-type ProfileProps = {
-  user: User;
-};
-
-export default function Profile({ user }: ProfileProps) {
   return (
-    <>
-      <User user={user} />
-    </>
+    <div>
+      <h2>My Shopping Carts</h2>
+      {cartProps.ownedCarts.length > 0 ? (
+        <ul>
+          {cartProps.ownedCarts.map((shoppingCart) => (
+            <li key={shoppingCart.id}>{shoppingCart.name}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No carts found</p>
+      )}
+    </div>
   );
 }

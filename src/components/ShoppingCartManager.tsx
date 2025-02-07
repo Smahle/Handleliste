@@ -17,7 +17,6 @@ type ShoppingCartManagerProps = {
 };
 
 export default function ShoppingCartManager({
-  user,
   createCart,
   deleteCart,
   removeProduct,

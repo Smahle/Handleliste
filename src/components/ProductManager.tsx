@@ -1,14 +1,9 @@
 import ShoppingCartManager from "./ShoppingCartManager";
 import ProductSearch from "./ProductSearch";
 import styles from "./ProductManager.module.css";
-import useCart from "../hooks/useCart";
 
-type ProductManagerProps = {
-  user: User;
-};
-
-export default function ProductManager({ user }: ProductManagerProps) {
-  const cartProps = useCart({ user });
+export default function ProductManager({ user, cartProps}: UserAndCartsProps) {
+  
 
   return (
     <div className={styles.container}>
@@ -16,8 +11,7 @@ export default function ProductManager({ user }: ProductManagerProps) {
       <div className={styles.productList}>
       <ProductSearch 
   {...cartProps} 
-  user={user} 
-  addProduct={cartProps.addProduct}
+  addProduct={cartProps.addProduct }
 />
       </div>
       <div className={styles.shoppingCart}>
