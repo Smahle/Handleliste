@@ -2,20 +2,6 @@ import { Button, FormControl, List, ListItem, MenuItem, Select, SelectChangeEven
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 
-type ShoppingCartManagerProps = {
-  user: User;
-  createCart: () => void;
-  deleteCart: (id: string) => void;
-  removeProduct: (cartId: string, productId: string) => void;
-  incrementProduct: (cartId: string, productId: string) => void;
-  decrementProduct: (cartId: string, productId: string) => void;
-  activeCart: Cart | undefined;
-  clearCart: (cartId: string) => void;
-  carts: Cart[];
-  activeCartId: string | null;
-  setActiveCartId: (id: string | null) => void;
-};
-
 export default function ShoppingCartManager({
   createCart,
   deleteCart,
@@ -25,12 +11,11 @@ export default function ShoppingCartManager({
   activeCart,
   clearCart,
   carts,
-  activeCartId,
-  setActiveCartId,
-}: ShoppingCartManagerProps) {
+  selectCart
+}: CartProps) {
 
   const handleChange = (event: SelectChangeEvent)=>{
-    setActiveCartId(event.target.value)
+    selectCart(event.target.value)
   }
 
   return (
