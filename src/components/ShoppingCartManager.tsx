@@ -27,7 +27,8 @@ export default function ShoppingCartManager({
           {carts.map((cart) => (
            <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
           ))}
-          </Select>            
+          </Select>
+          <div style={{ paddingLeft: "1rem" }}>Cart owner: {activeCart?.owner.username} </div>       
       </div>
 
       <div className={styles.shoppingCart}>
