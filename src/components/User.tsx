@@ -1,14 +1,16 @@
+import { List, ListItem } from "@mui/material";
+
 export default function UserInfo(profileProps: UserAndCartsProps) {
 
   return (
     <div>
       <h2>My Shopping Carts</h2>
       {profileProps.cartProps.ownedCarts.length > 0 ? (
-        <ul>
+        <List>
           {profileProps.cartProps.ownedCarts.map((cart) => (
-            <li key={cart.id}>{cart.name}</li>
+            <ListItem key={cart.id}>{cart.name}</ListItem>
           ))}
-        </ul>
+        </List>
       ) : (
         <p>No carts found</p>
       )}
