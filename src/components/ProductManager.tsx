@@ -7,7 +7,6 @@ export default function ProductManager(cartProps: CartProps) {
 
   return (
     <div className={styles.container}>
-      <h2>Active Cart ID: {cartProps.activeCartId ?? "None"}</h2>
       <div className={styles.productList}>
       <ProductSearch 
   {...cartProps} 

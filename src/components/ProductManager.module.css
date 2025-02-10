@@ -1,12 +1,10 @@
 .container {
-    display: flex;
-    align-items: center; /* Horizontally centers the child elements */
-    justify-content: center; /* Vertically centers the child elements */
-    height: 100vh;
-  }
-  .shoppingCart{
-    display: flex;
-    align-items: flex-start;
-    height: 100%;
-    width: 100%;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.productList, .shoppingCart {
+  max-width: 50%;
+}

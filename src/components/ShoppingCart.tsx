@@ -24,29 +24,44 @@ export default function ShoppingCart({
 
 }: ShoppingCartProps) {
   return (
-    <div >
-      <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
-        {cart.products.map((product) => (
-      <ListItem   key={product.id}
-      style={{
-        cursor: "pointer",
-        border: "2px solid #3c4245",
-      }}className={styles.itemContainer}>
-        <div className={styles.item}>
-          <ProductImage imageSrc={product.image} altText={product.name} />
-          {product.name}
-        </div>
-        <div className={styles.itemQuantityContainer}>
-          <div className={styles.itemQuantity}>{product.quantity}</div>
-          <button onClick={() => incrementQuantity(cart.id, product.id)}><ArrowDropUp /></button>
-          <button onClick={() => decrementQuantity(cart.id, product.id)}><ArrowDropDown /></button>
-          <button onClick={() => removeProduct(cart.id, product.id)}><Delete /></button>
-        </div>
-      </ListItem>
-        ))}
-      </List>
-          <Button onClick={() =>clearCart(cart.id)}>Clear cart</Button>
-          <Button onClick={() => deleteCart(cart.id)}>Delete cart</Button>
-    </div>
+    <>
+      {cart.products.length > 0 ? (
+        <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
+          {cart.products.map((product) => (
+            <ListItem
+              key={product.id}
+              style={{
+                cursor: "pointer",
+                border: "2px solid #3c4245",
+              }}
+              className={styles.itemContainer}
+            >
+              <div className={styles.item}>
+                <ProductImage imageSrc={product.image} altText={product.name} />
+                {product.name}
+              </div>
+              <div className={styles.itemQuantityContainer}>
+                <div className={styles.itemQuantity}>{product.quantity}</div>
+                <button onClick={() => incrementQuantity(cart.id, product.id)}>
+                  <ArrowDropUp />
+                </button>
+                <button onClick={() => decrementQuantity(cart.id, product.id)}>
+                  <ArrowDropDown />
+                </button>
+                <button onClick={() => removeProduct(cart.id, product.id)}>
+                  <Delete />
+                </button>
+              </div>
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <p>No products in cart</p>
+      )}
+      
+      <Button onClick={() => clearCart(cart.id)}>Clear cart</Button>
+      <Button onClick={() => deleteCart(cart.id)}>Delete cart</Button>
+    </>
   );
+  
 }

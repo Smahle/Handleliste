@@ -5,18 +5,17 @@
   height: 100vh;
 }
 
-.listsContainer {
-  display: flex;
-}
 
 .productList {
   width: 65vh;
-  border: 2px solid #3c4245;
   margin: 1vh;
 }
 
 .searchControls {
-  width: 60vh;
-  border: 2px solid #3c4245;
-  margin: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15vh;
+  overflow: hidden;
+  flex-shrink: 0;
 }
