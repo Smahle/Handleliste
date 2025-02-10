@@ -8,9 +8,19 @@ import useCart from "./hooks/useCart";
 import UserList from "./pages/UserList";
 import CreateUser from "./pages/CreateUser";
 import Navbar from "./components/NavBar";
+import useUser from "./hooks/useUser";
 
 function App() {
-  const user = { username: "Stian" } as User;
+  const { user } = useUser({
+    username: "stian",
+    carts: [],
+    firstName: "",
+    lastName: "",
+    age: undefined,
+    email: "",
+    following: [],
+  });
+
   const cartProps = useCart({ user });
 
   return (
@@ -19,14 +29,16 @@ function App() {
         <Navbar />
       </Box>
       <Routes>
-        <Route path="/" element={<Home {...cartProps}/>} />
-        <Route path="/createUser" element={<CreateUser />} />
-        <Route path="/userList" element={<UserList />} />
-        <Route path="/profile" element={<Profile cartProps={cartProps} user={user} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+  <Route path="/" element={<Home {...cartProps} />} />
+  <Route path="/createUser" element={<CreateUser />} />
+  <Route path="/userList" element={<UserList />} />
+  <Route path="/profile/:username" element={<Profile cartProps={cartProps} user={user} />} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
+
     </Router>
   );
 }
 
 export default App;
+

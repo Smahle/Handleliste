@@ -5,6 +5,16 @@ export default function useUser(initialUser: User) {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : initialUser;
   });
+  const [activeUser, setActiveUser] = useState<User>({
+    username: "Stian",
+    carts: [],
+    firstName: "",
+    lastName: "",
+    age: undefined,
+    email: "",
+    following: [],
+  });
+  
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -24,5 +34,5 @@ export default function useUser(initialUser: User) {
     }));
   };
 
-  return { user, setUser, followUser, unfollowUser };
+  return { user, setUser, followUser, unfollowUser, activeUser };
 }

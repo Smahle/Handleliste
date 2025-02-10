@@ -10,7 +10,7 @@ declare global {
     id: string;
     name: string;
     products: Product[];
-    owner: User;
+    owner: string;
   };
   type User = {
     username: string;

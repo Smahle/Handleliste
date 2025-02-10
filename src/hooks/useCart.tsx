@@ -8,14 +8,14 @@ type UseCartProps = {
 export default function useCart({ user }: UseCartProps) {
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
-  const ownedCarts = carts.filter((cart) => cart.owner.username === user.username);
+  const ownedCarts = carts.filter((cart) => cart.owner === user.username);
   const activeCart = carts.find((cart) => cart.id === activeCartId);
 
   const createCart = useCallback(() => {
     const name = prompt("Enter cart name")?.trim();
     if (!name) return;
 
-    const newCart: Cart = { id: crypto.randomUUID(), name, products: [], owner: user };
+    const newCart: Cart = { id: crypto.randomUUID(), name, products: [], owner: user.username };
     setCarts((prev) => [...prev, newCart]);
     setActiveCartId(newCart.id);
   }, [user, setCarts, setActiveCartId]);
