@@ -19,6 +19,7 @@ declare global {
     lastName?: string;
     age?: number;
     email?: string;
+    following?: string[];
   }
   type CartProps = {
     createCart: () => void;

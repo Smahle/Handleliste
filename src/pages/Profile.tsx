@@ -7,7 +7,7 @@ export default function Profile({ cartProps }: UserAndCartsProps) {
   return (
     <div>
       <div>
-        <h2>My Shopping Carts</h2>
+        <h2>{}hopping Carts</h2>
         {cartProps.ownedCarts.length > 0 ? (
           <List>
             {cartProps.ownedCarts.map((shoppingCart) => (
