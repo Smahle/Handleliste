@@ -30,7 +30,7 @@ export default function ShoppingCart({
       <ListItem   key={product.id}
       style={{
         cursor: "pointer",
-        border: "1px solid gray",
+        border: "2px solid #3c4245",
       }}className={styles.itemContainer}>
         <div className={styles.item}>
           <ProductImage imageSrc={product.image} altText={product.name} />

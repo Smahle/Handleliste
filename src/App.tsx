@@ -85,7 +85,7 @@ function App() {
         <Navbar />
       </Box>
       <Routes>
-        <Route path="/" element={<Home cartProps={cartProps} user={user} />} />
+        <Route path="/" element={<Home {...cartProps}/>} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile cartProps={cartProps} user={user} />} />
         <Route path="*" element={<NotFound />} />

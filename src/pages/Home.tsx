@@ -5,10 +5,10 @@ type HomeProps = {
 };
 
 
-export default function Home({ cartProps, user }: UserAndCartsProps) {
+export default function Home(cartProps: CartProps) {
   return (
     <>
-      <ProductManager user={user} cartProps={cartProps}/>
+      <ProductManager {...cartProps}/>
     </>
   );
 }

@@ -22,7 +22,6 @@ export default function ShoppingCartManager({
   return (
     <div className={styles.container}>
       <div className={styles.cartManagement}>
-        <h2>Shopping Carts</h2>
         <Button onClick={createCart}>Create New Cart</Button>   
           <Select value={activeCart?.id || ""} onChange={handleChange}>
           {carts.map((cart) => (

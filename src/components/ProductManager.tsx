@@ -2,7 +2,7 @@ import ShoppingCartManager from "./ShoppingCartManager";
 import ProductSearch from "./ProductSearch";
 import styles from "./ProductManager.module.css";
 
-export default function ProductManager({ user, cartProps}: UserAndCartsProps) {
+export default function ProductManager(cartProps: CartProps) {
   
 
   return (
@@ -15,7 +15,7 @@ export default function ProductManager({ user, cartProps}: UserAndCartsProps) {
 />
       </div>
       <div className={styles.shoppingCart}>
-        <ShoppingCartManager {...cartProps} user={user} />
+        <ShoppingCartManager {...cartProps} />
       </div>
     </div>
   );
