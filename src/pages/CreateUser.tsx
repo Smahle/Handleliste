@@ -10,15 +10,7 @@ export default function CreateUser() {
     email: "",
   });
 
-  const { setUser } = useUser({
-    username: "",
-    carts: [],
-    firstName: "",
-    lastName: "",
-    age: undefined,
-    email: "",
-    following: [],
-  });
+  const { createUser } = useUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,7 +22,7 @@ export default function CreateUser() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const newUser: User = {
       username: formData.username,
       firstName: formData.firstName,
@@ -40,25 +32,11 @@ export default function CreateUser() {
       carts: [],
       following: [],
     };
-  
-    // Get existing users from localStorage
-    const storedUsers = localStorage.getItem("users");
-    const users: User[] = storedUsers ? JSON.parse(storedUsers) : [];
-  
-    // Check if username already exists
-    if (users.some((u) => u.username === newUser.username)) {
+
+    if (!createUser(newUser)) {
       alert("Username already taken!");
-      return;
     }
-  
-    // Save updated users list
-    const updatedUsers = [...users, newUser];
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-  
-    // Set the new user as the active user in `useUser`
-    setUser(newUser);
   };
-  
 
   return (
     <form onSubmit={handleSubmit}>

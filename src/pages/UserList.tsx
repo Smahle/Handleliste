@@ -4,15 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
   const [users, setUsers] = useState<User[]>([]);
-  const { user, followUser, unfollowUser } = useUser({
-    username: "",
-    carts: [],
-    firstName: "",
-    lastName: "",
-    age: undefined,
-    email: "",
-    following: [],
-  });
+  const { activeUser, followUser, unfollowUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -30,7 +22,7 @@ export default function UserList() {
   }, []);
 
   const handleFollow = (username: string) => {
-    if (user.following?.includes(username)) {
+    if (activeUser?.following.includes(username)) {
       unfollowUser(username);
     } else {
       followUser(username);
@@ -52,9 +44,9 @@ export default function UserList() {
                 {u.username}
               </button> 
               ({u.firstName} {u.lastName})
-              {u.username !== user.username && (
+              {u.username !== activeUser?.username && (
                 <button onClick={() => handleFollow(u.username)}>
-                  {user.following?.includes(u.username) ? "Unfollow" : "Follow"}
+                  {activeUser?.following?.includes(u.username) ? "Unfollow" : "Follow"}
                 </button>
               )}
             </li>

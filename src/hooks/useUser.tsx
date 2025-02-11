@@ -1,38 +1,67 @@
-import { useState, useEffect } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 
-export default function useUser(initialUser: User) {
-  const [user, setUser] = useState<User>(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : initialUser;
-  });
-  const [activeUser, setActiveUser] = useState<User>({
-    username: "Stian",
-    carts: [],
-    firstName: "",
-    lastName: "",
-    age: undefined,
-    email: "",
-    following: [],
-  });
-  
+function useUser() {
+  const [activeUser, setActiveUser] = useLocalStorage<User | null>("activeUser", null);
+  const [users, setUsers] = useLocalStorage<User[]>("users", []);
 
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+  const createUser = (user: User): boolean => {
+    if (users.some((u) => u.username === user.username)) {
+      return false; // Username already taken
+    }
 
-  const followUser = (userId: string) => {
-    setUser((prev) => ({
-      ...prev,
-      following: [...(prev.following || []), userId],
-    }));
+    const updatedUsers = [...users, user];
+    setUsers(updatedUsers);
+    return true;
   };
 
-  const unfollowUser = (userId: string) => {
-    setUser((prev) => ({
-      ...prev,
-      following: prev.following?.filter((id) => id !== userId) || [],
-    }));
+  const followUser = (usernameToFollow: string) => {
+    if (!activeUser) return;
+
+    if (!users.some((u) => u.username === usernameToFollow)) {
+      console.error("User to follow not found");
+      return;
+    }
+
+    if (activeUser.following.includes(usernameToFollow)) {
+      console.warn("Already following this user");
+      return;
+    }
+
+    const updatedUser = {
+      ...activeUser,
+      following: [...activeUser.following, usernameToFollow],
+    };
+
+    updateUser(updatedUser);
   };
 
-  return { user, setUser, followUser, unfollowUser, activeUser };
+  const unfollowUser = (usernameToUnfollow: string) => {
+    if (!activeUser) return;
+
+    const updatedUser = {
+      ...activeUser,
+      following: activeUser.following.filter((username) => username !== usernameToUnfollow),
+    };
+
+    updateUser(updatedUser);
+  };
+
+  // Update user in the users list
+  const updateUser = (updatedUser: User) => {
+    const updatedUsers = users.map((user) =>
+      user.username === updatedUser.username ? updatedUser : user
+    );
+    setUsers(updatedUsers);
+  };
+
+  return {
+    activeUser,
+    setActiveUser,
+    users,
+    createUser,
+    followUser,
+    unfollowUser,
+  };
 }
+
+export default useUser;
