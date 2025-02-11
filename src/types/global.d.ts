@@ -35,11 +35,14 @@ declare global {
     ownedCarts: Cart[];
     addProduct: (cartId: string, product: Product) => void;
   };
-  type UserAndCartsProps = {
-    cartProps: CartProps;
-    user: User;
-  };
-
+  type UserProps = {
+    activeUser: User | null;
+    setActiveUser: (user: User | null) => void;
+    users: User[];
+    createUser: (user: User) => boolean;
+    followUser: (usernameToFollow: string) => void;
+    unfollowUser: (usernameToUnfollow: string) => void;
+  };  
 }
 
 export {}; // Prevents this from becoming a module

@@ -2,11 +2,16 @@ import { useParams } from "react-router-dom";
 import { Button, List, ListItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function Profile(cartAndUserProps: UserAndCartsProps) {
-  const { username } = useParams(); // Get the profile username from the URL
+type ProfileProps = {
+  user: UserProps;
+  cartProps: CartProps;
+};
+
+export default function Profile({ cartProps, user }: ProfileProps) {
+  const { username } = useParams();
   const navigate = useNavigate();
 
-  const userCarts = cartAndUserProps.cartProps.carts.filter(
+  const userCarts = cartProps.carts.filter(
     (cart) => cart.owner.toLowerCase() === username?.toLowerCase()
   );
 
@@ -21,8 +26,8 @@ export default function Profile(cartAndUserProps: UserAndCartsProps) {
               <ListItem key={shoppingCart.id}>
                 <Button 
                   onClick={() => {
-                    navigate("/"); 
-                    cartAndUserProps.cartProps.setActiveCartId(shoppingCart.id);
+                    navigate("/");
+                    cartProps.setActiveCartId(shoppingCart.id);
                   }}
                 >
                   {shoppingCart.name}

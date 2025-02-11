@@ -1,7 +1,6 @@
 import { useState } from "react";
-import useUser from "../hooks/useUser";
 
-export default function CreateUser() {
+export default function CreateUser({ createUser }:UserProps) {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -9,8 +8,6 @@ export default function CreateUser() {
     age: "",
     email: "",
   });
-
-  const { createUser } = useUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

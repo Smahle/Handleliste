@@ -11,17 +11,8 @@ import Navbar from "./components/NavBar";
 import useUser from "./hooks/useUser";
 
 function App() {
-  const { user } = useUser({
-    username: "stian",
-    carts: [],
-    firstName: "",
-    lastName: "",
-    age: undefined,
-    email: "",
-    following: [],
-  });
-
-  const cartProps = useCart({ user });
+  const userProps = useUser();
+  const cartProps = useCart();
 
   return (
     <Router>
@@ -30,9 +21,9 @@ function App() {
       </Box>
       <Routes>
   <Route path="/" element={<Home {...cartProps} />} />
-  <Route path="/createUser" element={<CreateUser />} />
-  <Route path="/userList" element={<UserList />} />
-  <Route path="/profile/:username" element={<Profile cartProps={cartProps} user={user} />} />
+  <Route path="/createUser" element={<CreateUser {...userProps}/>} />
+  <Route path="/userList" element={<UserList {...userProps}/>} />
+  <Route path="/profile/:username" element={<Profile cartProps={cartProps} user={userProps} />} />
   <Route path="*" element={<NotFound />} />
 </Routes>
 

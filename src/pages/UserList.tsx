@@ -1,33 +1,7 @@
-import { useState, useEffect } from "react";
-import useUser from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
-export default function UserList() {
-  const [users, setUsers] = useState<User[]>([]);
-  const { activeUser, followUser, unfollowUser } = useUser();
-
+export default function UserList({users, activeUser, followUser}:UserProps) {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadUsers = () => {
-      const storedUsers = localStorage.getItem("users");
-      setUsers(storedUsers ? JSON.parse(storedUsers) : []);
-    };
-
-    loadUsers();
-  
-    // Listen for localStorage updates (e.g., new user created)
-    window.addEventListener("storage", loadUsers);
-    return () => window.removeEventListener("storage", loadUsers);
-  }, []);
-
-  const handleFollow = (username: string) => {
-    if (activeUser?.following.includes(username)) {
-      unfollowUser(username);
-    } else {
-      followUser(username);
-    }
-  };
 
   return (
     <div>
@@ -36,7 +10,6 @@ export default function UserList() {
         <ul>
           {users.map((u) => (
             <li key={u.username}>
-              {/* Clickable username to navigate to profile */}
               <button 
                 onClick={() => navigate(`/profile/${u.username}`)} 
                 style={{ background: "none", border: "none", color: "blue", cursor: "pointer" }}
@@ -45,7 +18,7 @@ export default function UserList() {
               </button> 
               ({u.firstName} {u.lastName})
               {u.username !== activeUser?.username && (
-                <button onClick={() => handleFollow(u.username)}>
+                <button onClick={() => followUser(u.username)}>
                   {activeUser?.following?.includes(u.username) ? "Unfollow" : "Follow"}
                 </button>
               )}
