@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import useUser from "./useUser";  // Import useUser
 
-export default function useCart() :CartProps{
+export default function useCart(): CartState{
   const { activeUser } = useUser();  // Get active user
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);

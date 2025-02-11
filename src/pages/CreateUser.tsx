@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CreateUser({ createUser }:UserProps) {
+export default function CreateUser({ createUser }: UserState) {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",

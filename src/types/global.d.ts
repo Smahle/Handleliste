@@ -21,7 +21,7 @@ declare global {
     email?: string;
     following: string[];
   }
-  type CartProps = {
+  type CartState = {
     createCart: () => void;
     deleteCart: (id: string) => void;
     removeProduct: (cartId: string, productId: string) => void;
@@ -35,7 +35,7 @@ declare global {
     ownedCarts: Cart[];
     addProduct: (cartId: string, product: Product) => void;
   };
-  type UserProps = {
+  type UserState = {
     activeUser: User | null;
     setActiveUser: (user: User | null) => void;
     users: User[];

@@ -2,7 +2,7 @@ import ShoppingCartManager from "./ShoppingCartManager";
 import ProductSearch from "./ProductSearch";
 import styles from "./ProductManager.module.css";
 
-export default function ProductManager(cartProps: CartProps) {
+export default function ProductManager(cartProps: CartState) {
   
 
   return (

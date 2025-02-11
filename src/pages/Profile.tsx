@@ -3,8 +3,8 @@ import { Button, List, ListItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 type ProfileProps = {
-  user: UserProps;
-  cartProps: CartProps;
+  user: UserState;
+  cartProps: CartState;
 };
 
 export default function Profile({ cartProps }: ProfileProps) {

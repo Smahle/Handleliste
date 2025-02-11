@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function UserList({users, activeUser, followUser}:UserProps) {
+export default function UserList({users, activeUser, followUser}: UserState) {
   const navigate = useNavigate();
 
   return (

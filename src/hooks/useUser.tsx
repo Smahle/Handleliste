@@ -10,7 +10,7 @@ const defaultUser: User = {
   following: [],
 };
 
-function useUser(): UserProps {
+function useUser(): UserState {
   const [users, setUsers] = useLocalStorage<User[]>("users", []);
 
   // TODO: remove when Login is implemented. Ensure the default user exists in localStorage
