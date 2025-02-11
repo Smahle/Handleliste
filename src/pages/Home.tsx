@@ -1,11 +1,6 @@
 import ProductManager from "../components/ProductManager";
 
-type HomeProps = {
-  user: User;
-};
-
-
-export default function Home(cartProps: CartProps) {
+export default function Home(cartProps: CartState) {
   return (
     <>
       <ProductManager {...cartProps}/>

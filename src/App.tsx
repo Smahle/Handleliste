@@ -17,7 +17,7 @@ function App() {
   return (
     <Router>
       <Box sx={{ flexGrow: 1 }}>
-        <Navbar />
+        <Navbar {...userProps}/>
       </Box>
       <Routes>
   <Route path="/" element={<Home {...cartProps} />} />

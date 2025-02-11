@@ -33,6 +33,7 @@ export default function CreateUser({ createUser }: UserState) {
     if (!createUser(newUser)) {
       alert("Username already taken!");
     }
+    else alert(formData.username+" created.")
   };
 
   return (

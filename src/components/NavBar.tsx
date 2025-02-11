@@ -7,7 +7,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({activeUser}: UserState) {
   const pages = [
     { name: "Home", path: "/" },
     { name: "CreateUser", path: "/createUser" },
@@ -62,7 +62,7 @@ export default function Navbar() {
             <MenuItem
               onClick={() => {
                 handleClose();
-                navigate("/profile");
+                navigate(`/profile/${activeUser?.username}`);
               }}
             >
               Profile
