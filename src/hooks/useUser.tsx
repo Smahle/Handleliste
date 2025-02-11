@@ -54,7 +54,6 @@ function useUser(): UserState {
 
   const unfollowUser = (usernameToUnfollow: string) => {
     if (!activeUser) return;
-    console.log(usernameToUnfollow)
     const updatedUser = {
       ...activeUser,
       following: activeUser.following.filter((username) => username !== usernameToUnfollow),
