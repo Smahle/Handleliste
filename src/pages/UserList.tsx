@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function UserList({users, activeUser, followUser}: UserState) {
+export default function UserList({users, activeUser, followUser, unfollowUser}: UserState) {
   const navigate = useNavigate();
 
   return (
@@ -18,8 +18,9 @@ export default function UserList({users, activeUser, followUser}: UserState) {
               </button> 
               ({u.firstName} {u.lastName})
               {u.username !== activeUser?.username && (
-                <button onClick={() => followUser(u.username)}>
+                <button onClick={() => {activeUser?.following?.includes(u.username) ? unfollowUser(u.username): followUser(u.username)}}>
                   {activeUser?.following?.includes(u.username) ? "Unfollow" : "Follow"}
+                  
                 </button>
               )}
             </li>

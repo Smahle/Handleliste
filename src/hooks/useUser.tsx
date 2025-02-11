@@ -49,17 +49,19 @@ function useUser(): UserState {
     };
 
     updateUser(updatedUser);
+    setActiveUser(updatedUser)
   };
 
   const unfollowUser = (usernameToUnfollow: string) => {
     if (!activeUser) return;
-
+    console.log(usernameToUnfollow)
     const updatedUser = {
       ...activeUser,
       following: activeUser.following.filter((username) => username !== usernameToUnfollow),
     };
 
     updateUser(updatedUser);
+    setActiveUser(updatedUser)
   };
 
   // Update user in the users list
@@ -67,7 +69,7 @@ function useUser(): UserState {
     const updatedUsers = users.map((user) =>
       user.username === updatedUser.username ? updatedUser : user
     );
-    setUsers(updatedUsers);
+    setUsers(updatedUsers);;
   };
 
   return {
