@@ -7,7 +7,7 @@ type ProfileProps = {
   cartProps: CartProps;
 };
 
-export default function Profile({ cartProps, user }: ProfileProps) {
+export default function Profile({ cartProps }: ProfileProps) {
   const { username } = useParams();
   const navigate = useNavigate();
 
