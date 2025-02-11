@@ -23,7 +23,7 @@ function App() {
   <Route path="/" element={<Home {...cartProps} />} />
   <Route path="/createUser" element={<CreateUser {...userProps}/>} />
   <Route path="/userList" element={<UserList {...userProps}/>} />
-  <Route path="/profile/:username" element={<Profile cartProps={cartProps} user={userProps} />} />
+  <Route path="/profile/:username" element={<Profile cartProps={cartProps} userState={userProps} />} />
   <Route path="*" element={<NotFound />} />
 </Routes>
 

@@ -42,6 +42,7 @@ declare global {
     createUser: (user: User) => boolean;
     followUser: (usernameToFollow: string) => void;
     unfollowUser: (usernameToUnfollow: string) => void;
+    ownedCarts: (owner: User) => Cart[] | null;
   };  
 }
 
