@@ -6,15 +6,21 @@ import Select from '@mui/material/Select';
 type SearchControlsProps = {
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  sort: string;
-  onSortChange: (value: string) => void;
+  sortPrice: string;
+  onSortPriceChange: (value: string) => void;
+  stores: string[];
+  selectedStore: string;
+  onStoreChange: (value: string) => void;
 };
 
 export default function SearchControls({
   searchTerm,
   onSearchChange,
-  sort,
-  onSortChange,
+  sortPrice,
+  onSortPriceChange,
+  stores,
+  selectedStore,
+  onStoreChange
 }: SearchControlsProps) {
   return (
     <Box sx={{
@@ -31,13 +37,25 @@ export default function SearchControls({
       />
 
       <Select
-        value={sort}
-        onChange={(e) => onSortChange(e.target.value)}
+        value={sortPrice}
+        onChange={(e) => onSortPriceChange(e.target.value)}
         displayEmpty
         inputProps={{ 'aria-label': 'Sort' }}
       >
         <MenuItem value="price_desc">Price Descending</MenuItem>
         <MenuItem value="price_asc">Price Ascending</MenuItem>
+      </Select>
+
+      <Select
+        value={selectedStore}
+        onChange={(e) => onStoreChange(e.target.value)}
+        displayEmpty
+        inputProps={{ 'aria-label': 'Sort' }}
+      >
+        <MenuItem value="">All Stores</MenuItem>
+        {stores.map((store) => (
+          <MenuItem key={store} value={store}>{store}</MenuItem>
+        ))}
       </Select>
     </Box>
   );

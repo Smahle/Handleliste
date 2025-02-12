@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const BASE_URL = "https://kassal.app/api/v1/";
 const TOKEN = "Vc6oCV3QeMen3keN2bYlk27LUGtXVQQiUVmLZhoj";
 
-export function useFetchProducts(searchTerm?: string, sort?: string) {
+export function useFetchProducts(searchTerm?: string, sortPrice?: string) {
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -14,7 +14,7 @@ export function useFetchProducts(searchTerm?: string, sort?: string) {
       const url = new URL(`${BASE_URL}products`);
 
       if (searchTerm) url.searchParams.append("search", searchTerm);
-      if (sort) url.searchParams.append("sort", sort);
+      if (sortPrice) url.searchParams.append("sort", sortPrice);
 
       try {
         const response = await fetch(url.toString(), {
@@ -45,7 +45,7 @@ export function useFetchProducts(searchTerm?: string, sort?: string) {
     };
 
     fetchProducts();
-  }, [searchTerm, sort]);
+  }, [searchTerm, sortPrice]);
 
   return { data, error, loading };
 }

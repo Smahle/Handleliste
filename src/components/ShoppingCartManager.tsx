@@ -13,7 +13,7 @@ export default function ShoppingCartManager({
   clearCart,
   carts,
   setActiveCartId
-}: CartProps) {
+}: CartState) {
 
   const handleChange = (event: SelectChangeEvent)=>{
     setActiveCartId(event.target.value)
