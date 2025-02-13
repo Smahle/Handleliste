@@ -14,12 +14,12 @@ declare global {
   };
   type User = {
     username: string;
-    carts?: Cart[];
     firstName?: string;
     lastName?: string;
     age?: number;
     email?: string;
     following: string[];
+    favorites: string[];
   }
   type CartState = {
     createCart: () => void;

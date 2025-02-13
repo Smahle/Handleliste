@@ -42,6 +42,10 @@ export default function Profile({ cartProps, userStateProps }: ProfileProps) {
           <p>No carts found</p>
         )}
       </div>
+      <div>
+        {username==userStateProps.activeUser?.username && (
+          <h1>Favorites</h1>)}
+      </div>
     </div>
   );
 }
