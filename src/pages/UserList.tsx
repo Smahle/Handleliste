@@ -20,7 +20,6 @@ export default function UserList({users, activeUser, followUser, unfollowUser}: 
               {u.username !== activeUser?.username && (
                 <button onClick={() => {activeUser?.following?.includes(u.username) ? unfollowUser(u.username): followUser(u.username)}}>
                   {activeUser?.following?.includes(u.username) ? "Unfollow" : "Follow"}
-                  
                 </button>
               )}
             </li>

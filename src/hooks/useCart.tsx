@@ -1,10 +1,20 @@
 import { useCallback, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import useUser from "./useUser";
+import { useUserContext } from "./UserContext";
 
-export default function useCart(): CartState{
-  const {activeUser} = useUser();
-  const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
+const defaultCarts: Cart[] = [
+  {
+    id: "mock-cart-id",
+    name: "Mock User's Cart",
+    products: [],
+    owner: "mockUser"
+  }
+];
+
+export default function useCart(): CartState {
+  const { activeUser, updateUser, setActiveUser } = useUserContext();
+  const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", defaultCarts);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
 
   const ownedCarts = (owner: User): Cart[] => {
@@ -120,6 +130,51 @@ export default function useCart(): CartState{
     },
     [setCarts, activeCartId]
   );
+
+  const favoriteCart = (cartId: string)=>{
+    if (!activeUser) return;
+
+    if(!carts.find((cart)=> cart.id === cartId)){
+      console.log("Favorite failed: cart not found");
+      return;
+    }
+
+    if(activeUser?.favorites.includes(cartId)){
+      console.log("Cart is already favorited");
+      return;
+    }
+
+    const updatedUser = {
+      ...activeUser,
+      favorites: [...(activeUser.favorites || []), cartId],
+    };
+
+    updateUser(updatedUser);
+    setActiveUser(updatedUser);
+  }
+
+  const unFavoriteCart = (cartId: string)=>{
+    if (!activeUser) return;
+
+    if(!carts.find((cart)=> cart.id === cartId)){
+      console.log("Favorite failed: cart not found");
+      return;
+    }
+
+    if(!activeUser?.favorites.includes(cartId)){
+      console.log("Cart is not favorited");
+      return;
+    }
+
+    const updatedUser = {
+      ...activeUser,
+      favorites: activeUser.favorites.filter((cartIdToUnFavorite) => cartId !== cartIdToUnFavorite)
+    };
+    console.log("unfav")
+    updateUser(updatedUser);
+    setActiveUser(updatedUser)
+  }
+
   return {
     createCart,
     deleteCart,
@@ -132,6 +187,8 @@ export default function useCart(): CartState{
     decrementProduct,
     clearCart,
     removeProduct,
-    addProduct
+    addProduct,
+    favoriteCart,
+    unFavoriteCart
   };
 }

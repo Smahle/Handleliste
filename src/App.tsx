@@ -8,10 +8,10 @@ import useCart from "./hooks/useCart";
 import UserList from "./pages/UserList";
 import CreateUser from "./pages/CreateUser";
 import Navbar from "./components/NavBar";
-import useUser from "./hooks/useUser";
+import { useUserContext } from "./hooks/UserContext";
 
 function App() {
-  const userProps = useUser();
+  const userProps = useUserContext();
   const cartProps = useCart();
 
   return (

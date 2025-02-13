@@ -6,12 +6,14 @@ declare global {
     current_price: number;
     quantity: number;
   };
+
   type Cart = {
     id: string;
     name: string;
     products: Product[];
     owner: string;
   };
+
   type User = {
     username: string;
     firstName?: string;
@@ -21,6 +23,7 @@ declare global {
     following: string[];
     favorites: string[];
   }
+
   type CartState = {
     createCart: () => void;
     deleteCart: (id: string) => void;
@@ -33,8 +36,11 @@ declare global {
     activeCartId: string | null;
     setActiveCartId: (id: string | null) => void;
     ownedCarts: (owner: User) => Cart[] | null;
+    favoriteCart: (cartId: string) => void;
+    unFavoriteCart: (cartId: string) => void;
     addProduct: (cartId: string, product: Product) => void;
   };
+  
   type UserState = {
     activeUser: User | null;
     setActiveUser: (user: User | null) => void;
@@ -42,6 +48,7 @@ declare global {
     createUser: (user: User) => boolean;
     followUser: (usernameToFollow: string) => void;
     unfollowUser: (usernameToUnfollow: string) => void;
+    updateUser: (user: User) => void;
   };  
 }
 

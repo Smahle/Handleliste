@@ -1,23 +1,33 @@
 import { useLocalStorage } from "./useLocalStorage";
 
-const defaultUser: User = {
-  username: "guest",
-  firstName: "Guest",
-  lastName: "User",
-  age: 0,
-  email: "guest@example.com",
-  carts: [],
-  following: [],
-};
+const defaultUsers: User[] = [
+  {
+    username: "guest",
+    firstName: "Guest",
+    lastName: "User",
+    age: 0,
+    email: "guest@example.com",
+    following: [],
+    favorites: []
+  },
+  {
+    username: "mockUser",
+    firstName: "Mock",
+    lastName: "User",
+    age: 25,
+    email: "mock@example.com",
+    following: [],
+    favorites: []
+  }
+];
 
 function useUser(): UserState {
-  const [users, setUsers] = useLocalStorage<User[]>("users", []);
-  const [activeUser, setActiveUser] = useLocalStorage<User | null>("activeUser", users[0] || defaultUser);
+  const [users, setUsers] = useLocalStorage<User[]>("users", defaultUsers);
+  const [activeUser, setActiveUser] = useLocalStorage<User | null>("activeUser", users[0] || defaultUsers[0]);
 
-  
   // TODO: remove when Login is implemented. Ensure the default user exists in localStorage
   if (users.length === 0) {
-    setUsers([defaultUser]);
+    setUsers(defaultUsers);
   }
 
   const createUser = (user: User): boolean => {
@@ -78,6 +88,7 @@ function useUser(): UserState {
     createUser,
     followUser,
     unfollowUser,
+    updateUser
   };
 }
 
