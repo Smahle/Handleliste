@@ -32,7 +32,7 @@ declare global {
     carts: Cart[];
     activeCartId: string | null;
     setActiveCartId: (id: string | null) => void;
-    ownedCarts: Cart[];
+    ownedCarts: (owner: User) => Cart[] | null;
     addProduct: (cartId: string, product: Product) => void;
   };
   type UserState = {
@@ -42,7 +42,6 @@ declare global {
     createUser: (user: User) => boolean;
     followUser: (usernameToFollow: string) => void;
     unfollowUser: (usernameToUnfollow: string) => void;
-    ownedCarts: (owner: User) => Cart[] | null;
   };  
 }
 

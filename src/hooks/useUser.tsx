@@ -13,11 +13,7 @@ const defaultUser: User = {
 function useUser(): UserState {
   const [users, setUsers] = useLocalStorage<User[]>("users", []);
   const [activeUser, setActiveUser] = useLocalStorage<User | null>("activeUser", users[0] || defaultUser);
-  const ownedCarts = (owner: User): Cart[] => {
-    return owner?.carts ? owner.carts.filter(
-      (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase()
-    ) : [];
-  };
+
   
   // TODO: remove when Login is implemented. Ensure the default user exists in localStorage
   if (users.length === 0) {
@@ -82,7 +78,6 @@ function useUser(): UserState {
     createUser,
     followUser,
     unfollowUser,
-    ownedCarts
   };
 }
 

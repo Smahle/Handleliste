@@ -2,21 +2,21 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button, List, ListItem } from "@mui/material";
 
 type ProfileProps = {
-  userState: UserState;
+  userStateProps: UserState;
   cartProps: CartState;
 };
 
-export default function Profile({ cartProps, userState }: ProfileProps) {
+export default function Profile({ cartProps, userStateProps }: ProfileProps) {
   const { username } = useParams();
   const navigate = useNavigate();
 
-  const profileUser = userState.users.find((u) => u.username === username);
+  const profileUser = userStateProps.users.find((u) => u.username === username);
 
   if (!profileUser) {
     return <h2>User not found</h2>;
   }
-
-  const profileUserCarts = userState.ownedCarts(profileUser) || [];
+  
+  const profileUserCarts = cartProps.ownedCarts(profileUser) || [];
 
   return (
     <div>

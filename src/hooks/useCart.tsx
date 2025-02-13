@@ -7,10 +7,11 @@ export default function useCart(): CartState{
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", []);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
 
-  // Ensure activeUser exists before filtering
-  const ownedCarts = activeUser
-    ? carts.filter((cart) => cart.owner === activeUser.username)
-    : [];
+  
+  const ownedCarts = (owner: User): Cart[] => {
+    return carts.filter(
+      (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase());
+  };
 
   const activeCart = carts.find((cart) => cart.id === activeCartId);
 
