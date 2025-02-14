@@ -130,7 +130,6 @@ export default function useCart() {
 
   const favoriteCart = (cartId: string)=>{
     if (!activeUser) return;
-
     if(!carts.find((cart)=> cart.id === cartId)){
       console.log("Favorite failed: cart not found");
       return;
@@ -151,8 +150,7 @@ export default function useCart() {
   }
 
   const unFavoriteCart = (cartId: string)=>{
-    if (!activeUser) return;
-
+    if(!activeUser) return;
     if(!carts.find((cart)=> cart.id === cartId)){
       console.log("Favorite failed: cart not found");
       return;
@@ -167,7 +165,6 @@ export default function useCart() {
       ...activeUser,
       favorites: activeUser.favorites.filter((cartIdToUnFavorite) => cartId !== cartIdToUnFavorite)
     };
-    console.log("unfav")
     updateUser(updatedUser);
     setActiveUser(updatedUser)
   }

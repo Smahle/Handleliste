@@ -6,8 +6,8 @@ import { useCartContext } from "../context/CartContext";
 
 export default function Profile() {
   const {username} = useParams();
-  const {favoriteCart, unFavoriteCart, setActiveCartId, ownedCarts} = useCartContext()
-  const {users, activeUser } = useUserContext();
+  const {favoriteCart, unFavoriteCart, setActiveCartId, ownedCarts, carts} = useCartContext()
+  const {users, activeUser} = useUserContext();
   const navigate = useNavigate();
   const profileUser = users.find((u) => u.username === username);
 
@@ -15,17 +15,21 @@ export default function Profile() {
     return <h2>User not found</h2>;
   }
   
-  const ownecProfileUserCarts = ownedCarts(profileUser) || [];
+  const ownedProfileCarts = ownedCarts(profileUser) || [];
 
- 
+  const handleNavigateClick = (cartId: string)=>{
+    setActiveCartId(cartId);
+    navigate("/");
+  }
+
   return (
     <div>
       <h2>Profile of {username}</h2>
       <div>
         <h2>Shopping Carts</h2>
-        {ownecProfileUserCarts.length > 0 ? (
+        {ownedProfileCarts.length > 0 ? (
           <List>
-            {ownecProfileUserCarts.map((shoppingCart) => (
+            {ownedProfileCarts.map((shoppingCart) => (
               <ListItem key={shoppingCart.id}>
                 <Button 
                   onClick={() => {
@@ -38,9 +42,9 @@ export default function Profile() {
                   {!(username==activeUser?.username) && (
                     <Button 
                       onClick={() => {
-                        {{console.log(activeUser)}{activeUser?.favorites.includes(shoppingCart.id) ? unFavoriteCart(shoppingCart.id) : favoriteCart(shoppingCart.id)}}
+                        {activeUser?.favorites.includes(shoppingCart.id) ? unFavoriteCart(shoppingCart.id) : favoriteCart(shoppingCart.id)}
                       }}>
-                        {activeUser?.favorites.includes(shoppingCart.id) ? <StarBorder></StarBorder> : <Star></Star>}
+                        {!activeUser?.favorites.includes(shoppingCart.id) ? <StarBorder></StarBorder> : <Star></Star>}
                     </Button>)}
               </ListItem>
             ))}
@@ -50,9 +54,21 @@ export default function Profile() {
         )}
       </div>
       <div>
-        {username==activeUser?.username && (
-          <h1>Favorites</h1>)}
-      </div>
+        {username === activeUser?.username && (
+          <>
+            <h1>Favorites</h1>
+            <List>
+              {carts
+                .filter(cart => activeUser?.favorites.includes(cart.id))
+                .map(cart => (
+                  <ListItem key={cart.id}>
+                    <Button onClick={() => handleNavigateClick(cart.id)}>{cart.name}</Button>
+                  </ListItem>
+                ))}
+            </List>
+          </>
+      )}
+    </div>
     </div>
   );
 }
