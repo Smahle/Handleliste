@@ -1,5 +1,5 @@
 import AppBar from "@mui/material/AppBar";
-import { Link, useNavigate } from "react-router-dom"; // ✅ FIXED IMPORT
+import { Link, useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -13,6 +13,7 @@ export default function Navbar() {
     { name: "Home", path: "/" },
     { name: "CreateUser", path: "/createUser" },
     { name: "UserList", path: "/userList" },
+    { name: "Discover", path: "/discover" },
   ];
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -36,8 +37,8 @@ const { activeUser} = useUserContext();
               <Button
                 key={page.name}
                 sx={{ my: 2, color: "white", display: "block" }}
-                component={Link} // ✅ Correctly using Link
-                to={page.path}    // ✅ This now works as expected
+                component={Link}
+                to={page.path}
               >
                 {page.name}
               </Button>

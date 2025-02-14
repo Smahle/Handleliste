@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductList from "./ProductList";
 import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/useFetchProducts";
 import styles from "./ProductSearch.module.css";
-import { useCartContext } from "../context/CartContext";
-
 
 export default function ProductSearch() {
-  const {activeCartId, addProduct } = useCartContext()
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
-  const { data: products, error, loading } = useFetchProducts(searchTerm, sortPrice);
+  const [retryTrigger, setRetryTrigger] = useState(0);
+  const { data: products, error, loading } = useFetchProducts(searchTerm, sortPrice, retryTrigger);
   const [stores, setStores] = useState<string[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>("")
 
   useEffect(() => {
-    if (products.length > 0) {
+    if (products && products.length > 0) {
       const storeNames = Array.from(new Set(products.map((p) => p.store.name))).filter(Boolean); // Filter out falsy values
       setStores(storeNames);
     }
@@ -23,12 +21,14 @@ export default function ProductSearch() {
   
 
   const retryFetch = () => {
-    setSearchTerm((prev) => prev + " ");
+    setRetryTrigger((prev) => prev + 1);
   };
 
-  const storeFilteredProducts = selectedStore
-  ? products.filter((p) => p.store.name === selectedStore)
-  : products;
+  const storeFilteredProducts = useMemo(() => {
+    return selectedStore
+      ? products.filter((p) => p.store.name === selectedStore)
+      : products;
+  }, [products, selectedStore]);
 
   return (
     <div className={styles.container}>
@@ -51,13 +51,6 @@ export default function ProductSearch() {
             loading={loading}
             error={error}
             onRetry={retryFetch}
-            onDoubleClick={(product) => {
-              if (activeCartId) {
-                addProduct(activeCartId, product);
-              } else {
-                alert("No cart selected")
-              }
-            }}
           />
         </div>
       </div>

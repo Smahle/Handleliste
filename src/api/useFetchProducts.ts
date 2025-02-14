@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const BASE_URL = "https://kassal.app/api/v1/";
 const TOKEN = "Vc6oCV3QeMen3keN2bYlk27LUGtXVQQiUVmLZhoj";
 
-export function useFetchProducts(searchTerm?: string, sortPrice?: string) {
+export function useFetchProducts(searchTerm?: string, sortPrice?: string, retryTrigger?: number) {
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,7 +45,7 @@ export function useFetchProducts(searchTerm?: string, sortPrice?: string) {
     };
 
     fetchProducts();
-  }, [searchTerm, sortPrice]);
+  }, [searchTerm, sortPrice, retryTrigger]); // Added retryTrigger here
 
   return { data, error, loading };
 }
