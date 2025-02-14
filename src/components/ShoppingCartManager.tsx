@@ -8,7 +8,6 @@ export default function ShoppingCartManager() {
   const activeCart = carts.find((cart) => cart.id === activeCartId);
 
   const handleChange = (event: SelectChangeEvent)=>{
-    console.log(event.target.value)
     setActiveCartId(event.target.value)
   }
 
