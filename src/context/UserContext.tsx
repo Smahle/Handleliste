@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import useUser from "./useUser";
+import useUser from "../hooks/useUser";
 
 const UserContext = createContext<UserState | null>(null);
 

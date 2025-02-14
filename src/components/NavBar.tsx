@@ -6,8 +6,9 @@ import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
+import { useUserContext } from "../context/UserContext";
 
-export default function Navbar({activeUser}: UserState) {
+export default function Navbar() {
   const pages = [
     { name: "Home", path: "/" },
     { name: "CreateUser", path: "/createUser" },
@@ -16,6 +17,7 @@ export default function Navbar({activeUser}: UserState) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+const { activeUser} = useUserContext();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

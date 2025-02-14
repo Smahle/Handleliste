@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useUserContext } from "../context/UserContext";
 
-export default function CreateUser({ createUser }: UserState) {
+export default function CreateUser() {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -8,6 +9,7 @@ export default function CreateUser({ createUser }: UserState) {
     age: "",
     email: "",
   });
+  const {createUser} = useUserContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,8 +28,8 @@ export default function CreateUser({ createUser }: UserState) {
       lastName: formData.lastName,
       age: formData.age ? parseInt(formData.age, 10) : undefined,
       email: formData.email,
-      carts: [],
       following: [],
+      favorites: []
     };
 
     if (!createUser(newUser)) {

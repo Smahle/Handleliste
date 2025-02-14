@@ -30,7 +30,6 @@ declare global {
     removeProduct: (cartId: string, productId: string) => void;
     incrementProduct: (cartId: string, productId: string) => void;
     decrementProduct: (cartId: string, productId: string) => void;
-    activeCart: Cart | undefined;
     clearCart: (cartId: string) => void;
     carts: Cart[];
     activeCartId: string | null;

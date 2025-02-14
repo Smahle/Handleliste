@@ -1,24 +1,21 @@
 import { useParams, useNavigate } from "react-router-dom"; 
 import { Button, List, ListItem } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
+import { useUserContext } from "../context/UserContext";
+import { useCartContext } from "../context/CartContext";
 
-type ProfileProps = {
-  userStateProps: UserState;
-  cartProps: CartState;
-};
-
-export default function Profile({ cartProps, userStateProps }: ProfileProps) {
+export default function Profile() {
   const {username} = useParams();
-  const {favoriteCart, unFavoriteCart, setActiveCartId} = cartProps;
-  const {activeUser} = userStateProps;
+  const {favoriteCart, unFavoriteCart, setActiveCartId, ownedCarts} = useCartContext()
+  const {users, activeUser } = useUserContext();
   const navigate = useNavigate();
-  const profileUser = userStateProps.users.find((u) => u.username === username);
+  const profileUser = users.find((u) => u.username === username);
 
   if (!profileUser) {
     return <h2>User not found</h2>;
   }
   
-  const ownecProfileUserCarts = cartProps.ownedCarts(profileUser) || [];
+  const ownecProfileUserCarts = ownedCarts(profileUser) || [];
 
  
   return (
@@ -38,7 +35,7 @@ export default function Profile({ cartProps, userStateProps }: ProfileProps) {
                 >
                   {shoppingCart.name}
                 </Button>
-                  {!(username==userStateProps.activeUser?.username) && (
+                  {!(username==activeUser?.username) && (
                     <Button 
                       onClick={() => {
                         {{console.log(activeUser)}{activeUser?.favorites.includes(shoppingCart.id) ? unFavoriteCart(shoppingCart.id) : favoriteCart(shoppingCart.id)}}

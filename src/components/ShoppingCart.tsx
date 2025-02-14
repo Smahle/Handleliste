@@ -4,30 +4,23 @@ import styles from "./ShoppingCart.module.css";
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import { Delete } from "@mui/icons-material";
+import { useCartContext } from "../context/CartContext";
 
-type ShoppingCartProps = {
-  cart: Cart;
-  removeProduct: (cartId: string, productId: string) => void;
-  clearCart: (cartId: string) => void;
-  deleteCart: (cartId: string) => void;
-  incrementQuantity: (cartId: string, productId: string) => void;
-  decrementQuantity: (cartId: string, productId: string) => void;
-};
-
-export default function ShoppingCart({
-  cart,
-  clearCart,
-  removeProduct,
-  incrementQuantity,
-  decrementQuantity,
-  deleteCart
-
-}: ShoppingCartProps) {
+export default function ShoppingCart(){
+    const {activeCartId, carts, clearCart,
+      removeProduct,
+      incrementProduct,
+      decrementProduct,
+      deleteCart} = useCartContext()
+      const activeCart = carts.find((cart) => cart.id === activeCartId);
+      if(!activeCart){
+        return <div>Loading cart...</div>;
+      }
   return (
     <>
-      {cart.products.length > 0 ? (
+      {activeCart.products.length > 0 ? (
         <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
-          {cart.products.map((product) => (
+          {activeCart.products.map((product) => (
             <ListItem
               key={product.id}
               style={{
@@ -42,13 +35,13 @@ export default function ShoppingCart({
               </div>
               <div className={styles.itemQuantityContainer}>
                 <div className={styles.itemQuantity}>{product.quantity}</div>
-                <button onClick={() => incrementQuantity(cart.id, product.id)}>
+                <button onClick={() => incrementProduct(activeCart.id, product.id)}>
                   <ArrowDropUp />
                 </button>
-                <button onClick={() => decrementQuantity(cart.id, product.id)}>
+                <button onClick={() => decrementProduct(activeCart.id, product.id)}>
                   <ArrowDropDown />
                 </button>
-                <button onClick={() => removeProduct(cart.id, product.id)}>
+                <button onClick={() => removeProduct(activeCart.id, product.id)}>
                   <Delete />
                 </button>
               </div>
@@ -59,8 +52,8 @@ export default function ShoppingCart({
         <p>No products in cart</p>
       )}
       
-      <Button onClick={() => clearCart(cart.id)}>Clear cart</Button>
-      <Button onClick={() => deleteCart(cart.id)}>Delete cart</Button>
+      <Button onClick={() => clearCart(activeCart.id)}>Clear cart</Button>
+      <Button onClick={() => deleteCart(activeCart.id)}>Delete cart</Button>
     </>
   );
   

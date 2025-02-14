@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../context/UserContext";
 
-export default function UserList({users, activeUser, followUser, unfollowUser}: UserState) {
+export default function UserList() {
   const navigate = useNavigate();
-
+const {users, activeUser, followUser, unfollowUser} = useUserContext();
   return (
     <div>
       <h2>All Users</h2>

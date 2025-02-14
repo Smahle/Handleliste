@@ -1,19 +1,12 @@
 import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
+import { useCartContext } from "../context/CartContext";
 
 
-export default function ShoppingCartManager({
-  createCart,
-  deleteCart,
-  removeProduct,
-  incrementProduct,
-  decrementProduct,
-  activeCart,
-  clearCart,
-  carts,
-  setActiveCartId
-}: CartState) {
+export default function ShoppingCartManager() {
+  const {createCart, activeCartId, carts, setActiveCartId} = useCartContext();
+  const activeCart = carts.find((cart) => cart.id === activeCartId);
 
   const handleChange = (event: SelectChangeEvent)=>{
     setActiveCartId(event.target.value)
@@ -33,14 +26,7 @@ export default function ShoppingCartManager({
 
       <div className={styles.shoppingCart}>
         {activeCart && (
-          <ShoppingCart
-            cart={activeCart}
-            removeProduct={removeProduct}
-            clearCart={clearCart}
-            deleteCart={deleteCart}
-            incrementQuantity={incrementProduct}
-            decrementQuantity={decrementProduct}
-          />
+          <ShoppingCart/>
         )}
       </div>
     </div>

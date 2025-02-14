@@ -8,22 +8,18 @@ import useCart from "./hooks/useCart";
 import UserList from "./pages/UserList";
 import CreateUser from "./pages/CreateUser";
 import Navbar from "./components/NavBar";
-import { useUserContext } from "./hooks/UserContext";
 
 function App() {
-  const userProps = useUserContext();
-  const cartProps = useCart();
-
   return (
     <Router>
       <Box sx={{ flexGrow: 1 }}>
-        <Navbar {...userProps}/>
+        <Navbar/>
       </Box>
       <Routes>
-  <Route path="/" element={<Home {...cartProps} />} />
-  <Route path="/createUser" element={<CreateUser {...userProps}/>} />
-  <Route path="/userList" element={<UserList {...userProps}/>} />
-  <Route path="/profile/:username" element={<Profile cartProps={cartProps} userStateProps={userProps} />} />
+  <Route path="/" element={<Home/>} />
+  <Route path="/createUser" element={<CreateUser/>} />
+  <Route path="/userList" element={<UserList/>} />
+  <Route path="/profile/:username" element={<Profile/>} />
   <Route path="*" element={<NotFound />} />
 </Routes>
 

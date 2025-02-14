@@ -3,9 +3,11 @@ import ProductList from "./ProductList";
 import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/useFetchProducts";
 import styles from "./ProductSearch.module.css";
+import { useCartContext } from "../context/CartContext";
 
 
-export default function ProductSearch({activeCartId, addProduct }: CartState) {
+export default function ProductSearch() {
+  const {activeCartId, addProduct } = useCartContext()
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
   const { data: products, error, loading } = useFetchProducts(searchTerm, sortPrice);

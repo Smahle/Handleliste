@@ -1,9 +1,9 @@
 import ProductManager from "../components/ProductManager";
 
-export default function Home(cartProps: CartState) {
+export default function Home() {
   return (
     <>
-      <ProductManager {...cartProps}/>
+      <ProductManager/>
     </>
   );
 }

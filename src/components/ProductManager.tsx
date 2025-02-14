@@ -2,19 +2,16 @@ import ShoppingCartManager from "./ShoppingCartManager";
 import ProductSearch from "./ProductSearch";
 import styles from "./ProductManager.module.css";
 
-export default function ProductManager(cartProps: CartState) {
+export default function ProductManager() {
   
 
   return (
     <div className={styles.container}>
       <div className={styles.productList}>
-        <ProductSearch 
-          {...cartProps} 
-          addProduct={cartProps.addProduct }
-        />
+        <ProductSearch/>
       </div>
       <div className={styles.shoppingCart}>
-        <ShoppingCartManager {...cartProps} />
+        <ShoppingCartManager/>
       </div>
     </div>
   );

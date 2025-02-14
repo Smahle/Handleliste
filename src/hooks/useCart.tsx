@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import useUser from "./useUser";
-import { useUserContext } from "./UserContext";
+import { useUserContext } from "../context/UserContext";
 
 const defaultCarts: Cart[] = [
   {
@@ -12,7 +11,7 @@ const defaultCarts: Cart[] = [
   }
 ];
 
-export default function useCart(): CartState {
+export default function useCart() {
   const { activeUser, updateUser, setActiveUser } = useUserContext();
   const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", defaultCarts);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
@@ -21,8 +20,6 @@ export default function useCart(): CartState {
     return carts.filter(
       (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase());
   };
-
-  const activeCart = carts.find((cart) => cart.id === activeCartId);
 
   const createCart = useCallback(() => {
     if (!activeUser) {
@@ -178,7 +175,6 @@ export default function useCart(): CartState {
   return {
     createCart,
     deleteCart,
-    activeCart,
     carts,
     ownedCarts,
     activeCartId,
