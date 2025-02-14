@@ -16,7 +16,7 @@ export default function ShoppingCartManager() {
     <div className={styles.container}>
       <div className={styles.cartManagement}>
         <Button onClick={createNewCart}>Create New Cart</Button>
-        <Button onClick={copyCart}>Copy Cart</Button>    
+        <Button disabled={!activeCartId} onClick={copyCart}>Copy Cart</Button>    
         <Select value={activeCart?.id || ""} onChange={handleChange}>
           {carts.map((cart) => (
            <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
