@@ -25,7 +25,8 @@ declare global {
   }
 
   type CartState = {
-    createCart: () => void;
+    createNewCart: () => void;
+    copyCart: () => void;
     deleteCart: (id: string) => void;
     removeProduct: (cartId: string, productId: string) => void;
     incrementProduct: (cartId: string, productId: string) => void;

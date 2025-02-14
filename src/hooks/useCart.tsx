@@ -21,7 +21,7 @@ export default function useCart() {
       (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase());
   };
 
-  const createCart = useCallback(() => {
+  const createNewCart = useCallback(() => {
     if (!activeUser) {
       console.error("No active user found.");
       return;
@@ -40,6 +40,37 @@ export default function useCart() {
     setCarts((prev) => [...prev, newCart]);
     setActiveCartId(newCart.id);
   }, [activeUser, setCarts, setActiveCartId]);
+
+  const copyCart = useCallback(() => {
+    if (!activeUser) {
+      console.error("No active user found.");
+      return;
+    }
+  
+    if (!activeCartId) {
+      console.error("No active cart ID set.");
+      return;
+    }
+  
+    const activeCart = carts.find((cart) => cart.id === activeCartId);
+    if (!activeCart) {
+      console.error("No active cart found.");
+      return;
+    }
+  
+    const name = prompt("Enter cart name")?.trim();
+    if (!name) return;
+  
+    const newCart: Cart = {
+      id: crypto.randomUUID(),
+      name,
+      products: activeCart.products || [],
+      owner: activeUser.username,
+    };
+    console.log("Creating copy of:", activeCart);
+    setCarts((prev) => [...prev, newCart]);
+    setActiveCartId(newCart.id);
+  }, [activeUser, activeCartId, carts]);
 
   const deleteCart = useCallback(
     (id: string) => {
@@ -170,7 +201,8 @@ export default function useCart() {
   }
 
   return {
-    createCart,
+    createNewCart,
+    copyCart,
     deleteCart,
     carts,
     ownedCarts,
