@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.productList {
+  max-width: 50%;
+}
+.searchQuery {
+  height: 60vh;
+  max-width: 50%;
+  cursor: pointer;
+  border: 2px solid #3c4245;
+}
