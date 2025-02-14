@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom"; 
-import { Button, List, ListItem } from "@mui/material";
+import { Button, dividerClasses, List, ListItem } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
 import { useUserContext } from "../context/UserContext";
 import { useCartContext } from "../context/CartContext";
@@ -57,15 +57,18 @@ export default function Profile() {
         {username === activeUser?.username && (
           <>
             <h1>Favorites</h1>
-            <List>
-              {carts
-                .filter(cart => activeUser?.favorites.includes(cart.id))
-                .map(cart => (
-                  <ListItem key={cart.id}>
-                    <Button onClick={() => handleNavigateClick(cart.id)}>{cart.name}</Button>
-                  </ListItem>
-                ))}
-            </List>
+            {(activeUser?.favorites ?? []).length<=0 ?
+            <p>No favorited lists</p>
+            : <List>
+            {carts
+              .filter(cart => activeUser?.favorites.includes(cart.id))
+              .map(cart => (
+                <ListItem key={cart.id}>
+                  <Button onClick={() => handleNavigateClick(cart.id)}>{cart.name}</Button>
+                </ListItem>
+              ))}
+          </List>}
+           
           </>
       )}
     </div>
