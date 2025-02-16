@@ -1,16 +1,35 @@
 .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: 100%;
+  gap: 1vh;
 }
+
 .productList {
-  max-width: 50%;
+  width: 65vh;
+  margin: 1vh;
 }
-.searchQuery {
-  height: 60vh;
-  max-width: 50%;
-  cursor: pointer;
-  border: 2px solid #3c4245;
+
+.searchQueryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65vh;
+  margin: 1vh;
+}
+
+.cartContainer {
+  display: flex;
+  width: 65vh;
+  margin: 1vh;
+  gap: 1vh;
+}
+
+.searchQueryList {
+  flex: 1;
+}
+
+.compatibleCarts {
+  flex: 0.5; /* 50% of SearchQueryList */
 }

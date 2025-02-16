@@ -6,3 +6,9 @@
 // TODO: filter på butikker - pris match på oppskrifter
 // TODO: favoritte lister
 // TODO: PROFILE: se alle lagrede handlelister, friends, followers(siste)
+
+// returne en array med objects med values: {antall matchende oppskrifter, og product} så en får feks
+// 4 oppskrifter med isbergsalat, tomat og pasta, men 10 oppskrifter ned tomat og pasta? nei gjær d enkelt
+// return kun oppskrifte som he alle ingrediensa - så kan en ettekvart lage et mer sofistikert ai? som
+// tek inn feks ti ingrediensa - så gjer den beste tips fer feks en populær rett med 5 ingrediensa, en
+// mindre populær rett me 8, alle me 10 og 9, etc.

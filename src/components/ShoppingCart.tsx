@@ -18,7 +18,7 @@ export default function ShoppingCart() {
   } = useCartContext();
   const activeCart = carts.find((cart) => cart.id === activeCartId);
   if (!activeCart) {
-    return <div>Loading cart...</div>;
+    return <>Loading cart...</>;
   }
   return (
     <>
