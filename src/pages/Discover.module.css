@@ -1,35 +1,33 @@
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  gap: 1vh;
+
+  gap: 2vh;
+  padding: 2vh;
 }
 
 .productList {
-  width: 65vh;
-  margin: 1vh;
-}
-
-.searchQueryContainer {
+  flex: 1; /* 50% of the screen */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 65vh;
-  margin: 1vh;
 }
 
 .cartContainer {
+  flex: 1; /* 50% of the screen */
   display: flex;
-  width: 65vh;
-  margin: 1vh;
+  flex-direction: column;
   gap: 1vh;
+  max-height: 100vh; /* Prevents overflow */
+  overflow: hidden;
+  width: 100%; /* Ensures it takes full width */
 }
 
-.searchQueryList {
-  flex: 1;
-}
-
+.searchQueryList,
 .compatibleCarts {
-  flex: 0.5; /* 50% of SearchQueryList */
+  flex: 1; /* Both start equally sized */
+  width: 100%; /* Fixes right-side cutoff */
+  box-sizing: border-box; /* Ensures padding doesn't exceed width */
+  overflow-y: auto; /* Allows scrolling */
+  padding: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }

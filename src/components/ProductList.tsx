@@ -1,5 +1,6 @@
 import { List, ListItem } from "@mui/material";
 import ProductImage from "./ProductImage";
+import styles from "./ProductList.module.css";
 
 type ProductListProps = {
   products: Product[];
@@ -25,15 +26,16 @@ export default function ProductList({
     );
 
   return (
-    <List sx={{ padding: 0, margin: 0 }}>
+    <List className={styles.list}>
       {products.map((product) => (
-       <ListItem
-        key={product.id}
-        onDoubleClick={() => onDoubleClick?.(product)}
-        style={{
-          border: "2px solid #3c4245",
-        }}
-      >
+        <ListItem
+          className={styles.listItem}
+          key={product.id}
+          onDoubleClick={() => onDoubleClick?.(product)}
+          style={{
+            border: "2px solid #3c4245",
+          }}
+        >
           <ProductImage imageSrc={product.image} altText={product.name} />
           {product.name}
         </ListItem>

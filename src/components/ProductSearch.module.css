@@ -2,20 +2,18 @@
   display: flex;
   flex-direction: column; /* Stacks the child elements vertically */
   align-items: center; /* Horizontally centers the child elements */
-  height: 100vh;
 }
-
 
 .productList {
   width: 65vh;
   margin: 1vh;
+  height: 50vh;
 }
 
 .searchControls {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15vh;
   overflow: hidden;
   flex-shrink: 0;
 }
