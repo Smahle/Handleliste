@@ -1,19 +1,11 @@
 .container {
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Allows scrolling if content exceeds 30vh */
+    overflow: auto;
+    height: 60vh; /* Ensures it always takes up this space */
+    min-height: 60vh; /* Prevents it from collapsing */
 }
 
-.itemContainer {
-    display: flex;
-    width: 100%; /* Make it take the full width */
-}
-
-.item{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .item {
     display: flex;
