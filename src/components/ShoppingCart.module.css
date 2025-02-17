@@ -1,5 +1,4 @@
 .container {
-    max-height: 75vh;
     display: flex;
     flex-direction: column;
     overflow-y: auto; /* Allows scrolling if content exceeds 30vh */
@@ -8,7 +7,6 @@
 .itemContainer {
     display: flex;
     width: 100%; /* Make it take the full width */
-    max-width: 600px; /* Set a reasonable max-width */
 }
 
 .item{
@@ -21,8 +19,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex: 1; /* Takes up remaining space */
-    min-width: 0; /* Prevents growing too much */
     overflow: hidden; /* Ensures text doesn’t break layout */
 }
 
@@ -32,5 +28,4 @@
     justify-content: center;
     gap: 5px;
     margin-left: auto; /* Pushes it to the right */
-    min-width: 120px; /* Prevents excessive shrinking */
 }

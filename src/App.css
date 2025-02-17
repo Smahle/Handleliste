@@ -28,6 +28,5 @@
 .content {
   flex: 1; /* Takes remaining space */
   overflow: auto; /* Enables scrolling inside instead of the whole page */
-  margin-top: 8vh; /* Matches navbar height to prevent overlap */
   padding: 16px; /* Optional: Add padding to the content */
 }

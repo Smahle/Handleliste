@@ -12,10 +12,10 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.productList}>
+      <div className={styles.productSearch}>
         <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>
-      <div className={styles.shoppingCart}>
+      <div className={styles.shoppingCartManager}>
         <ShoppingCartManager />
       </div>
     </div>

@@ -1,19 +1,10 @@
 .container {
   display: flex;
-  flex-direction: column; /* Stacks the child elements vertically */
-  align-items: center; /* Horizontally centers the child elements */
 }
 
-.productList {
-  width: 65vh;
-  margin: 1vh;
-  height: 50vh;
+.shoppingCartManager {
+
 }
 
-.searchControls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  flex-shrink: 0;
+.productSearch {
 }
