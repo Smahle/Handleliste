@@ -7,6 +7,7 @@ import UserList from "./pages/UserList";
 import CreateUser from "./pages/CreateUser";
 import Discover from "./pages/Discover";
 import Navbar from "./components/NavBar";
+import Shop from "./pages/Shop";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/userList" element={<UserList />} />
             <Route path="/profile/:username" element={<Profile />} />
             <Route path="/discover" element={<Discover />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

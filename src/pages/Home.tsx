@@ -16,7 +16,7 @@ export default function Home() {
         <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>
       <div className={styles.shoppingCartManager}>
-        <ShoppingCartManager />
+      <ShoppingCartManager showFullControls={true} />
       </div>
     </div>
   );

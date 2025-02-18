@@ -14,6 +14,7 @@ export default function Navbar() {
     { name: "CreateUser", path: "/createUser" },
     { name: "UserList", path: "/userList" },
     { name: "Discover", path: "/discover" },
+    { name: "Shop", path: "/shop" },
   ];
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
