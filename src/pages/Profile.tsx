@@ -85,6 +85,22 @@ export default function Profile() {
             )}
           </>
         )}
+                  <h2>Followed Users</h2>
+          {profileUser.following.length ? (
+            <List>
+              {users
+                .filter((user) => profileUser.following.includes(user.username))
+                .map((user) => (
+                  <ListItem key={user.username}>
+                    <Button onClick={() => navigate(`/profile/${user.username}`)}>
+                      {user.username}
+                    </Button>
+                  </ListItem>
+                ))}
+            </List>
+          ) : (
+            <p>Not following anyone</p>
+          )}
       </>
     </>
   );
