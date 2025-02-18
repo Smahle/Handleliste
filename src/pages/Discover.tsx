@@ -22,6 +22,9 @@ export default function Discover() {
 
   return (
     <div className={styles.container}>
+            <div className={styles.productList}>
+        <ProductSearch onDoubleClick={handleProductDoubleClick} />
+      </div>
       <div className={styles.cartContainer}>
         <div className={styles.searchQueryList}>
           <SearchQueryList
@@ -32,9 +35,6 @@ export default function Discover() {
         <div className={styles.compatibleCarts}>
           <CompatibleCarts products={searchQuery} />
         </div>
-      </div>
-      <div className={styles.productList}>
-        <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>
     </div>
   );
