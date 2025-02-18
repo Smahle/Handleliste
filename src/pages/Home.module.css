@@ -1,9 +1,10 @@
 .container {
   display: flex;
+  gap: 2vh;
+  padding: 2vh;
 }
 
 .shoppingCartManager {
-
 }
 
 .productSearch {
