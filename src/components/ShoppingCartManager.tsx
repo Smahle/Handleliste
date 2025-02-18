@@ -3,7 +3,7 @@ import { Star, StarBorder } from "@mui/icons-material";
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 import { useCartContext } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 export default function ShoppingCartManager({ showFullControls }: { showFullControls: boolean }) {
@@ -15,12 +15,18 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
   const handleChange = (event: SelectChangeEvent) => {
     setActiveCartId(event.target.value);
   };
-
-  // If no activeUser, only show the select button
+  const location = useLocation();
+  const navigateToHome = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  };
+  
+  // If no activeUser, only show the select button and create new cart
   if (!activeCart) {
-    console.log("No active cart");
     return (
       <div className={styles.container}>
+        <Button onClick={createNewCart}>Create New Cart</Button>
         Select cart: 
         <Select value={activeCartId || ""} onChange={handleChange} fullWidth>
           {carts.map((cart) => (
@@ -34,8 +40,8 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
   return (
     <div className={styles.container}>
       <div className={styles.cartManagement}>
-        <Button onClick={createNewCart}>Create New Cart</Button>
-        <Button disabled={!activeCartId} onClick={copyCart}>Copy Cart</Button>
+        <Button onClick={() => { createNewCart(); navigateToHome(); }}>Create New Cart</Button>
+        <Button disabled={!activeCartId} onClick={() => { copyCart(); navigateToHome(); }}>Copy Cart</Button>
         <Select value={activeCart?.id || ""} onChange={handleChange}>
           {carts.map((cart) => (
             <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
