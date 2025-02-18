@@ -49,9 +49,7 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
             </Button>
           </p>
         )}
-      </div>
-
-      {activeCart && (
+              {activeCart && (
         <Button
           disabled={!activeUser}
           onClick={() => {
@@ -64,6 +62,7 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
           {activeUser?.favorites.includes(activeCart.id) ? <Star /> : <StarBorder />}
        </Button>
     )}
+      </div>
 
       <div className={styles.shoppingCart}>
         {activeCart && <ShoppingCart showFullControls={showFullControls} />}
