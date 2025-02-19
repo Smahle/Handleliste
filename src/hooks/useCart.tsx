@@ -7,7 +7,8 @@ const defaultCarts: Cart[] = [
     id: "mock-cart-id",
     name: "Mock User's Cart",
     products: [],
-    owner: "mockUser"
+    owner: "mockUser",
+    receipts: []
   }
 ];
 
@@ -35,6 +36,7 @@ export default function useCart() {
       name,
       products: [],
       owner: activeUser.username,
+      receipts: []
     };
 
     setCarts((prev) => [...prev, newCart]);
@@ -66,6 +68,7 @@ export default function useCart() {
       name,
       products: activeCart.products || [],
       owner: activeUser.username,
+      receipts: []
     };
     console.log("Creating copy of:", activeCart);
     setCarts((prev) => [...prev, newCart]);
@@ -200,7 +203,45 @@ export default function useCart() {
     setActiveUser(updatedUser)
   }
 
+  const addReceipt = useCallback((cartId: string, receipt: Receipt) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId
+          ? { ...cart, receipts: [...cart.receipts, receipt] }
+          : cart
+      )
+    );
+  }, [setCarts]);
+
+  const removeReceipt = useCallback((cartId: string, receiptTitle: string) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId
+          ? { ...cart, receipts: cart.receipts.filter(r => r.title !== receiptTitle) }
+          : cart
+      )
+    );
+  }, [setCarts]);
+
+  const updateReceipt = useCallback((cartId: string, updatedReceipt: Receipt) => {
+    setCarts((prev) =>
+      prev.map((cart) =>
+        cart.id === cartId
+          ? {
+              ...cart,
+              receipts: cart.receipts.map(r =>
+                r.title === updatedReceipt.title ? updatedReceipt : r
+              ),
+            }
+          : cart
+      )
+    );
+  }, [setCarts]);
+
   return {
+    addReceipt,
+    removeReceipt,
+    updateReceipt,
     createNewCart,
     copyCart,
     deleteCart,

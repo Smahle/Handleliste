@@ -12,8 +12,16 @@ declare global {
     name: string;
     products: Product[];
     owner: string;
+    receipts: Receipt[]
   };
-
+  
+  type Receipt = {
+    title: string;
+    steps: string[];
+    time: "short" | "medium" | "long";
+    difficulty: "easy" | "medium" | "difficult";
+  };
+  
   type User = {
     username: string;
     firstName?: string;
@@ -39,6 +47,9 @@ declare global {
     favoriteCart: (cartId: string) => void;
     unFavoriteCart: (cartId: string) => void;
     addProduct: (cartId: string, product: Product) => void;
+    addReceipt: (cartId: string, receipt: Receipt) => void;
+    removeReceipt: (cartId: string, receiptTitle: string) => void;
+    updateReceipt: (cartId: string, updatedReceipt: Receipt) => void;
   };
   
   type UserState = {
