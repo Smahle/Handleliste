@@ -12,3 +12,5 @@
 // return kun oppskrifte som he alle ingrediensa - så kan en ettekvart lage et mer sofistikert ai? som
 // tek inn feks ti ingrediensa - så gjer den beste tips fer feks en populær rett med 5 ingrediensa, en
 // mindre populær rett me 8, alle me 10 og 9, etc.
+
+// oppskrift tilhørende handlevogn?

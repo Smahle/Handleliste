@@ -1,5 +1,5 @@
-import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { Star, StarBorder } from "@mui/icons-material";
+import { Button, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { AddShoppingCart, ContentCopy, Star, StarBorder } from "@mui/icons-material";
 import ShoppingCart from "./ShoppingCart";
 import styles from "./ShoppingCartManager.module.css";
 import { useCartContext } from "../context/CartContext";
@@ -26,9 +26,11 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
   if (!activeCart) {
     return (
       <div className={styles.container}>
-        <Button onClick={createNewCart}>Create New Cart</Button>
-        Select cart: 
-        <Select value={activeCartId || ""} onChange={handleChange} fullWidth>
+        <Button onClick={createNewCart}><AddShoppingCart/></Button>
+        <InputLabel variant="standard" id="selected-cart">
+          Select cart
+        </InputLabel>
+        <Select value={activeCartId || ""} onChange={handleChange} fullWidth labelId="selected-cart">
           {carts.map((cart) => (
             <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
           ))}
@@ -40,22 +42,9 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
   return (
     <div className={styles.container}>
       <div className={styles.cartManagement}>
-        <Button onClick={() => { createNewCart(); navigateToHome(); }}>Create New Cart</Button>
-        <Button disabled={!activeCartId} onClick={() => { copyCart(); navigateToHome(); }}>Copy Cart</Button>
-        <Select value={activeCart?.id || ""} onChange={handleChange}>
-          {carts.map((cart) => (
-            <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
-          ))}
-        </Select>
+        <Button onClick={() => { createNewCart(); navigateToHome(); }}><AddShoppingCart/></Button>
+        <Button disabled={!activeCartId} onClick={() => { copyCart(); navigateToHome(); }}><ContentCopy/></Button>
         {activeCart && (
-          <p style={{ paddingLeft: "1rem" }}>
-            Cart owner:
-            <Button onClick={() => navigate(`/profile/${activeCart.owner}`)} style={{ paddingLeft: "1rem" }}>
-              {activeCart.owner}
-            </Button>
-          </p>
-        )}
-              {activeCart && (
         <Button
           disabled={!activeUser}
           onClick={() => {
@@ -68,6 +57,26 @@ export default function ShoppingCartManager({ showFullControls }: { showFullCont
           {activeUser?.favorites.includes(activeCart.id) ? <Star /> : <StarBorder />}
        </Button>
     )}
+
+        {activeCart && (
+          <p style={{ paddingLeft: "1rem" }}>
+            Cart owner:
+            <Button onClick={() => navigate(`/profile/${activeCart.owner}`)} style={{ paddingLeft: "1rem" }}>
+              {activeCart.owner}
+            </Button>
+          </p>
+        )}
+        <div className={styles.dropDown}>
+        <InputLabel variant="standard" id="selected-cart">
+          Select cart
+        </InputLabel>
+          <Select value={activeCart?.id || ""} onChange={handleChange} labelId="selected-cart">
+          {carts.map((cart) => (
+            <MenuItem key={cart.id} value={cart.id}>{cart.name}</MenuItem>
+          ))}
+        </Select>
+        </div>
+        
       </div>
 
       <div className={styles.shoppingCart}>
