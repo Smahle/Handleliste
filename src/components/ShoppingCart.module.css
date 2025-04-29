@@ -1,23 +1,32 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    height: 60vh; /* Ensures it always takes up this space */
-    min-height: 60vh; /* Prevents it from collapsing */
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 60vh; /* Ensures it always takes up this space */
+  min-height: 60vh; /* Prevents it from collapsing */
 }
 
-
 .item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    overflow: hidden; /* Ensures text doesn’t break layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden; /* Ensures text doesn’t break layout */
 }
 
 .itemQuantityContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-left: auto; /* Pushes it to the right */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto; /* Pushes it to the right */
+}
+.listItem {
+  cursor: "pointer";
+  text-decoration: none;
+  opacity: 1;
+}
+.hiddenListItem {
+  cursor: "pointer";
+  text-decoration: line-through;
+  opacity: 0.5;
 }

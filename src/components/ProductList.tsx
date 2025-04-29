@@ -32,9 +32,6 @@ export default function ProductList({
           className={styles.listItem}
           key={product.id}
           onDoubleClick={() => onDoubleClick?.(product)}
-          style={{
-            border: "2px solid #3c4245",
-          }}
         >
           <ProductImage imageSrc={product.image} altText={product.name} />
           {product.name}

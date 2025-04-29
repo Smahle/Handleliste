@@ -10,6 +10,7 @@ import {
   ContentCopy,
   Description,
   FormatListNumbered,
+  Person,
   Star,
   StarBorder,
 } from "@mui/icons-material";
@@ -100,7 +101,10 @@ export default function ShoppingCartManager({
           <Description />
         </Button>
 
-        <CreateReceipt open={receiptOpen} onClose={() => setReceiptOpen(false)} />
+        <CreateReceipt
+          open={receiptOpen}
+          onClose={() => setReceiptOpen(false)}
+        />
         {activeCart && (
           <Button
             disabled={!activeUser}
@@ -121,19 +125,16 @@ export default function ShoppingCartManager({
 
         {activeCart && (
           <p style={{ paddingLeft: "1rem" }}>
-            Cart owner:
             <Button
               onClick={() => navigate(`/profile/${activeCart.owner}`)}
               style={{ paddingLeft: "1rem" }}
             >
+              <Person></Person>
               {activeCart.owner}
             </Button>
           </p>
         )}
         <div className={styles.dropDown}>
-          <InputLabel variant="standard" id="selected-cart">
-            Select cart
-          </InputLabel>
           <Select
             value={activeCart?.id || ""}
             onChange={handleChange}

@@ -7,7 +7,11 @@ import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import { Delete } from "@mui/icons-material";
 import { useCartContext } from "../context/CartContext";
 
-export default function ShoppingCart({ showFullControls }: { showFullControls: boolean }) {
+export default function ShoppingCart({
+  showFullControls,
+}: {
+  showFullControls: boolean;
+}) {
   const {
     activeCartId,
     carts,
@@ -42,36 +46,65 @@ export default function ShoppingCart({ showFullControls }: { showFullControls: b
       <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
         {activeCart.products.length > 0 ? (
           activeCart.products.map((product) => (
-            <ListItem
-              key={product.id}
-              style={{
-                cursor: "pointer",
-                border: "2px solid #3c4245",
-                textDecoration: hiddenProducts.has(product.id) ? "line-through" : "none",
-                opacity: hiddenProducts.has(product.id) ? 0.5 : 1, // Reduce opacity when hidden
-              }}
-              className={styles.itemContainer}
-            >
+            <ListItem key={product.id} className={styles.itemContainer}>
               <div className={styles.item}>
                 <ProductImage imageSrc={product.image} altText={product.name} />
-                {product.name}
+                <div
+                  className={
+                    hiddenProducts.has(product.id)
+                      ? "listItem listItemHidden"
+                      : "listItem"
+                  }
+                >
+                  <div
+                    className={
+                      hiddenProducts.has(product.id)
+                        ? "listItem listItemHidden"
+                        : "listItem"
+                    }
+                  >
+                    <div
+                      className={
+                        hiddenProducts.has(product.id)
+                          ? "listItem listItemHidden"
+                          : "listItem"
+                      }
+                    >
+                      {product.name}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={styles.itemQuantityContainer}>
                 {showFullControls ? (
                   <>
-                    <div className={styles.itemQuantity}>{product.quantity}</div>
-                    <button onClick={() => incrementProduct(activeCart.id, product.id)}>
+                    <div className={styles.itemQuantity}>
+                      {product.quantity}
+                    </div>
+                    <button
+                      onClick={() =>
+                        incrementProduct(activeCart.id, product.id)
+                      }
+                    >
                       <ArrowDropUp />
                     </button>
-                    <button onClick={() => decrementProduct(activeCart.id, product.id)}>
+                    <button
+                      onClick={() =>
+                        decrementProduct(activeCart.id, product.id)
+                      }
+                    >
                       <ArrowDropDown />
                     </button>
-                    <button onClick={() => removeProduct(activeCart.id, product.id)}>
+                    <button
+                      onClick={() => removeProduct(activeCart.id, product.id)}
+                    >
                       <Delete />
                     </button>
                   </>
                 ) : (
-                  <Button onClick={() => toggleHideProduct(product.id)}>Hide</Button>
+                  <Button onClick={() => toggleHideProduct(product.id)}>
+                    Hide
+                  </Button>
                 )}
               </div>
             </ListItem>
