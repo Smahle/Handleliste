@@ -1,0 +1,26 @@
+.searchControlsContainer {
+  display: flex;
+  width: 100%;
+}
+
+.search {
+  flex: 0.4;
+  display: flex;
+}
+
+.sortPrice {
+  flex: 0.3;
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectedStore {
+  flex: 0.3;
+  display: flex;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

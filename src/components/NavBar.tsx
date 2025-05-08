@@ -1,14 +1,24 @@
-import AppBar from "@mui/material/AppBar";
 import { Link, useNavigate } from "react-router-dom";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Button,
+  Box,
+  Menu,
+  MenuItem,
+  Divider,
+  Avatar,
+} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Box, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useUserContext } from "../context/UserContext";
 
-export default function Navbar() {
+export default function LeftSideNavbar() {
   const pages = [
     { name: "Home", path: "/" },
     { name: "CreateUser", path: "/createUser" },
@@ -16,10 +26,11 @@ export default function Navbar() {
     { name: "Discover", path: "/discover" },
     { name: "Shop", path: "/shop" },
   ];
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-const { activeUser} = useUserContext();
+  const { activeUser } = useUserContext();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,31 +41,58 @@ const { activeUser} = useUserContext();
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                sx={{ my: 2, color: "white", display: "block" }}
+    <>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: 240,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: 240,
+            boxSizing: "border-box",
+          },
+        }}
+      >
+        <Box sx={{ p: 2, textAlign: "center" }}>
+          <Typography variant="h6">HandleL</Typography>
+        </Box>
+
+        <Divider />
+
+        <List>
+          {pages.map((page) => (
+            <ListItem key={page.name} disablePadding>
+              <ListItemButton
                 component={Link}
                 to={page.path}
+                sx={{
+                  "&.Mui-selected": {
+                    backgroundColor: "primary.main",
+                    color: "white",
+                  },
+                  "&.Mui-selected:hover": {
+                    backgroundColor: "primary.dark",
+                  },
+                }}
               >
-                {page.name}
-              </Button>
-            ))}
-            <Button
-              sx={{ marginLeft: "auto" }}
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <AccountCircleIcon />
-            </Button>
-          </Box>
+                <ListItemText primary={page.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+
+        <Box sx={{ mt: "auto", p: 2 }}>
+          <Button
+            fullWidth
+            startIcon={<AccountCircleIcon />}
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            {activeUser?.username || "Account"}
+          </Button>
 
           <Menu
             id="basic-menu"
@@ -74,8 +112,8 @@ const { activeUser} = useUserContext();
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
-        </Typography>
-      </Toolbar>
-    </AppBar>
+        </Box>
+      </Drawer>
+    </>
   );
 }
