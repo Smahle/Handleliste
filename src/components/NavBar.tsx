@@ -18,7 +18,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import { useUserContext } from "../context/UserContext";
 
-export default function LeftSideNavbar() {
+export default function Navbar() {
   const pages = [
     { name: "Home", path: "/" },
     { name: "CreateUser", path: "/createUser" },
@@ -45,10 +45,10 @@ export default function LeftSideNavbar() {
       <Drawer
         variant="permanent"
         sx={{
-          width: 240,
-          flexShrink: 0,
+          width: 440,
+
           "& .MuiDrawer-paper": {
-            width: 240,
+            width: 440,
             boxSizing: "border-box",
           },
         }}
