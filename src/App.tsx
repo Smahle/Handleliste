@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import UserList from "./pages/UserList";
+import Users from "./pages/Users";
 import CreateUser from "./pages/CreateUser";
 import Discover from "./pages/Discover";
 import Navbar from "./components/NavBar";
@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/createUser" element={<CreateUser />} />
-            <Route path="/userList" element={<UserList />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/profile/:username" element={<Profile />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/shop" element={<Shop />} />

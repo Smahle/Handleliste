@@ -11,21 +11,49 @@ import {
   Button,
 } from "@mui/material";
 
-export default function UserList() {
+export default function Users() {
   const navigate = useNavigate();
   const { users, activeUser, followUser, unfollowUser } = useUserContext();
 
   return (
     <>
-      <h2>All Users</h2>
       {users.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            backgroundColor: (theme) => theme.palette.secondary.main,
+            color: (theme) => theme.palette.secondary.contrastText,
+          }}
+        >
           <Table sx={{ minWidth: 650 }} aria-label="users table">
             <TableHead>
-              <TableRow>
-                <TableCell>Username</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Action</TableCell>
+              <TableRow
+                sx={{
+                  backgroundColor: (theme) => theme.palette.secondary.dark,
+                }}
+              >
+                <TableCell
+                  sx={{
+                    color: (theme) => theme.palette.secondary.contrastText,
+                  }}
+                >
+                  Username
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: (theme) => theme.palette.secondary.contrastText,
+                  }}
+                >
+                  Name
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    color: (theme) => theme.palette.secondary.contrastText,
+                  }}
+                >
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -36,13 +64,18 @@ export default function UserList() {
                     <TableCell>
                       <Button
                         onClick={() => navigate(`/profile/${u.username}`)}
-                        variant="text"
+                        variant="contained"
+                        color="primary"
                         sx={{ textTransform: "none" }}
                       >
                         {u.username}
                       </Button>
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      sx={{
+                        color: (theme) => theme.palette.secondary.contrastText,
+                      }}
+                    >
                       {u.firstName} {u.lastName}
                     </TableCell>
                     <TableCell align="right">
@@ -53,7 +86,8 @@ export default function UserList() {
                               ? unfollowUser(u.username)
                               : followUser(u.username)
                           }
-                          variant="outlined"
+                          variant="contained"
+                          color="primary"
                         >
                           {activeUser?.following?.includes(u.username)
                             ? "Unfollow"

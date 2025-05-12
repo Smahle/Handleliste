@@ -28,7 +28,7 @@ import {
 export default function Navbar() {
   const pages = [
     { icon: <Home />, label: "Home", path: "/" },
-    { icon: <People />, label: "Users", path: "/userList" },
+    { icon: <People />, label: "Users", path: "/users" },
     { icon: <Science />, label: "Discover", path: "/discover" },
     { icon: <ShoppingCart />, label: "Shop", path: "/shop" },
     { icon: <ManageAccounts />, label: "Create User", path: "/createUser" },
@@ -99,6 +99,10 @@ export default function Navbar() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+            }}
           >
             {activeUser?.username || "Account"}
           </Button>
