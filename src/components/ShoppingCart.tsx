@@ -41,6 +41,12 @@ export default function ShoppingCart({
     });
   };
 
+  const toggleHideShow = (productId: string): string => {
+    if (hiddenProducts.has(productId)) {
+      return "SHOW";
+    } else return "HIDE";
+  };
+
   return (
     <>
       <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
@@ -52,27 +58,11 @@ export default function ShoppingCart({
                 <div
                   className={
                     hiddenProducts.has(product.id)
-                      ? "listItem listItemHidden"
-                      : "listItem"
+                      ? `${styles.listItem} ${styles.hiddenListItem}`
+                      : styles.listItem
                   }
                 >
-                  <div
-                    className={
-                      hiddenProducts.has(product.id)
-                        ? "listItem listItemHidden"
-                        : "listItem"
-                    }
-                  >
-                    <div
-                      className={
-                        hiddenProducts.has(product.id)
-                          ? "listItem listItemHidden"
-                          : "listItem"
-                      }
-                    >
-                      {product.name}
-                    </div>
-                  </div>
+                  {product.name}
                 </div>
               </div>
               <div className={styles.itemQuantityContainer}>
@@ -103,7 +93,7 @@ export default function ShoppingCart({
                   </>
                 ) : (
                   <Button onClick={() => toggleHideProduct(product.id)}>
-                    Hide
+                    {toggleHideShow(product.id)}
                   </Button>
                 )}
               </div>

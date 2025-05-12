@@ -4,6 +4,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Tooltip,
 } from "@mui/material";
 import {
   AddShoppingCart,
@@ -51,106 +52,136 @@ export default function ShoppingCartManager({
     }
   };
 
-  // If no activeUser, only show the select button and create new cart
-  if (!activeCart) {
-    return (
-      <div className={styles.container}>
-        <Button onClick={createNewCart}>
-          <AddShoppingCart />
-        </Button>
-        <InputLabel variant="standard" id="selected-cart">
-          Select cart
-        </InputLabel>
-        <Select
-          value={activeCartId || ""}
-          onChange={handleChange}
-          fullWidth
-          labelId="selected-cart"
-        >
-          {carts.map((cart) => (
-            <MenuItem key={cart.id} value={cart.id}>
-              {cart.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.cartManagement}>
-        <Button
-          onClick={() => {
-            createNewCart();
-            navigateToHome();
-          }}
+        {/* New Cart Button - Always enabled */}
+        <Tooltip title="Create new cart">
+          <Button
+            onClick={() => {
+              createNewCart();
+              navigateToHome();
+            }}
+          >
+            <AddShoppingCart />
+          </Button>
+        </Tooltip>
+
+        {/* Copy Cart Button - Disabled when no active cart */}
+        <Tooltip title={!activeCart ? "No cart to copy" : "Copy current cart"}>
+          <span>
+            {" "}
+            {/* Wrapper span for disabled tooltip */}
+            <Button
+              disabled={!activeCart}
+              onClick={() => {
+                copyCart();
+                navigateToHome();
+              }}
+            >
+              <ContentCopy />
+            </Button>
+          </span>
+        </Tooltip>
+
+        {/* Create Receipt Button - Disabled when no active cart */}
+        <Tooltip
+          title={!activeCart ? "No cart to create receipt" : "Create receipt"}
         >
-          <AddShoppingCart />
-        </Button>
-        <Button
-          disabled={!activeCartId}
-          onClick={() => {
-            copyCart();
-            navigateToHome();
-          }}
-        >
-          <ContentCopy />{" "}
-        </Button>
-        <Button onClick={() => setReceiptOpen(true)}>
-          <Description />
-        </Button>
+          <span>
+            <Button disabled={!activeCart} onClick={() => setReceiptOpen(true)}>
+              <Description />
+            </Button>
+          </span>
+        </Tooltip>
 
         <CreateReceipt
           open={receiptOpen}
           onClose={() => setReceiptOpen(false)}
         />
-        {activeCart && (
-          <Button
-            disabled={!activeUser}
-            onClick={() => {
-              if (!activeUser) return;
-              activeUser.favorites.includes(activeCart.id)
-                ? unFavoriteCart(activeCart.id)
-                : favoriteCart(activeCart.id);
-            }}
-          >
-            {activeUser?.favorites.includes(activeCart.id) ? (
-              <Star />
-            ) : (
-              <StarBorder />
-            )}
-          </Button>
-        )}
 
+        {/* Favorite Button - Disabled when no active cart or user */}
+        <Tooltip
+          title={
+            !activeUser
+              ? "Login to favorite"
+              : !activeCart
+              ? "No cart to favorite"
+              : activeUser.favorites.includes(activeCart.id)
+              ? "Unfavorite cart"
+              : "Favorite cart"
+          }
+        >
+          <span>
+            <Button
+              disabled={!activeCart || !activeUser}
+              onClick={() => {
+                if (!activeCart || !activeUser) return;
+                activeUser.favorites.includes(activeCart.id)
+                  ? unFavoriteCart(activeCart.id)
+                  : favoriteCart(activeCart.id);
+              }}
+            >
+              {activeCart && activeUser?.favorites.includes(activeCart.id) ? (
+                <Star color="primary" />
+              ) : (
+                <StarBorder />
+              )}
+            </Button>
+          </span>
+        </Tooltip>
+
+        {/* Cart Owner Display - Only shows when active cart exists */}
         {activeCart && (
-          <p style={{ paddingLeft: "1rem" }}>
+          <Tooltip title="View cart owner profile">
             <Button
               onClick={() => navigate(`/profile/${activeCart.owner}`)}
-              style={{ paddingLeft: "1rem" }}
+              style={{ marginLeft: "1rem" }}
             >
-              <Person></Person>
+              <Person />
               {activeCart.owner}
             </Button>
-          </p>
+          </Tooltip>
         )}
+
+        {/* Cart Selector Dropdown */}
         <div className={styles.dropDown}>
           <Select
             value={activeCart?.id || ""}
             onChange={handleChange}
             labelId="selected-cart"
+            displayEmpty
+            renderValue={(selected) => {
+              if (!selected) {
+                return <em>Select a cart</em>;
+              }
+              return activeCart?.name || selected;
+            }}
           >
-            {carts.map((cart) => (
-              <MenuItem key={cart.id} value={cart.id}>
-                {cart.name}
+            {carts.length === 0 ? (
+              <MenuItem disabled value="">
+                <em>No carts available</em>
               </MenuItem>
-            ))}
+            ) : (
+              carts.map((cart) => (
+                <MenuItem key={cart.id} value={cart.id}>
+                  {cart.name}
+                </MenuItem>
+              ))
+            )}
           </Select>
         </div>
       </div>
 
+      {/* Shopping Cart Display */}
       <div className={styles.shoppingCart}>
-        {activeCart && <ShoppingCart showFullControls={showFullControls} />}
+        {activeCart ? (
+          <ShoppingCart showFullControls={showFullControls} />
+        ) : (
+          <div className={styles.emptyCartPlaceholder}>
+            <p>No active cart selected</p>
+          </div>
+        )}
       </div>
     </div>
   );

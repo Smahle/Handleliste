@@ -71,7 +71,7 @@ export default function Navbar() {
                     color: "white",
                   },
                   "&.Mui-selected:hover": {
-                    backgroundColor: "primary.dark",
+                    backgroundColor: "green",
                   },
                 }}
               >

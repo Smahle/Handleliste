@@ -1,8 +1,19 @@
 import { Button, Modal, Paper } from "@mui/material";
-
-export default function CreateReceipt({ open, onClose }: { open: boolean; onClose: () => void }) {
+//TODO IMPLEMENT RECIEPS
+export default function CreateReceipt({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
       <Paper
         sx={{
           position: "absolute",
@@ -15,11 +26,15 @@ export default function CreateReceipt({ open, onClose }: { open: boolean; onClos
           p: 4,
         }}
       >
-        <h2 id="modal-modal-title">Modal Title</h2>
-        <p id="modal-modal-description">Modal content goes here.</p>
-        <Button onClick={onClose} variant="outlined">Close</Button>
+        <h2 id="modal-modal-title">Receipt</h2>
+        <p id="Recipe 1.">
+          1. Peel the potatoes and carrots and boil them for 30mins.
+        </p>
+        <p id="Recipe 2.">2. Cut the fish in medium chunks and fry them.</p>
+        <Button onClick={onClose} variant="outlined">
+          Close
+        </Button>
       </Paper>
     </Modal>
   );
 }
-
