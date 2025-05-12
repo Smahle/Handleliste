@@ -9,7 +9,7 @@ export default function CreateUser() {
     age: "",
     email: "",
   });
-  const {createUser} = useUserContext();
+  const { createUser } = useUserContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,23 +29,48 @@ export default function CreateUser() {
       age: formData.age ? parseInt(formData.age, 10) : undefined,
       email: formData.email,
       following: [],
-      favorites: []
+      favorites: [],
     };
 
     if (!createUser(newUser)) {
       alert("Username already taken!");
-    }
-    else alert(formData.username+" created.")
+    } else alert(formData.username + " created.");
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Create User</h2>
-      <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-      <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} />
-      <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} />
-      <input type="number" name="age" placeholder="Age" onChange={handleChange} />
-      <input type="email" name="email" placeholder="Email" onChange={handleChange} />
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        onChange={handleChange}
+      />
+      <input
+        type="number"
+        name="age"
+        placeholder="Age"
+        onChange={handleChange}
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        onChange={handleChange}
+      />
       <button type="submit">Create</button>
     </form>
   );

@@ -10,13 +10,11 @@ import {
   AddShoppingCart,
   ContentCopy,
   Description,
-  FormatListNumbered,
   Person,
   Star,
   StarBorder,
 } from "@mui/icons-material";
 import ShoppingCart from "./ShoppingCart";
-import styles from "./ShoppingCartManager.module.css";
 import { useCartContext } from "../context/CartContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
@@ -45,6 +43,7 @@ export default function ShoppingCartManager({
   const handleChange = (event: SelectChangeEvent) => {
     setActiveCartId(event.target.value);
   };
+
   const location = useLocation();
   const navigateToHome = () => {
     if (location.pathname !== "/") {
@@ -53,46 +52,64 @@ export default function ShoppingCartManager({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.cartManagement}>
-        {/* New Cart Button - Always enabled */}
+    <div className="shoppingCartManagerContainer">
+      <div className="cartManagement">
         <Tooltip title="Create new cart">
           <Button
             onClick={() => {
               createNewCart();
               navigateToHome();
             }}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+              marginRight: "10px",
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
           >
             <AddShoppingCart />
           </Button>
         </Tooltip>
 
-        {/* Copy Cart Button - Disabled when no active cart */}
         <Tooltip title={!activeCart ? "No cart to copy" : "Copy current cart"}>
-          <span>
-            {" "}
-            {/* Wrapper span for disabled tooltip */}
-            <Button
-              disabled={!activeCart}
-              onClick={() => {
-                copyCart();
-                navigateToHome();
-              }}
-            >
-              <ContentCopy />
-            </Button>
-          </span>
+          <Button
+            disabled={!activeCart}
+            onClick={() => {
+              copyCart();
+              navigateToHome();
+            }}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+              marginRight: "10px",
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            <ContentCopy />
+          </Button>
         </Tooltip>
 
-        {/* Create Receipt Button - Disabled when no active cart */}
         <Tooltip
           title={!activeCart ? "No cart to create receipt" : "Create receipt"}
         >
-          <span>
-            <Button disabled={!activeCart} onClick={() => setReceiptOpen(true)}>
-              <Description />
-            </Button>
-          </span>
+          <Button
+            disabled={!activeCart}
+            onClick={() => setReceiptOpen(true)}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+              marginRight: "10px",
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            <Description />
+          </Button>
         </Tooltip>
 
         <CreateReceipt
@@ -100,7 +117,6 @@ export default function ShoppingCartManager({
           onClose={() => setReceiptOpen(false)}
         />
 
-        {/* Favorite Button - Disabled when no active cart or user */}
         <Tooltip
           title={
             !activeUser
@@ -112,31 +128,43 @@ export default function ShoppingCartManager({
               : "Favorite cart"
           }
         >
-          <span>
-            <Button
-              disabled={!activeCart || !activeUser}
-              onClick={() => {
-                if (!activeCart || !activeUser) return;
-                activeUser.favorites.includes(activeCart.id)
-                  ? unFavoriteCart(activeCart.id)
-                  : favoriteCart(activeCart.id);
-              }}
-            >
-              {activeCart && activeUser?.favorites.includes(activeCart.id) ? (
-                <Star color="primary" />
-              ) : (
-                <StarBorder />
-              )}
-            </Button>
-          </span>
+          <Button
+            disabled={!activeCart || !activeUser}
+            onClick={() => {
+              if (!activeCart || !activeUser) return;
+              activeUser.favorites.includes(activeCart.id)
+                ? unFavoriteCart(activeCart.id)
+                : favoriteCart(activeCart.id);
+            }}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+              marginRight: "10px",
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            {activeCart && activeUser?.favorites.includes(activeCart.id) ? (
+              <Star />
+            ) : (
+              <StarBorder />
+            )}
+          </Button>
         </Tooltip>
 
-        {/* Cart Owner Display - Only shows when active cart exists */}
         {activeCart && (
           <Tooltip title="View cart owner profile">
             <Button
               onClick={() => navigate(`/profile/${activeCart.owner}`)}
-              style={{ marginLeft: "1rem" }}
+              sx={{
+                backgroundColor: (theme) => theme.palette.primary.main,
+                color: (theme) => theme.palette.primary.contrastText,
+                marginLeft: "1rem",
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.dark,
+                },
+              }}
             >
               <Person />
               {activeCart.owner}
@@ -144,8 +172,7 @@ export default function ShoppingCartManager({
           </Tooltip>
         )}
 
-        {/* Cart Selector Dropdown */}
-        <div className={styles.dropDown}>
+        <div className="dropDown">
           <Select
             value={activeCart?.id || ""}
             onChange={handleChange}
@@ -173,12 +200,11 @@ export default function ShoppingCartManager({
         </div>
       </div>
 
-      {/* Shopping Cart Display */}
-      <div className={styles.shoppingCart}>
+      <div className="shoppingCart">
         {activeCart ? (
           <ShoppingCart showFullControls={showFullControls} />
         ) : (
-          <div className={styles.emptyCartPlaceholder}>
+          <div className="emptyCartPlaceholder">
             <p>No active cart selected</p>
           </div>
         )}

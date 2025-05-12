@@ -6,7 +6,17 @@
 }
 
 .shoppingCartManager {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%; /* or specific width like 300px */
+  min-height: 100px; /* ensure there's enough height */
 }
 
 .productSearch {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%; /* or specific width like 300px */
+  min-height: 100px; /* ensure there's enough height */
 }

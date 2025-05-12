@@ -16,7 +16,7 @@ function App() {
         <div className="navbar">
           <Navbar />
         </div>
-        <div className="content">
+        <div className={`content primary`}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/createUser" element={<CreateUser />} />

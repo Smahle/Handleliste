@@ -106,8 +106,24 @@ export default function ShoppingCart({
 
       {showFullControls && (
         <>
-          <Button onClick={() => clearCart(activeCart.id)}>Clear cart</Button>
-          <Button onClick={() => deleteCart(activeCart.id)}>Delete cart</Button>
+          <Button
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+            }}
+            onClick={() => clearCart(activeCart.id)}
+          >
+            Clear cart
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+            }}
+            onClick={() => deleteCart(activeCart.id)}
+          >
+            Delete cart
+          </Button>
         </>
       )}
     </>

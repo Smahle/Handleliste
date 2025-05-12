@@ -4,6 +4,20 @@
   box-sizing: border-box;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+.primary {
+  background-color: #66d8ad;
+  color: #0b2e1d; /* Dark green-black for contrast */
+}
+
+.secondary {
+  background-color: #ffa500;
+  color: #2b2b2b; /* Dark gray for contrast */
+}
+
+.accent {
+  background-color: #ff8403;
+  color: #2b2b2b; /* Same dark gray works here */
+}
 
 .appContainer {
   display: flex;

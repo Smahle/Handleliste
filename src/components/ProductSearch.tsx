@@ -4,23 +4,28 @@ import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/useFetchProducts";
 import styles from "./ProductSearch.module.css";
 
-type ProductSearchProps = {onDoubleClick?: (product: Product) => void;};
+type ProductSearchProps = { onDoubleClick?: (product: Product) => void };
 
 export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
   const [retryTrigger, setRetryTrigger] = useState(0);
-  const { data: products, error, loading } = useFetchProducts(searchTerm, sortPrice, retryTrigger);
+  const {
+    data: products,
+    error,
+    loading,
+  } = useFetchProducts(searchTerm, sortPrice, retryTrigger);
   const [stores, setStores] = useState<string[]>([]);
-  const [selectedStore, setSelectedStore] = useState<string>("")
+  const [selectedStore, setSelectedStore] = useState<string>("");
 
   useEffect(() => {
     if (products && products.length > 0) {
-      const storeNames = Array.from(new Set(products.map((p) => p.store.name))).filter(Boolean); // Filter out falsy values
+      const storeNames = Array.from(
+        new Set(products.map((p) => p.store.name))
+      ).filter(Boolean); // Filter out falsy values
       setStores(storeNames);
     }
   }, [products]);
-  
 
   const retryFetch = () => {
     setRetryTrigger((prev) => prev + 1);
@@ -33,7 +38,7 @@ export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
   }, [products, selectedStore]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.productSearchContainer}>
       <div className={styles.searchControls}>
         <SearchControls
           searchTerm={searchTerm}
@@ -48,13 +53,13 @@ export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
 
       <div className={styles.listsContainer}>
         <div className={styles.productList}>
-        <ProductList
-          products={storeFilteredProducts}
-          loading={loading}
-          error={error}
-          onRetry={retryFetch}
-          onDoubleClick={onDoubleClick}
-        />
+          <ProductList
+            products={storeFilteredProducts}
+            loading={loading}
+            error={error}
+            onRetry={retryFetch}
+            onDoubleClick={onDoubleClick}
+          />
         </div>
       </div>
     </div>

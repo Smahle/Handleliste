@@ -11,11 +11,11 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.productSearch}>
+    <div className={`${styles.container} primary`}>
+      <div className={`${styles.productSearch} accent`}>
         <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>
-      <div className={styles.shoppingCartManager}>
+      <div className={`${styles.shoppingCartManager} accent`}>
         <ShoppingCartManager showFullControls={true} />
       </div>
     </div>

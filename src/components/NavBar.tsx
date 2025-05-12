@@ -57,6 +57,7 @@ export default function Navbar() {
           "& .MuiDrawer-paper": {
             width: 440,
             boxSizing: "border-box",
+            backgroundColor: "#ffa500",
           },
         }}
       >
