@@ -13,7 +13,7 @@ export default function SearchQueryList({
   removeFromQuery,
 }: SearchQueryListProps) {
   return (
-    <div className={styles.container}>
+    <div className={styles.SearchQueryListcontainer}>
       <h3 className={styles.title}>Selected Products</h3>
       <List className={styles.list}>
         {searchQuery.length > 0 ? (

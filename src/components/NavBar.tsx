@@ -17,14 +17,21 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import { useUserContext } from "../context/UserContext";
+import {
+  Home,
+  ManageAccounts,
+  People,
+  Science,
+  ShoppingCart,
+} from "@mui/icons-material";
 
 export default function Navbar() {
   const pages = [
-    { name: "Home", path: "/" },
-    { name: "CreateUser", path: "/createUser" },
-    { name: "UserList", path: "/userList" },
-    { name: "Discover", path: "/discover" },
-    { name: "Shop", path: "/shop" },
+    { icon: <Home />, label: "Home", path: "/" },
+    { icon: <People />, label: "Users", path: "/userList" },
+    { icon: <Science />, label: "Discover", path: "/discover" },
+    { icon: <ShoppingCart />, label: "Shop", path: "/shop" },
+    { icon: <ManageAccounts />, label: "Create User", path: "/createUser" },
   ];
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -61,7 +68,7 @@ export default function Navbar() {
 
         <List>
           {pages.map((page) => (
-            <ListItem key={page.name} disablePadding>
+            <ListItem key={page.label} disablePadding>
               <ListItemButton
                 component={Link}
                 to={page.path}
@@ -75,7 +82,8 @@ export default function Navbar() {
                   },
                 }}
               >
-                <ListItemText primary={page.name} />
+                <ListItemIcon>{page.icon}</ListItemIcon>
+                <ListItemText primary={page.label} />
               </ListItemButton>
             </ListItem>
           ))}

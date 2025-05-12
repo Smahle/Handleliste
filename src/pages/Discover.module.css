@@ -14,27 +14,28 @@
   flex: 1; /* 50% of the screen */
   display: flex;
   gap: 1vh;
-  max-height: 100vh;
-  overflow-x: auto; /* allow horizontal scroll */
-  overflow-y: auto; /* optional: vertical scroll if needed */
+  overflow-x: none; /* allow horizontal scroll */
+  overflow-y: none; /* optional: vertical scroll if needed */
   justify-content: center;
   flex-wrap: wrap; /* enable wrapping on smaller screens */
 }
 
 .searchQueryList {
-  flex: 0.6;
+  flex: 0 0 50%;
   box-sizing: border-box;
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  min-width: 100%;
 }
 
 .compatibleCarts {
-  flex: 0.4;
+  flex: 0 0 50%;
   box-sizing: border-box;
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  min-width: 100%;
 }
