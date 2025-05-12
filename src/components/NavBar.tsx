@@ -12,7 +12,6 @@ import {
   Menu,
   MenuItem,
   Divider,
-  Avatar,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";

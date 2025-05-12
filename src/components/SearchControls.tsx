@@ -37,7 +37,18 @@ export default function SearchControls({
         onChange={(e) => onSearchChange(e.target.value)}
         placeholder="Search for a product"
         fullWidth
-        className={styles.search}
+        variant="outlined"
+        className={`${styles.search} tertiary`}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            border: "3px solid",
+            borderColor: "primary.main",
+            borderRadius: "4px",
+            "& fieldset": {
+              border: "none", // Remove default outline
+            },
+          },
+        }}
       />
 
       <Select
@@ -45,7 +56,11 @@ export default function SearchControls({
         onChange={(e) => onSortPriceChange(e.target.value)}
         displayEmpty
         inputProps={{ "aria-label": "Sort" }}
-        className={styles.sortPrice}
+        className={`${styles.sortPrice} tertiary`}
+        sx={{
+          border: "3px solid",
+          borderColor: "primary.main",
+        }}
       >
         <MenuItem value="price_desc">Price Descending</MenuItem>
         <MenuItem value="price_asc">Price Ascending</MenuItem>
@@ -56,7 +71,11 @@ export default function SearchControls({
         onChange={(e) => onStoreChange(e.target.value)}
         displayEmpty
         inputProps={{ "aria-label": "Sort" }}
-        className={styles.selectedStore}
+        className={`${styles.selectedStore} tertiary`}
+        sx={{
+          border: "3px solid",
+          borderColor: "primary.main",
+        }}
       >
         <MenuItem value="">All Stores</MenuItem>
         {stores.map((store) => (

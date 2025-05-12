@@ -50,7 +50,7 @@ export default function ShoppingCartManager({
       navigate("/");
     }
   };
-
+  //TODO: PADDING
   return (
     <div className="shoppingCartManagerContainer">
       <div className="cartManagement">

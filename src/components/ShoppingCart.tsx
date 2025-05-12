@@ -49,7 +49,10 @@ export default function ShoppingCart({
 
   return (
     <>
-      <List sx={{ padding: 0, margin: 0 }} className={styles.container}>
+      <List
+        sx={{ padding: 0, margin: 0 }}
+        className={styles.shoppingCartContainer}
+      >
         {activeCart.products.length > 0 ? (
           activeCart.products.map((product) => (
             <ListItem key={product.id} className={styles.itemContainer}>

@@ -13,9 +13,9 @@ export default function SearchQueryList({
   removeFromQuery,
 }: SearchQueryListProps) {
   return (
-    <div className={styles.SearchQueryListcontainer}>
-      <h3 className={styles.title}>Selected Products</h3>
-      <List className={styles.list}>
+    <div className={`${styles.SearchQueryListcontainer} tertiary`}>
+      <h3 className={`${styles.title} tertiary`}>Selected Products</h3>
+      <List className={`${styles.list} tertiary`}>
         {searchQuery.length > 0 ? (
           searchQuery.map((product) => (
             <ListItem key={product.id} className={styles.listItem}>

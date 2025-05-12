@@ -22,17 +22,17 @@ export default function Discover() {
 
   return (
     <div className={styles.container}>
-            <div className={styles.productList}>
+      <div className={styles.productList}>
         <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>
-      <div className={styles.cartContainer}>
-        <div className={styles.searchQueryList}>
+      <div className={`${styles.cartContainer} primary`}>
+        <div className={`${styles.searchQueryList} secondary`}>
           <SearchQueryList
             searchQuery={searchQuery}
             removeFromQuery={removeFromQuery}
           />
         </div>
-        <div className={styles.compatibleCarts}>
+        <div className={`${styles.compatibleCarts} secondary`}>
           <CompatibleCarts products={searchQuery} />
         </div>
       </div>
