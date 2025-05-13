@@ -23,7 +23,7 @@ export default function Discover() {
   return (
     <div className={styles.discoverContainer}>
       <div className={styles.productList}>
-        <ProductSearch onDoubleClick={handleProductDoubleClick} />
+        <ProductSearch onProductClick={handleProductDoubleClick} />
       </div>
       <div className={`${styles.cartContainer} primary`}>
         <div className={`${styles.searchQueryList} secondary`}>

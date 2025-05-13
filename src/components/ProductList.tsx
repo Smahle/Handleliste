@@ -7,7 +7,7 @@ type ProductListProps = {
   loading: boolean;
   error: string | null;
   onRetry: () => void;
-  onDoubleClick?: (product: Product) => void;
+  onProductClick?: (product: Product) => void;
 };
 
 export default function ProductList({
@@ -15,7 +15,7 @@ export default function ProductList({
   loading,
   error,
   onRetry,
-  onDoubleClick,
+  onProductClick,
 }: ProductListProps) {
   if (loading) return <p>Loading...</p>;
   if (error)
@@ -31,7 +31,7 @@ export default function ProductList({
         <ListItem
           className={styles.listItem}
           key={product.id}
-          onDoubleClick={() => onDoubleClick?.(product)}
+          onClick={() => onProductClick?.(product)}
         >
           <ProductImage imageSrc={product.image} altText={product.name} />
           {product.name}

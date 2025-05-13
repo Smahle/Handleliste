@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.productSearch}>
-        <ProductSearch onDoubleClick={handleProductDoubleClick} />
+        <ProductSearch onProductClick={handleProductDoubleClick} />
       </div>
       <div className={styles.shoppingCartManager}>
         <ShoppingCartManager showFullControls={true} />
