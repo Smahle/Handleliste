@@ -74,28 +74,38 @@ export default function ShoppingCart({
                     <div className={styles.itemQuantity}>
                       {product.quantity}
                     </div>
-                    <button
+                    <Button
+                      size="small"
+                      variant="text"
                       onClick={() =>
                         incrementProduct(activeCart.id, product.id)
                       }
                     >
-                      <ArrowDropUp />
-                    </button>
-                    <button
+                      <ArrowDropUp fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="text"
                       onClick={() =>
                         decrementProduct(activeCart.id, product.id)
                       }
                     >
-                      <ArrowDropDown />
-                    </button>
-                    <button
+                      <ArrowDropDown fontSize="small" />
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="text"
                       onClick={() => removeProduct(activeCart.id, product.id)}
                     >
-                      <Delete />
-                    </button>
+                      <Delete fontSize="small" />
+                    </Button>
                   </>
                 ) : (
-                  <Button onClick={() => toggleHideProduct(product.id)}>
+                  <Button
+                    size="small"
+                    variant="text"
+                    onClick={() => toggleHideProduct(product.id)}
+                  >
                     {toggleHideShow(product.id)}
                   </Button>
                 )}
@@ -109,22 +119,10 @@ export default function ShoppingCart({
 
       {showFullControls && (
         <>
-          <Button
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-            }}
-            onClick={() => clearCart(activeCart.id)}
-          >
+          <Button variant="contained" onClick={() => clearCart(activeCart.id)}>
             Clear cart
           </Button>
-          <Button
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-            }}
-            onClick={() => deleteCart(activeCart.id)}
-          >
+          <Button variant="contained" onClick={() => deleteCart(activeCart.id)}>
             Delete cart
           </Button>
         </>

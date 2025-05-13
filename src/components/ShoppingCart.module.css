@@ -12,13 +12,20 @@
   justify-content: flex-start;
   overflow: hidden; /* Ensures text doesn’t break layout */
 }
+/* .itemContainer {
+  display: flex;
+} */
 
 .itemQuantityContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin-left: auto; /* Pushes it to the right */
+  margin-left: auto;
+  gap: 0.25rem;
+  font-size: 0.75rem; /* makes all text/buttons inside appear smaller */
+}
+.itemQuantityContainer button {
+  min-width: unset; /* Remove minimum width */
+  padding: 2px 0px; /* Tighter padding */
 }
 .listItem {
   cursor: "pointer";

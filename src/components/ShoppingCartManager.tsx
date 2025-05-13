@@ -1,6 +1,5 @@
 import {
   Button,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -20,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import CreateReceipt from "./CreateReceipt";
 import { useState } from "react";
+import styles from "./ShoppingCartManager.module.css";
 
 export default function ShoppingCartManager({
   showFullControls,
@@ -50,157 +50,137 @@ export default function ShoppingCartManager({
       navigate("/");
     }
   };
-  //TODO: PADDING
+
   return (
-    <div className="shoppingCartManagerContainer">
-      <div className="cartManagement">
-        <Tooltip title="Create new cart">
-          <Button
-            onClick={() => {
-              createNewCart();
-              navigateToHome();
-            }}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-              marginRight: "10px",
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
-          >
-            <AddShoppingCart />
-          </Button>
-        </Tooltip>
+    <div className={styles.shoppingCartManagerContainer}>
+      <div className={styles.cartManagement}>
+        <div className={styles.selectCart}>
+          <Tooltip title="Select cart" disableInteractive>
+            <Select
+              sx={{ width: 180 }}
+              variant="filled"
+              value={activeCart?.id || ""}
+              onChange={handleChange}
+              labelId="selected-cart"
+              displayEmpty
+              renderValue={(selected) =>
+                selected ? activeCart?.name : <em>Select cart</em>
+              }
+            >
+              {carts.length === 0 ? (
+                <MenuItem disabled value="">
+                  <em>No carts available</em>
+                </MenuItem>
+              ) : (
+                carts.map((cart) => (
+                  <MenuItem key={cart.id} value={cart.id}>
+                    {cart.name}
+                  </MenuItem>
+                ))
+              )}
+            </Select>
+          </Tooltip>
+        </div>
 
-        <Tooltip title={!activeCart ? "No cart to copy" : "Copy current cart"}>
-          <Button
-            disabled={!activeCart}
-            onClick={() => {
-              copyCart();
-              navigateToHome();
-            }}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-              marginRight: "10px",
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
-          >
-            <ContentCopy />
-          </Button>
-        </Tooltip>
-
-        <Tooltip
-          title={!activeCart ? "No cart to create receipt" : "Create receipt"}
-        >
-          <Button
-            disabled={!activeCart}
-            onClick={() => setReceiptOpen(true)}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-              marginRight: "10px",
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
-          >
-            <Description />
-          </Button>
-        </Tooltip>
-
-        <CreateReceipt
-          open={receiptOpen}
-          onClose={() => setReceiptOpen(false)}
-        />
-
-        <Tooltip
-          title={
-            !activeUser
-              ? "Login to favorite"
-              : !activeCart
-              ? "No cart to favorite"
-              : activeUser.favorites.includes(activeCart.id)
-              ? "Unfavorite cart"
-              : "Favorite cart"
-          }
-        >
-          <Button
-            disabled={!activeCart || !activeUser}
-            onClick={() => {
-              if (!activeCart || !activeUser) return;
-              activeUser.favorites.includes(activeCart.id)
-                ? unFavoriteCart(activeCart.id)
-                : favoriteCart(activeCart.id);
-            }}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
-              marginRight: "10px",
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
-          >
-            {activeCart && activeUser?.favorites.includes(activeCart.id) ? (
-              <Star />
-            ) : (
-              <StarBorder />
-            )}
-          </Button>
-        </Tooltip>
-
-        {activeCart && (
-          <Tooltip title="View cart owner profile">
+        <div className={styles.managementItem}>
+          <Tooltip title="Create new cart" disableInteractive>
             <Button
-              onClick={() => navigate(`/profile/${activeCart.owner}`)}
-              sx={{
-                backgroundColor: (theme) => theme.palette.primary.main,
-                color: (theme) => theme.palette.primary.contrastText,
-                marginLeft: "1rem",
-                "&:hover": {
-                  backgroundColor: (theme) => theme.palette.primary.dark,
-                },
+              variant="contained"
+              onClick={() => {
+                createNewCart();
+                navigateToHome();
               }}
             >
-              <Person />
-              {activeCart.owner}
+              <AddShoppingCart />
             </Button>
           </Tooltip>
-        )}
+        </div>
 
-        <div className="dropDown">
-          <Select
-            value={activeCart?.id || ""}
-            onChange={handleChange}
-            labelId="selected-cart"
-            displayEmpty
-            renderValue={(selected) => {
-              if (!selected) {
-                return <em>Select a cart</em>;
-              }
-              return activeCart?.name || selected;
-            }}
+        <div className={styles.managementItem}>
+          <Tooltip
+            title={!activeCart ? "No cart to copy" : "Copy current cart"}
+            disableInteractive
           >
-            {carts.length === 0 ? (
-              <MenuItem disabled value="">
-                <em>No carts available</em>
-              </MenuItem>
-            ) : (
-              carts.map((cart) => (
-                <MenuItem key={cart.id} value={cart.id}>
-                  {cart.name}
-                </MenuItem>
-              ))
-            )}
-          </Select>
+            <Button
+              variant="contained"
+              disabled={!activeCart}
+              onClick={() => {
+                copyCart();
+                navigateToHome();
+              }}
+            >
+              <ContentCopy />
+            </Button>
+          </Tooltip>
+        </div>
+
+        <div className={styles.managementItem}>
+          <Tooltip
+            title={!activeCart ? "No cart to create receipt" : "Create receipt"}
+            disableInteractive
+          >
+            <Button
+              disabled={!activeCart}
+              variant="contained"
+              onClick={() => setReceiptOpen(true)}
+            >
+              <Description />
+            </Button>
+          </Tooltip>
+          <CreateReceipt
+            open={receiptOpen}
+            onClose={() => setReceiptOpen(false)}
+          />
+        </div>
+
+        <div className={styles.managementItem}>
+          <Tooltip
+            title={
+              !activeUser
+                ? "Login to favorite"
+                : !activeCart
+                ? "No cart to favorite"
+                : activeUser.favorites.includes(activeCart.id)
+                ? "Unfavorite cart"
+                : "Favorite cart"
+            }
+            disableInteractive
+          >
+            <Button
+              variant="contained"
+              disabled={!activeCart || !activeUser}
+              onClick={() => {
+                if (!activeCart || !activeUser) return;
+                activeUser.favorites.includes(activeCart.id)
+                  ? unFavoriteCart(activeCart.id)
+                  : favoriteCart(activeCart.id);
+              }}
+            >
+              {activeCart && activeUser?.favorites.includes(activeCart.id) ? (
+                <Star />
+              ) : (
+                <StarBorder />
+              )}
+            </Button>
+          </Tooltip>
+        </div>
+
+        <div className={styles.managementItem}>
+          {activeCart && (
+            <Tooltip title="View cart owner profile" disableInteractive>
+              <Button
+                variant="contained"
+                onClick={() => navigate(`/profile/${activeCart.owner}`)}
+              >
+                <Person />
+                {activeCart.owner}
+              </Button>
+            </Tooltip>
+          )}
         </div>
       </div>
 
-      <div className="shoppingCart">
+      <div className={styles.shoppingCart}>
         {activeCart ? (
           <ShoppingCart showFullControls={showFullControls} />
         ) : (
