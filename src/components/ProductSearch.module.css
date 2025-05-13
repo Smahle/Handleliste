@@ -3,7 +3,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-sizing: border-box;
-  max-height: 100vh;
+  height: fit-content;
 }
 
 .productList {

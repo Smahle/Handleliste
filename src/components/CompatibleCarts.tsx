@@ -22,25 +22,35 @@ export default function CompatibleCarts({ products }: CompatibleCartsProps) {
     )
   );
 
-  return products.length > 0 ? (
-    <div className={styles.compatibleCartsContainer}>
+  return (
+    <>
       <h3 className={styles.title}>Compatible Carts</h3>
-      <List className={styles.list}>
-        {compatibleCarts.map((cart) => (
-          <ListItem key={cart.id} className={styles.listItem}>
-            <Button
-              fullWidth
-              onClick={() => {
-                navigate("/");
-                setActiveCartId(cart.id);
-              }}
-              style={{ justifyContent: "flex-start", textAlign: "left" }}
-            >
-              {cart.name}
-            </Button>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  ) : null;
+      {products.length > 0 && (
+        <div className={`${styles.compatibleCartsContainer} tertiary`}>
+          <List className={styles.list}>
+            {compatibleCarts.map((cart) => (
+              <ListItem key={cart.id} className={styles.listItem}>
+                <Button
+                  fullWidth
+                  onClick={() => {
+                    navigate("/");
+                    setActiveCartId(cart.id);
+                  }}
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.primary.main,
+                    color: (theme) => theme.palette.primary.contrastText,
+                    "&:hover": {
+                      backgroundColor: (theme) => theme.palette.primary.dark,
+                    },
+                  }}
+                >
+                  {cart.name}
+                </Button>
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      )}
+    </>
+  );
 }

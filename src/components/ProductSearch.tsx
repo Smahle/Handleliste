@@ -4,9 +4,9 @@ import SearchControls from "./SearchControls";
 import { useFetchProducts } from "../api/useFetchProducts";
 import styles from "./ProductSearch.module.css";
 
-type ProductSearchProps = { onDoubleClick?: (product: Product) => void };
+type ProductSearchProps = { onProductClick?: (product: Product) => void };
 
-export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
+export default function ProductSearch({ onProductClick }: ProductSearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
   const [retryTrigger, setRetryTrigger] = useState(0);
@@ -58,7 +58,7 @@ export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
             loading={loading}
             error={error}
             onRetry={retryFetch}
-            onDoubleClick={onDoubleClick}
+            onProductClick={onProductClick}
           />
         </div>
       </div>
