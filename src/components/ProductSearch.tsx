@@ -50,7 +50,7 @@ export default function ProductSearch({ onProductClick }: ProductSearchProps) {
           onStoreChange={setSelectedStore}
         />
       </div>
-      onProductClick
+
       <div className={styles.listsContainer}>
         <div className={styles.productList}>
           <ProductList
