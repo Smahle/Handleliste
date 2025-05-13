@@ -30,8 +30,6 @@
 
 .content {
   flex: 1; /* Takes remaining space */
-  overflow: auto; /* Enables scrolling inside instead of the whole page */
-  padding: 16px; /* Optional: Add padding to the content */
 }
 a {
   cursor: pointer;

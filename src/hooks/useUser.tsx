@@ -8,7 +8,7 @@ const defaultUsers: User[] = [
     age: 0,
     email: "guest@example.com",
     following: [],
-    favorites: []
+    favorites: [],
   },
   {
     username: "mockUser",
@@ -17,22 +17,26 @@ const defaultUsers: User[] = [
     age: 25,
     email: "mock@example.com",
     following: [],
-    favorites: []
-  }
+    favorites: [],
+  },
 ];
 
 function useUser(): UserState {
   const [users, setUsers] = useLocalStorage<User[]>("users", defaultUsers);
-  const [activeUser, setActiveUser] = useLocalStorage<User | null>("activeUser", users[0] || defaultUsers[0]);
+  const [activeUser, setActiveUser] = useLocalStorage<User | null>(
+    "activeUser",
+    users[0] || defaultUsers[0]
+  );
 
   // TODO: remove when Login is implemented. Ensure the default user exists in localStorage
   if (users.length === 0) {
     setUsers(defaultUsers);
   }
 
+  // returns false if username already taken
   const createUser = (user: User): boolean => {
     if (users.some((u) => u.username === user.username)) {
-      return false; // Username already taken
+      return false;
     }
 
     const updatedUsers = [...users, user];
@@ -59,18 +63,20 @@ function useUser(): UserState {
     };
 
     updateUser(updatedUser);
-    setActiveUser(updatedUser)
+    setActiveUser(updatedUser);
   };
 
   const unfollowUser = (usernameToUnfollow: string) => {
     if (!activeUser) return;
     const updatedUser = {
       ...activeUser,
-      following: activeUser.following.filter((username) => username !== usernameToUnfollow),
+      following: activeUser.following.filter(
+        (username) => username !== usernameToUnfollow
+      ),
     };
 
     updateUser(updatedUser);
-    setActiveUser(updatedUser)
+    setActiveUser(updatedUser);
   };
 
   // Update user in the users list
@@ -78,7 +84,7 @@ function useUser(): UserState {
     const updatedUsers = users.map((user) =>
       user.username === updatedUser.username ? updatedUser : user
     );
-    setUsers(updatedUsers);;
+    setUsers(updatedUsers);
   };
 
   return {
@@ -88,7 +94,7 @@ function useUser(): UserState {
     createUser,
     followUser,
     unfollowUser,
-    updateUser
+    updateUser,
   };
 }
 

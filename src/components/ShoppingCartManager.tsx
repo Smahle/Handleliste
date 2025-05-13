@@ -52,7 +52,7 @@ export default function ShoppingCartManager({
   };
 
   return (
-    <div className={styles.shoppingCartManagerContainer}>
+    <div className={`${styles.shoppingCartManagerContainer} tertiary`}>
       <div className={styles.cartManagement}>
         <div className={styles.selectCart}>
           <Tooltip title="Select cart" disableInteractive>

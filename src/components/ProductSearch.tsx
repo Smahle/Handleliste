@@ -38,7 +38,7 @@ export default function ProductSearch({ onDoubleClick }: ProductSearchProps) {
   }, [products, selectedStore]);
 
   return (
-    <div className={styles.productSearchContainer}>
+    <div className={`${styles.productSearchContainer} tertiary`}>
       <div className={styles.searchControls}>
         <SearchControls
           searchTerm={searchTerm}

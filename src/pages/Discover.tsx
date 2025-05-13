@@ -21,7 +21,7 @@ export default function Discover() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.discoverContainer}>
       <div className={styles.productList}>
         <ProductSearch onDoubleClick={handleProductDoubleClick} />
       </div>

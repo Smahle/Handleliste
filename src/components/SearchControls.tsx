@@ -24,13 +24,7 @@ export default function SearchControls({
   onStoreChange,
 }: SearchControlsProps) {
   return (
-    <Box
-      className={styles.searchControlsContainer}
-      sx={{
-        display: "flex",
-        justifyContent: "", // Pushes items to the edges
-      }}
-    >
+    <Box className={styles.searchControlsContainer}>
       <TextField
         type="text"
         value={searchTerm}

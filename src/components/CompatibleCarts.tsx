@@ -23,7 +23,7 @@ export default function CompatibleCarts({ products }: CompatibleCartsProps) {
   );
 
   return products.length > 0 ? (
-    <div className={styles.container}>
+    <div className={styles.compatibleCartsContainer}>
       <h3 className={styles.title}>Compatible Carts</h3>
       <List className={styles.list}>
         {compatibleCarts.map((cart) => (

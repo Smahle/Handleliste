@@ -51,10 +51,10 @@ export default function Navbar() {
       <Drawer
         variant="permanent"
         sx={{
-          width: 440,
+          width: 300,
 
           "& .MuiDrawer-paper": {
-            width: 440,
+            width: 300,
             boxSizing: "border-box",
             backgroundColor: "#ffa500",
           },

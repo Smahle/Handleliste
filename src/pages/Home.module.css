@@ -10,7 +10,7 @@
   box-sizing: border-box;
   width: 100%; /* or specific width like 300px */
   min-height: 100px; /* ensure there's enough height */
-  padding: 5px;
+  padding: 1vh;
 }
 
 .productSearch {
@@ -18,5 +18,5 @@
   box-sizing: border-box;
   width: 100%; /* or specific width like 300px */
   min-height: 100px; /* ensure there's enough height */
-  padding: 5px;
+  padding: 1vh;
 }

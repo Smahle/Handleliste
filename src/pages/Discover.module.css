@@ -1,23 +1,23 @@
-.container {
+.discoverContainer {
   display: flex;
   gap: 2vh;
   padding: 2vh;
 }
 
 .productList {
-  flex: 1; /* 50% of the screen */
+  flex: 1;
   display: flex;
   justify-content: center;
 }
 
 .cartContainer {
-  flex: 1; /* 50% of the screen */
+  flex: 2;
   display: flex;
+  flex-direction: column;
   gap: 1vh;
-  overflow-x: none; /* allow horizontal scroll */
-  overflow-y: none; /* optional: vertical scroll if needed */
-  justify-content: center;
-  flex-wrap: wrap; /* enable wrapping on smaller screens */
+  overflow: none;
+  justify-content: start;
+  flex-wrap: wrap;
 }
 
 .searchQueryList {
@@ -26,7 +26,7 @@
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
-  min-width: 100%;
+  justify-items: center;
 }
 
 .compatibleCarts {
@@ -35,5 +35,4 @@
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
-  min-width: 100%;
 }

@@ -21,8 +21,8 @@ export default function Users() {
         <TableContainer
           component={Paper}
           sx={{
-            backgroundColor: (theme) => theme.palette.secondary.main,
-            color: (theme) => theme.palette.secondary.contrastText,
+            backgroundColor: (theme) => theme.palette.tertiary.main,
+            color: (theme) => theme.palette.tertiary.contrastText,
           }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="users table">
@@ -34,7 +34,7 @@ export default function Users() {
               >
                 <TableCell
                   sx={{
-                    color: (theme) => theme.palette.secondary.contrastText,
+                    color: (theme) => theme.palette.tertiary.contrastText,
                   }}
                 >
                   Username
@@ -58,7 +58,7 @@ export default function Users() {
             </TableHead>
             <TableBody>
               {users
-                .filter((u) => activeUser?.following?.includes(u.username))
+                .filter((u) => activeUser?.username !== u.username)
                 .map((u) => (
                   <TableRow key={u.username}>
                     <TableCell>
