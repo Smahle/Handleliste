@@ -4,7 +4,7 @@ import ProductImage from "./ProductImage";
 import styles from "./ShoppingCart.module.css";
 import ArrowDropUp from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
-import { Delete } from "@mui/icons-material";
+import { Delete, Margin } from "@mui/icons-material";
 import { useCartContext } from "../context/CartContext";
 
 export default function ShoppingCart({
@@ -48,11 +48,8 @@ export default function ShoppingCart({
   };
 
   return (
-    <>
-      <List
-        sx={{ padding: 0, margin: 0 }}
-        className={styles.shoppingCartContainer}
-      >
+    <div className={styles.shoppingCartContainer}>
+      <List sx={{ padding: 0, margin: 0 }}>
         {activeCart.products.length > 0 ? (
           activeCart.products.map((product) => (
             <ListItem key={product.id} className={styles.itemContainer}>
@@ -113,20 +110,22 @@ export default function ShoppingCart({
             </ListItem>
           ))
         ) : (
-          <p>No products in cart</p>
+          <span className={styles.noProducts}>
+            <p>No products in cart</p>
+          </span>
         )}
       </List>
 
       {showFullControls && (
-        <>
+        <div className="clearDeleteButtons">
           <Button variant="contained" onClick={() => clearCart(activeCart.id)}>
             Clear cart
           </Button>
           <Button variant="contained" onClick={() => deleteCart(activeCart.id)}>
             Delete cart
           </Button>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }

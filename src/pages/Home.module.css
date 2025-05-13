@@ -1,8 +1,9 @@
-.container {
+.homeContainer {
   display: flex;
   justify-content: center;
   gap: 2vh;
   padding: 2vh;
+  min-height: 100vh;
 }
 
 .shoppingCartManager {

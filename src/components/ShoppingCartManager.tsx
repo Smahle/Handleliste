@@ -184,7 +184,7 @@ export default function ShoppingCartManager({
         {activeCart ? (
           <ShoppingCart showFullControls={showFullControls} />
         ) : (
-          <div className="emptyCartPlaceholder">
+          <div className={styles.emptyCartPlaceholder}>
             <p>No active cart selected</p>
           </div>
         )}

@@ -11,7 +11,7 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.homeContainer}>
       <div className={styles.productSearch}>
         <ProductSearch onProductClick={handleProductDoubleClick} />
       </div>

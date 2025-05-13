@@ -6,17 +6,17 @@
 }
 .primary {
   background-color: #66d8ad;
-  color: #0b2e1d; /* Dark green-black for contrast */
+  color: #0b2e1d;
 }
 
 .secondary {
   background-color: #ffa500;
-  color: #2b2b2b; /* Dark gray for contrast */
+  color: #2b2b2b;
 }
 
 .tertiary {
   background-color: #ff8403;
-  color: #2b2b2b; /* Same dark gray works here */
+  color: #2b2b2b;
 }
 
 .appContainer {
@@ -28,7 +28,7 @@
 }
 
 .content {
-  flex: 1; /* Takes remaining space */
+  flex: 1;
 }
 a {
   cursor: pointer;

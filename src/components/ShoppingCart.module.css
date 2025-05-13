@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  max-height: 93vh;
 }
 
 .item {
@@ -34,4 +35,9 @@
   cursor: "pointer";
   text-decoration: line-through;
   opacity: 0.5;
+}
+.clearDeleteButtons {
+}
+.noProducts {
+  margin: 0 3px;
 }

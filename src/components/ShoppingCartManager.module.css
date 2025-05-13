@@ -14,6 +14,11 @@
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
+  max-height: 93vh;
 }
 .shoppingCart {
+  max-height: 93vh;
+}
+.emptyCartPlaceholder {
+  margin: 6px 0;
 }
