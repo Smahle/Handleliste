@@ -45,9 +45,9 @@ export default function ShoppingCartManager({
   };
 
   const location = useLocation();
-  const navigateToHome = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
+  const navigateToCreate = () => {
+    if (location.pathname !== "/create") {
+      navigate("/create");
     }
   };
 
@@ -88,7 +88,7 @@ export default function ShoppingCartManager({
               variant="contained"
               onClick={() => {
                 createNewCart();
-                navigateToHome();
+                navigateToCreate();
               }}
             >
               <AddShoppingCart />
@@ -106,7 +106,7 @@ export default function ShoppingCartManager({
               disabled={!activeCart}
               onClick={() => {
                 copyCart();
-                navigateToHome();
+                navigateToCreate();
               }}
             >
               <ContentCopy />

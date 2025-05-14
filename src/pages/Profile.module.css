@@ -1,0 +1,32 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1vh;
+  margin: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: fit-content;
+  gap: 1vh;
+}
+
+.title {
+  padding: 1vh;
+}
+
+.ownedCarts {
+  padding: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.followedUsers {
+  padding: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.favorites {
+  padding: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

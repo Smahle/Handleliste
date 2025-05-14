@@ -1,8 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, List, ListItem } from "@mui/material";
-import { Star, StarBorder } from "@mui/icons-material";
+import { Padding, Star, StarBorder } from "@mui/icons-material";
 import { useUserContext } from "../context/UserContext";
 import { useCartContext } from "../context/CartContext";
+import styles from "./Profile.module.css";
 
 export default function Profile() {
   const { username } = useParams();
@@ -20,24 +21,21 @@ export default function Profile() {
 
   const handleNavigateClick = (cartId: string) => {
     setActiveCartId(cartId);
-    navigate("/");
+    navigate("/create");
   };
 
   return (
-    <>
-      <h2>Profile of {username}</h2>
-      <>
+    <div className={`${styles.profileContainer} tertiary`}>
+      <div className={styles.title}>
+        <h1>Profile of {username}</h1>
+      </div>
+      <div className={`${styles.ownedCarts} secondary`}>
         <h2>Shopping Carts</h2>
         {ownedProfileCarts.length > 0 ? (
           <List>
             {ownedProfileCarts.map((shoppingCart) => (
               <ListItem key={shoppingCart.id}>
-                <Button
-                  onClick={() => {
-                    navigate("/");
-                    setActiveCartId(shoppingCart.id);
-                  }}
-                >
+                <Button onClick={() => handleNavigateClick(shoppingCart.id)}>
                   {shoppingCart.name}
                 </Button>
                 {!(username == activeUser?.username) && (
@@ -63,45 +61,43 @@ export default function Profile() {
         ) : (
           <p>No carts found</p>
         )}
-      </>
-      <>
-        {username === activeUser?.username && (
-          <>
-            <h1>Favorites</h1>
-            {(activeUser?.favorites ?? []).length <= 0 ? (
-              <p>No favorited lists</p>
-            ) : (
-              <List>
-                {carts
-                  .filter((cart) => activeUser?.favorites.includes(cart.id))
-                  .map((cart) => (
-                    <ListItem key={cart.id}>
-                      <Button onClick={() => handleNavigateClick(cart.id)}>
-                        {cart.name}
-                      </Button>
-                    </ListItem>
-                  ))}
-              </List>
-            )}
-          </>
+      </div>
+      <div className={`${styles.favorites} secondary`}>
+        <h1>Favorites</h1>
+        {(profileUser?.favorites ?? []).length <= 0 ? (
+          <p>No favorited lists.</p>
+        ) : (
+          <List>
+            {carts
+              .filter((cart) => profileUser?.favorites.includes(cart.id))
+              .map((cart) => (
+                <ListItem key={cart.id}>
+                  <Button onClick={() => handleNavigateClick(cart.id)}>
+                    {cart.name}
+                  </Button>
+                </ListItem>
+              ))}
+          </List>
         )}
-                  <h2>Followed Users</h2>
-          {profileUser.following.length ? (
-            <List>
-              {users
-                .filter((user) => profileUser.following.includes(user.username))
-                .map((user) => (
-                  <ListItem key={user.username}>
-                    <Button onClick={() => navigate(`/profile/${user.username}`)}>
-                      {user.username}
-                    </Button>
-                  </ListItem>
-                ))}
-            </List>
-          ) : (
-            <p>Not following anyone</p>
-          )}
-      </>
-    </>
+      </div>
+      <div className={`${styles.followedUsers} secondary`}>
+        <h2>Followed Users</h2>
+        {profileUser.following.length ? (
+          <List>
+            {users
+              .filter((user) => profileUser.following.includes(user.username))
+              .map((user) => (
+                <ListItem key={user.username}>
+                  <Button onClick={() => navigate(`/profile/${user.username}`)}>
+                    {user.username}
+                  </Button>
+                </ListItem>
+              ))}
+          </List>
+        ) : (
+          <p>Not following anyone.</p>
+        )}
+      </div>
+    </div>
   );
 }
