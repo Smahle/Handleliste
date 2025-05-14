@@ -81,9 +81,18 @@ export default function Navbar() {
           },
         }}
       >
-        <Box>
+        <Button
+          onClick={() => navigate("/")}
+          sx={{
+            borderRadius: "0",
+            backgroundColor: "#66d8ad",
+            "&:hover": {
+              backgroundColor: "#559e85",
+            },
+          }}
+        >
           <img src={handlelLogo} className={styles.logo} />
-        </Box>
+        </Button>
 
         <Divider />
 
