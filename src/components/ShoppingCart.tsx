@@ -52,7 +52,16 @@ export default function ShoppingCart({
       <List sx={{ padding: 0, margin: 0 }}>
         {activeCart.products.length > 0 ? (
           activeCart.products.map((product) => (
-            <ListItem key={product.id} className={styles.itemContainer}>
+            <ListItem
+              sx={{
+                "&:hover": {
+                  backgroundColor: "secondary.contrastText",
+                  cursor: "pointer",
+                },
+              }}
+              key={product.id}
+              className={styles.itemContainer}
+            >
               <div className={styles.item}>
                 <ProductImage imageSrc={product.image} altText={product.name} />
                 <div

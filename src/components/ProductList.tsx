@@ -32,6 +32,12 @@ export default function ProductList({
           className={styles.listItem}
           key={product.id}
           onClick={() => onProductClick?.(product)}
+          sx={{
+            "&:hover": {
+              backgroundColor: "secondary.contrastText",
+              cursor: "pointer",
+            },
+          }}
         >
           <ProductImage imageSrc={product.image} altText={product.name} />
           {product.name}

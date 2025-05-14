@@ -11,9 +11,9 @@
   justify-content: flex-start;
   overflow: hidden; /* Ensures text doesn’t break layout */
 }
-/* .itemContainer {
-  display: flex;
-} */
+.itemContainer {
+  cursor: "pointer";
+}
 
 .itemQuantityContainer {
   display: flex;
