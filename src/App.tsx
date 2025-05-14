@@ -8,6 +8,7 @@ import CreateUser from "./pages/CreateUser";
 import Discover from "./pages/Discover";
 import Navbar from "./components/NavBar";
 import Shop from "./pages/Shop";
+import Create from "./pages/Create";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <div className={`content primary`}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/create" element={<Create />} />
             <Route path="/createUser" element={<CreateUser />} />
             <Route path="/users" element={<Users />} />
             <Route path="/profile/:username" element={<Profile />} />

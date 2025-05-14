@@ -17,6 +17,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import {
+  Create,
   Home,
   ManageAccounts,
   People,
@@ -27,6 +28,7 @@ import {
 export default function Navbar() {
   const pages = [
     { icon: <Home />, label: "Home", path: "/" },
+    { icon: <Create />, label: "Create", path: "/create" },
     { icon: <People />, label: "Users", path: "/users" },
     { icon: <Science />, label: "Discover", path: "/discover" },
     { icon: <ShoppingCart />, label: "Shop", path: "/shop" },

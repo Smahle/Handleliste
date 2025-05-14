@@ -1,0 +1,22 @@
+.createContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2vh;
+  min-height: 100vh;
+}
+
+.shoppingCartManager {
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%; /* or specific width like 300px */
+  min-height: 100px; /* ensure there's enough height */
+  padding: 1vh;
+}
+
+.productSearch {
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%; /* or specific width like 300px */
+  min-height: 100px; /* ensure there's enough height */
+  padding: 1vh;
+}
