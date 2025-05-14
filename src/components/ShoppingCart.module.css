@@ -12,7 +12,6 @@
   overflow: hidden; /* Ensures text doesn’t break layout */
 }
 .itemContainer {
-  cursor: "pointer";
 }
 
 .itemQuantityContainer {

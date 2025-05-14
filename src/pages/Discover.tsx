@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ProductSearch from "../components/ProductSearch";
 import CompatibleCarts from "../components/CompatibleCarts";
 import SearchQueryList from "../components/SearchQueryList";
@@ -23,7 +23,10 @@ export default function Discover() {
   return (
     <div className={styles.discoverContainer}>
       <div className={styles.productList}>
-        <ProductSearch onProductClick={handleProductDoubleClick} />
+        <ProductSearch
+          searchQuery={searchQuery}
+          onProductClick={handleProductDoubleClick}
+        />
       </div>
       <div className={`${styles.cartContainer} primary`}>
         <div className={`${styles.searchQueryList} secondary`}>

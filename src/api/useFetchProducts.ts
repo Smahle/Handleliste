@@ -3,37 +3,44 @@ import { useEffect, useState } from "react";
 const BASE_URL = "https://kassal.app/api/v1/";
 const TOKEN = "Vc6oCV3QeMen3keN2bYlk27LUGtXVQQiUVmLZhoj";
 
-export function useFetchProducts(searchTerm?: string, sortPrice?: string, retryTrigger?: number) {
+export function useFetchProducts(
+  searchTerm?: string,
+  sortPrice?: string,
+  retryTrigger?: number
+) {
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true); 
-      const url = new URL(`${BASE_URL}products`);
+      setLoading(true);
 
-      if (searchTerm) url.searchParams.append("search", searchTerm);
-      if (sortPrice) url.searchParams.append("sort", sortPrice);
+      const params = new URLSearchParams();
+      if (searchTerm) params.append("search", searchTerm);
+      if (sortPrice) params.append("sort", sortPrice);
+
+      const url = `${BASE_URL}products?${params.toString()}`;
+      console.log("Fetching from:", url);
 
       try {
-        const response = await fetch(url.toString(), {
-          method: "GET",
+        const response = await fetch(url, {
           headers: {
             Authorization: `Bearer ${TOKEN}`,
           },
         });
 
         if (!response.ok) {
-          if (response.status === 422) {
-            setError("The request could not be processed. Please check your input.");
-          } else {
-            setError("Something went wrong! Please try again later.");
-          }
+          const message =
+            response.status === 422
+              ? "The request could not be processed. Please check your input."
+              : "Something went wrong! Please try again later.";
+          setError(message);
           return;
         }
 
         const result = await response.json();
+        console.log("API result:", result);
         setData(result.data || []);
         setError(null);
       } catch (err: any) {
@@ -45,7 +52,7 @@ export function useFetchProducts(searchTerm?: string, sortPrice?: string, retryT
     };
 
     fetchProducts();
-  }, [searchTerm, sortPrice, retryTrigger]); // Added retryTrigger here
+  }, [searchTerm, sortPrice, retryTrigger]);
 
   return { data, error, loading };
 }

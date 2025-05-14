@@ -24,7 +24,6 @@ export default function ShoppingCart({
 
   const activeCart = carts.find((cart) => cart.id === activeCartId);
   const [hiddenProducts, setHiddenProducts] = useState<Set<string>>(new Set());
-
   if (!activeCart) {
     return <>Loading cart...</>;
   }

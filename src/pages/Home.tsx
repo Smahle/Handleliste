@@ -5,7 +5,7 @@ import ProductSearch from "../components/ProductSearch";
 
 export default function Home() {
   const { addProduct, activeCartId } = useCartContext();
-  const handleProductDoubleClick = (product: Product) => {
+  const onProductClick = (product: Product) => {
     if (!activeCartId) return;
     addProduct(activeCartId, product);
   };
@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.productSearch}>
-        <ProductSearch onProductClick={handleProductDoubleClick} />
+        <ProductSearch onProductClick={onProductClick} />
       </div>
       <div className={styles.shoppingCartManager}>
         <ShoppingCartManager showFullControls={true} />
