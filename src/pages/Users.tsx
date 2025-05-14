@@ -17,16 +17,21 @@ export default function Users() {
   const { users, activeUser, followUser, unfollowUser } = useUserContext();
 
   return (
-    <div className={`${styles.usersContainer}primary`}>
+    <div className={styles.usersContainer}>
       {users.length > 0 ? (
         <TableContainer
           component={Paper}
           sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
+            width: "fit-content",
+            padding: "1vh",
+            margin: "1vh",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            backgroundColor: (theme) => theme.palette.tertiary.main,
             color: (theme) => theme.palette.tertiary.contrastText,
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="users table">
+          <Table sx={{ width: "fit-content" }} aria-label="users table">
             <TableHead>
               <TableRow
                 sx={{
