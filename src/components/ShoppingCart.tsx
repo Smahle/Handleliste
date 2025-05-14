@@ -54,7 +54,7 @@ export default function ShoppingCart({
             <ListItem
               sx={{
                 "&:hover": {
-                  backgroundColor: "secondary.contrastText",
+                  backgroundColor: "secondary.main",
                   cursor: "pointer",
                 },
               }}

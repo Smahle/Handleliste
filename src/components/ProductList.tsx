@@ -34,7 +34,7 @@ export default function ProductList({
           onClick={() => onProductClick?.(product)}
           sx={{
             "&:hover": {
-              backgroundColor: "secondary.contrastText",
+              backgroundColor: "secondary.main",
               cursor: "pointer",
             },
           }}

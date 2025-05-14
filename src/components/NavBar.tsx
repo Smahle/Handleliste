@@ -120,8 +120,8 @@ export default function Navbar() {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
             sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              color: (theme) => theme.palette.primary.contrastText,
+              backgroundColor: (theme) => theme.palette.tertiary.main,
+              color: (theme) => theme.palette.tertiary.contrastText,
             }}
           >
             {activeUser?.username || "Account"}
