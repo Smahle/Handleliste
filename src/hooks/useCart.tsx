@@ -8,18 +8,22 @@ const defaultCarts: Cart[] = [
     name: "Mock User's Cart",
     products: [],
     owner: "mockUser",
-    receipts: []
-  }
+    receipts: [],
+  },
 ];
 
 export default function useCart() {
   const { activeUser, updateUser, setActiveUser } = useUserContext();
-  const [carts, setCarts] = useLocalStorage<Cart[]>("shoppingCarts", defaultCarts);
+  const [carts, setCarts] = useLocalStorage<Cart[]>(
+    "shoppingCarts",
+    defaultCarts
+  );
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
 
   const ownedCarts = (owner: User): Cart[] => {
     return carts.filter(
-      (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase());
+      (cart) => cart.owner.toLowerCase() === owner.username?.toLowerCase()
+    );
   };
 
   const createNewCart = useCallback(() => {
@@ -36,7 +40,7 @@ export default function useCart() {
       name,
       products: [],
       owner: activeUser.username,
-      receipts: []
+      receipts: [],
     };
 
     setCarts((prev) => [...prev, newCart]);
@@ -48,27 +52,27 @@ export default function useCart() {
       console.error("No active user found.");
       return;
     }
-  
+
     if (!activeCartId) {
       console.error("No active cart ID set.");
       return;
     }
-  
+
     const activeCart = carts.find((cart) => cart.id === activeCartId);
     if (!activeCart) {
       console.error("No active cart found.");
       return;
     }
-  
+
     const name = prompt("Enter cart name")?.trim();
     if (!name) return;
-  
+
     const newCart: Cart = {
       id: crypto.randomUUID(),
       name,
       products: activeCart.products || [],
       owner: activeUser.username,
-      receipts: []
+      receipts: [],
     };
     console.log("Creating copy of:", activeCart);
     setCarts((prev) => [...prev, newCart]);
@@ -82,7 +86,7 @@ export default function useCart() {
     },
     [setCarts, activeCartId, setActiveCartId]
   );
-  
+
   const addProduct = useCallback(
     (cartId: string, product: Product) => {
       setCarts((prev) =>
@@ -92,7 +96,9 @@ export default function useCart() {
                 ...cart,
                 products: cart.products.some((p) => p.id === product.id)
                   ? cart.products.map((p) =>
-                      p.id === product.id ? { ...p, quantity: (p.quantity ?? 1) + 1 } : p
+                      p.id === product.id
+                        ? { ...p, quantity: (p.quantity ?? 1) + 1 }
+                        : p
                     )
                   : [...cart.products, { ...product, quantity: 1 }],
               }
@@ -102,13 +108,16 @@ export default function useCart() {
     },
     [setCarts]
   );
-  
+
   const removeProduct = useCallback(
     (cartId: string, productId: string) => {
       setCarts((prev) =>
         prev.map((cart) =>
           cart.id === cartId
-            ? { ...cart, products: cart.products.filter((p) => p.id !== productId) }
+            ? {
+                ...cart,
+                products: cart.products.filter((p) => p.id !== productId),
+              }
             : cart
         )
       );
@@ -142,7 +151,9 @@ export default function useCart() {
             ? {
                 ...cart,
                 products: cart.products.map((p) =>
-                  p.id === productId ? { ...p, quantity: Math.max(1, p.quantity - 1) } : p
+                  p.id === productId
+                    ? { ...p, quantity: Math.max(1, p.quantity - 1) }
+                    : p
                 ),
               }
             : cart
@@ -156,20 +167,22 @@ export default function useCart() {
     (cartId: string) => {
       if (!activeCartId) return;
       setCarts((prev) =>
-        prev.map((cart) => (cartId === activeCartId ? { ...cart, products: [] } : cart))
+        prev.map((cart) =>
+          cartId === activeCartId ? { ...cart, products: [] } : cart
+        )
       );
     },
     [setCarts, activeCartId]
   );
 
-  const favoriteCart = (cartId: string)=>{
+  const favoriteCart = (cartId: string) => {
     if (!activeUser) return;
-    if(!carts.find((cart)=> cart.id === cartId)){
+    if (!carts.find((cart) => cart.id === cartId)) {
       console.log("Favorite failed: cart not found");
       return;
     }
 
-    if(activeUser?.favorites.includes(cartId)){
+    if (activeUser?.favorites.includes(cartId)) {
       console.log("Cart is already favorited");
       return;
     }
@@ -181,62 +194,76 @@ export default function useCart() {
 
     updateUser(updatedUser);
     setActiveUser(updatedUser);
-  }
+  };
 
-  const unFavoriteCart = (cartId: string)=>{
-    if(!activeUser) return;
-    if(!carts.find((cart)=> cart.id === cartId)){
+  const unFavoriteCart = (cartId: string) => {
+    if (!activeUser) return;
+    if (!carts.find((cart) => cart.id === cartId)) {
       console.log("Favorite failed: cart not found");
       return;
     }
 
-    if(!activeUser?.favorites.includes(cartId)){
+    if (!activeUser?.favorites.includes(cartId)) {
       console.log("Cart is not favorited");
       return;
     }
 
     const updatedUser = {
       ...activeUser,
-      favorites: activeUser.favorites.filter((cartIdToUnFavorite) => cartId !== cartIdToUnFavorite)
+      favorites: activeUser.favorites.filter(
+        (cartIdToUnFavorite) => cartId !== cartIdToUnFavorite
+      ),
     };
     updateUser(updatedUser);
-    setActiveUser(updatedUser)
-  }
+    setActiveUser(updatedUser);
+  };
 
-  const addReceipt = useCallback((cartId: string, receipt: Receipt) => {
-    setCarts((prev) =>
-      prev.map((cart) =>
-        cart.id === cartId
-          ? { ...cart, receipts: [...cart.receipts, receipt] }
-          : cart
-      )
-    );
-  }, [setCarts]);
+  const addReceipt = useCallback(
+    (cartId: string, receipt: Receipt) => {
+      setCarts((prev) =>
+        prev.map((cart) =>
+          cart.id === cartId
+            ? { ...cart, receipts: [...cart.receipts, receipt] }
+            : cart
+        )
+      );
+    },
+    [setCarts]
+  );
 
-  const removeReceipt = useCallback((cartId: string, receiptTitle: string) => {
-    setCarts((prev) =>
-      prev.map((cart) =>
-        cart.id === cartId
-          ? { ...cart, receipts: cart.receipts.filter(r => r.title !== receiptTitle) }
-          : cart
-      )
-    );
-  }, [setCarts]);
+  const removeReceipt = useCallback(
+    (cartId: string, receiptTitle: string) => {
+      setCarts((prev) =>
+        prev.map((cart) =>
+          cart.id === cartId
+            ? {
+                ...cart,
+                receipts: cart.receipts.filter((r) => r.title !== receiptTitle),
+              }
+            : cart
+        )
+      );
+    },
+    [setCarts]
+  );
 
-  const updateReceipt = useCallback((cartId: string, updatedReceipt: Receipt) => {
-    setCarts((prev) =>
-      prev.map((cart) =>
-        cart.id === cartId
-          ? {
-              ...cart,
-              receipts: cart.receipts.map(r =>
-                r.title === updatedReceipt.title ? updatedReceipt : r
-              ),
-            }
-          : cart
-      )
-    );
-  }, [setCarts]);
+  const updateReceipt = useCallback(
+    (cartId: string, updatedReceipt: Receipt) => {
+      setCarts((prev) =>
+        prev.map((cart) =>
+          cart.id === cartId
+            ? {
+                ...cart,
+                receipts: cart.receipts.map((r) =>
+                  r.title === updatedReceipt.title ? updatedReceipt : r
+                ),
+              }
+            : cart
+        )
+      );
+    },
+    [setCarts]
+  );
 
   return {
     addReceipt,
@@ -255,6 +282,6 @@ export default function useCart() {
     removeProduct,
     addProduct,
     favoriteCart,
-    unFavoriteCart
+    unFavoriteCart,
   };
 }

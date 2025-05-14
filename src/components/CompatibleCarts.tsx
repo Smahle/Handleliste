@@ -1,4 +1,4 @@
-import { Button, List, ListItem } from "@mui/material";
+import { Button, List, ListItem, Typography } from "@mui/material";
 import { useCartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./CompatibleCarts.module.css";
@@ -24,7 +24,17 @@ export default function CompatibleCarts({ products }: CompatibleCartsProps) {
 
   return (
     <>
-      <h3 className={styles.title}>Compatible Carts</h3>
+      {" "}
+      <Typography
+        variant="h5"
+        className={styles.title}
+        sx={{
+          color: (theme) => theme.palette.secondary.contrastText,
+          textAlign: "center",
+        }}
+      >
+        Compatible Carts
+      </Typography>
       {products.length > 0 && (
         <div className={`${styles.compatibleCartsContainer} tertiary`}>
           <List className={styles.list}>

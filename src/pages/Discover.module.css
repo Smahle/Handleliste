@@ -2,16 +2,15 @@
   display: flex;
   gap: 2vh;
   padding: 2vh;
+  height: 100%;
 }
 
 .productList {
-  flex: 1;
   display: flex;
   justify-content: center;
 }
 
 .cartContainer {
-  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 1vh;

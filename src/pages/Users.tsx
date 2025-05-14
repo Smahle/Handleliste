@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
+import styles from "./Users.module.css";
 import {
   Table,
   TableBody,
@@ -16,12 +17,12 @@ export default function Users() {
   const { users, activeUser, followUser, unfollowUser } = useUserContext();
 
   return (
-    <>
+    <div className={`${styles.usersContainer}primary`}>
       {users.length > 0 ? (
         <TableContainer
           component={Paper}
           sx={{
-            backgroundColor: (theme) => theme.palette.tertiary.main,
+            backgroundColor: (theme) => theme.palette.primary.main,
             color: (theme) => theme.palette.tertiary.contrastText,
           }}
         >
@@ -103,6 +104,6 @@ export default function Users() {
       ) : (
         <p>No users found</p>
       )}
-    </>
+    </div>
   );
 }
