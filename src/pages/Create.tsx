@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+import styles from "./Create.module.css";
 import { useCartContext } from "../context/CartContext";
 import ShoppingCartManager from "../components/ShoppingCartManager";
 import ProductSearch from "../components/ProductSearch";
@@ -11,7 +11,7 @@ export default function Create() {
   };
 
   return (
-    <div className={styles.homeContainer}>
+    <div className={styles.createContainer}>
       <div className={styles.productSearch}>
         <ProductSearch onProductClick={onProductClick} />
       </div>

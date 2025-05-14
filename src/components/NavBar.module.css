@@ -8,6 +8,11 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 2vw;
+  justify-content: center;
+  border: none;
+}
+.logo {
+  width: 100%;
+  display: block;
+  background-color: #66d8ad;
 }

@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import handlelLogo from "../assets/images/handlelLogo.png";
+import styles from "./Navbar.module.css";
 import {
   Drawer,
   List,
@@ -14,7 +16,7 @@ import {
   Divider,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import {
   Create,
@@ -48,9 +50,25 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    if (drawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [drawerOpen]);
+
   return (
     <>
       <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        ModalProps={{
+          keepMounted: true,
+          disableScrollLock: false, // <- make sure this is false (default)
+        }}
         variant="permanent"
         sx={{
           width: 300,
@@ -59,11 +77,12 @@ export default function Navbar() {
             width: 300,
             boxSizing: "border-box",
             backgroundColor: "#ffa500",
+            borderRight: "none",
           },
         }}
       >
-        <Box sx={{ p: 2, textAlign: "center" }}>
-          <Typography variant="h6">HandleL</Typography>
+        <Box>
+          <img src={handlelLogo} className={styles.logo} />
         </Box>
 
         <Divider />

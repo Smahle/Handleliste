@@ -1,28 +1,31 @@
 .homeBackground {
-  background-image: url("../assets/images/homePicture.jpg");
-  background-size: cover; /* scales to fill */
-  background-position: center; /* centers the image */
-  background-repeat: no-repeat; /* prevents tiling */
-  width: 100%;
-  height: 100vh; /* or any height you want, e.g. 500px */
   position: relative;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../assets/images/homePicture.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: start; /* or flex-start */
+  justify-content: center;
 }
+
 .headline {
+  margin-top: 12vh;
   font-size: 10rem;
   color: #66d8ad;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
+  /* ← Add this: */
   opacity: 0;
   animation: fadeIn 2s ease-in-out forwards;
-  text-align: center;
-  position: absolute;
-  top: 12%;
-  left: 50%;
-  /* This moves the element left by half of its own width */
-  transform: translateX(-50%);
 }
 
-/* Fade-in keyframes */
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
   }
