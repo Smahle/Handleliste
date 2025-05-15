@@ -26,6 +26,7 @@ export default function Discover() {
         <ProductSearch
           searchQuery={searchQuery}
           onProductClick={handleProductDoubleClick}
+          excludeActiveCartProducts={false}
         />
       </div>
       <div className={`${styles.cartContainer} primary`}>

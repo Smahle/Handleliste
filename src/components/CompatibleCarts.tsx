@@ -43,7 +43,7 @@ export default function CompatibleCarts({ products }: CompatibleCartsProps) {
                 <Button
                   fullWidth
                   onClick={() => {
-                    navigate("/");
+                    navigate("/create");
                     setActiveCartId(cart.id);
                   }}
                   sx={{

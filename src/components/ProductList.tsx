@@ -8,6 +8,7 @@ type ProductListProps = {
   error: string | null;
   onRetry: () => void;
   onProductClick?: (product: Product) => void;
+  filterProducts?: boolean;
 };
 
 export default function ProductList({

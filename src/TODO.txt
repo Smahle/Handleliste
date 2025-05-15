@@ -7,6 +7,10 @@
 // TODO: favoritte lister
 // TODO: PROFILE: se alle lagrede handlelister, friends, followers(siste)
 
+// TODO: FÅ VARSEL NÅR NOEN LEGGER TIL VARER PÅ FELLESLISTE
+// TODO: IKKE BAR MAT - TING TIL HUS/TREVARER etc.
+// TODO: VARSEL/TILBUD
+
 // returne en array med objects med values: {antall matchende oppskrifter, og product} så en får feks
 // 4 oppskrifter med isbergsalat, tomat og pasta, men 10 oppskrifter ned tomat og pasta? nei gjær d enkelt
 // return kun oppskrifte som he alle ingrediensa - så kan en ettekvart lage et mer sofistikert ai? som

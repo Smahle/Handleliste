@@ -141,18 +141,59 @@ export default function Navbar() {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            MenuListProps={{ "aria-labelledby": "basic-button" }}
+            /* 1) Style the outer Paper (the dropdown shell) */
+            PaperProps={{
+              sx: {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+                color: (theme) => theme.palette.primary.contrastText,
+                // Remove default elevation if you like:
+                boxShadow: "none",
+              },
+            }}
+            /* 2) Style the List container inside the Paper */
+            MenuListProps={{
+              sx: {
+                p: 0, // remove extra padding if desired
+                backgroundColor: (theme) => theme.palette.primary.dark,
+                color: (theme) => theme.palette.primary.contrastText,
+              },
+            }}
           >
             <MenuItem
               onClick={() => {
                 handleClose();
                 navigate(`/profile/${activeUser?.username}`);
               }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.main,
+                },
+              }}
             >
               Profile
             </MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.main,
+                },
+              }}
+            >
+              My account
+            </MenuItem>
+
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.main,
+                },
+              }}
+            >
+              Logout
+            </MenuItem>
           </Menu>
         </Box>
       </Drawer>

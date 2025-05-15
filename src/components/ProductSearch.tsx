@@ -8,11 +8,13 @@ import { useCartContext } from "../context/CartContext";
 type ProductSearchProps = {
   onProductClick?: (product: Product) => void;
   searchQuery?: Product[];
+  excludeActiveCartProducts?: boolean; // NEW prop
 };
 
 export default function ProductSearch({
   onProductClick,
   searchQuery,
+  excludeActiveCartProducts = true, // default true
 }: ProductSearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
@@ -41,16 +43,22 @@ export default function ProductSearch({
   };
 
   const storeFilteredProducts = useMemo(() => {
-    console.log(searchQuery);
     return products.filter(
       (p) =>
-        // Includes all stores if no store is selected, or filters to the selected one.
         (!selectedStore || p.store.name === selectedStore) &&
-        //Excludes any product already in the active cart.
-        !activeCart?.products.some((cartProduct) => cartProduct.id === p.id) &&
+        (!excludeActiveCartProducts ||
+          !activeCart?.products.some(
+            (cartProduct) => cartProduct.id === p.id
+          )) &&
         !searchQuery?.some((cartProduct) => cartProduct.id === p.id)
     );
-  }, [products, selectedStore, activeCart?.products?.length, searchQuery]);
+  }, [
+    products,
+    selectedStore,
+    activeCart?.products?.length,
+    searchQuery,
+    excludeActiveCartProducts,
+  ]);
 
   return (
     <div className={`${styles.productSearchContainer} tertiary`}>

@@ -20,7 +20,7 @@
 }
 
 .searchQueryList {
-  flex: 0 0 50%;
+  width: fit-content;
   box-sizing: border-box;
   padding: 1vh;
   border: 1px solid #ddd;
@@ -29,7 +29,7 @@
 }
 
 .compatibleCarts {
-  flex: 0 0 50%;
+  width: fit-content;
   box-sizing: border-box;
   padding: 1vh;
   border: 1px solid #ddd;
