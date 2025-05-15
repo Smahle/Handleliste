@@ -8,13 +8,13 @@ import { useCartContext } from "../context/CartContext";
 type ProductSearchProps = {
   onProductClick?: (product: Product) => void;
   searchQuery?: Product[];
-  excludeActiveCartProducts?: boolean; // NEW prop
+  excludeActiveCartProducts?: boolean;
 };
 
 export default function ProductSearch({
   onProductClick,
   searchQuery,
-  excludeActiveCartProducts = true, // default true
+  excludeActiveCartProducts = true,
 }: ProductSearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortPrice, setSortPrice] = useState<string>("price_desc");
@@ -33,7 +33,7 @@ export default function ProductSearch({
     if (products && products.length > 0) {
       const storeNames = Array.from(
         new Set(products.map((p) => p.store.name))
-      ).filter(Boolean); // Filter out falsy values
+      ).filter(Boolean);
       setStores(storeNames);
     }
   }, [products]);

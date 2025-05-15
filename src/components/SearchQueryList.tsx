@@ -22,7 +22,13 @@ export default function SearchQueryList({
         Selected Products
       </Typography>
       <div className={`${styles.SearchQueryListcontainer} tertiary`}>
-        <List className={`${styles.list} tertiary`}>
+        <List
+          className={`${styles.list} tertiary`}
+          sx={{
+            maxHeight: "87vh",
+            overflowY: "auto",
+          }}
+        >
           {searchQuery.length > 0 ? (
             searchQuery.map((product) => (
               <ListItem key={product.id} className={styles.listItem}>

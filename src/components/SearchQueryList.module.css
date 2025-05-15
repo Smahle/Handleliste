@@ -16,8 +16,8 @@
 }
 
 .list {
-  width: 100%;
-  overflow: none;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .listItem {

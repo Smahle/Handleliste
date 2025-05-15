@@ -1,7 +1,7 @@
 .compatibleCartsContainer {
   display: flex;
   flex-direction: column;
-  padding: 1vh;
+  padding: 0 1vh 0 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
@@ -11,17 +11,57 @@
   font-weight: bold;
   margin: 1vh;
 }
+.SearchQueryListcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60vh;
+  padding: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
 
 .list {
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .listItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1vh;
+  border-bottom: 1px solid #ddd;
+}
+
+.listItem:first-child {
+  padding-top: 0px;
 }
 
 .listItem:last-child {
   border-bottom: none;
+  padding-bottom: 0px;
+}
+
+/* Scrollbar styles */
+.list::-webkit-scrollbar {
+  width: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #66d8ad transparent;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #66d8ad; /* Your primary main color */
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background-color: #55c39a; /* Darker shade on hover */
 }
