@@ -26,6 +26,7 @@ export default function SearchQueryList({
           className={`${styles.list} tertiary`}
           sx={{
             maxHeight: "87vh",
+            width: "100%",
             overflowY: "auto",
           }}
         >

@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 60vh;
+  width: fit-content;
   padding: 1vh;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -30,4 +31,26 @@
 
 .listItem:last-child {
   border-bottom: none;
+}
+
+/* Scrollbar */
+.list::-webkit-scrollbar {
+  width: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #66d8ad transparent;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #66d8ad; /* Your primary main color */
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background-color: #55c39a; /* Darker shade on hover */
 }

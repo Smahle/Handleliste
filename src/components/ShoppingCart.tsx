@@ -48,7 +48,16 @@ export default function ShoppingCart({
 
   return (
     <div className={styles.shoppingCartContainer}>
-      <List sx={{ padding: 0, margin: 0 }}>
+      <List
+        sx={{
+          padding: 0,
+          margin: 0,
+          maxHeight: "80vh",
+          width: "100%",
+          overflowY: "auto",
+        }}
+        className={styles.list}
+      >
         {activeCart.products.length > 0 ? (
           activeCart.products.map((product) => (
             <ListItem
@@ -59,7 +68,6 @@ export default function ShoppingCart({
                 },
               }}
               key={product.id}
-              className={styles.itemContainer}
             >
               <div className={styles.item}>
                 <ProductImage imageSrc={product.image} altText={product.name} />
