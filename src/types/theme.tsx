@@ -68,6 +68,33 @@ const theme = createTheme({
         }),
       },
     },
+
+    MuiMenu: {
+      styleOverrides: {
+        paper: ({ theme }) => ({
+          backgroundColor: theme.palette.secondary.main,
+          color: theme.palette.secondary.contrastText,
+        }),
+      },
+    },
+
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          "&.Mui-selected": {
+            backgroundColor: theme.palette.tertiary.dark,
+            color: theme.palette.secondary.contrastText,
+          },
+          "&.Mui-selected:hover": {
+            backgroundColor: theme.palette.secondary.light,
+          },
+          "&:hover": {
+            backgroundColor: theme.palette.secondary.light,
+            color: theme.palette.tertiary.contrastText,
+          },
+        }),
+      },
+    },
   },
 });
 

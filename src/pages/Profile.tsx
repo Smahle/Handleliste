@@ -32,9 +32,12 @@ export default function Profile() {
       <div className={`${styles.ownedCarts} secondary`}>
         <h2>Shopping Carts</h2>
         {ownedProfileCarts.length > 0 ? (
-          <List>
+          <List sx={{ display: "flex", flexWrap: "wrap", padding: 0 }}>
             {ownedProfileCarts.map((shoppingCart) => (
-              <ListItem key={shoppingCart.id}>
+              <ListItem
+                key={shoppingCart.id}
+                sx={{ width: "fit-content", padding: "2px" }}
+              >
                 <Button onClick={() => handleNavigateClick(shoppingCart.id)}>
                   {shoppingCart.name}
                 </Button>
