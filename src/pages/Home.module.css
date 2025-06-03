@@ -24,12 +24,25 @@
 }
 
 .explanation {
-  padding: 4rem;
+  padding: 2rem;
   background-image: url("../assets/images/explanationpic.jpg");
   background-size: cover;
   background-position: center;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: flex-end; /* align to the right */
 }
 
+.explanationPic img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* or 'cover' if you want it to fill the box */
+}
+.explanationText img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* or 'cover' if you want it to fill the box */
+}
 .headline {
   margin-top: 12vh;
   font-size: 10rem;

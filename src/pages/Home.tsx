@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./Home.module.css";
+import explanationPic from "../assets/images/explanationPic.png";
+import introText from "../assets/images/introText.png";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +28,7 @@ export default function Home() {
 
       setTimeout(() => {
         isThrottled = false;
-      }, 1500);
+      }, 500);
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
@@ -41,7 +43,14 @@ export default function Home() {
       <div className={styles.firstpage}>
         <h1 className={styles.headline}>HandleL</h1>
       </div>
-      <div className={styles.explanation}></div>
+      <div className={styles.explanation}>
+        <div className={styles.explanationText}>
+          <img src={introText} alt="Preview" />
+        </div>
+        <div className={styles.explanationPic}>
+          <img src={explanationPic} alt="Preview" />
+        </div>
+      </div>
     </div>
   );
 }
