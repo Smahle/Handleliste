@@ -1,14 +1,33 @@
-.homeBackground {
+.homeContainer {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: auto; /* Turn off native smooth scroll */
+}
+
+.firstpage,
+.explanation {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+.firstpage {
   position: relative;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../assets/images/homePicture.jpg");
   background-size: cover;
   background-position: center;
-  width: 100%;
-  height: 100vh;
   display: flex;
-  align-items: start; /* or flex-start */
+  align-items: flex-start;
   justify-content: center;
+}
+
+.explanation {
+  padding: 4rem;
+  background-image: url("../assets/images/explanationpic.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .headline {
@@ -16,8 +35,6 @@
   font-size: 10rem;
   color: #66d8ad;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-
-  /* ← Add this: */
   opacity: 0;
   animation: fadeIn 2s ease-in-out forwards;
 }
