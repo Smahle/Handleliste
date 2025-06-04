@@ -38,11 +38,25 @@
   height: 100%;
   object-fit: contain; /* or 'cover' if you want it to fill the box */
 }
-.explanationText img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* or 'cover' if you want it to fill the box */
+.explanationText {
+  padding: 1rem 1rem 0 1rem;
+  color: white;
+  font-size: 2rem;
+  line-height: 1.6;
+  max-width: 600px;
 }
+
+.tertiaryBold {
+  color: #ff8403;
+  font-weight: bold;
+}
+
+.simple {
+  font-size: 8rem;
+  font-weight: bold;
+  color: #ff8403;
+}
+
 .headline {
   margin-top: 12vh;
   font-size: 10rem;
