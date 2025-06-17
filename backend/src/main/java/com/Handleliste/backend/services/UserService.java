@@ -31,4 +31,19 @@ public class UserService {
     public void deleteUser(String username) {
         userRepository.deleteById(username);
     }
+    public User updateUser(String username, User updatedUser) {
+        User existingUser = userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    
+        // Update the fields you allow to be changed
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setAge(updatedUser.getAge());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setFollowing(updatedUser.getFollowing());
+        existingUser.setFavorites(updatedUser.getFavorites());
+        // Add other fields if necessary
+    
+        return userRepository.save(existingUser);
+    }
 }

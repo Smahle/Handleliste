@@ -18,7 +18,6 @@ public class Cart {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
-    // Assume Receipt is also an Entity or Embeddable, otherwise adapt accordingly
     @OneToMany(cascade = CascadeType.ALL)
     private List<Receipt> receipts;
 

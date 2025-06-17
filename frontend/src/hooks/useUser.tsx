@@ -1,90 +1,91 @@
-import { useLocalStorage } from "./useLocalStorage";
+import { useState, useEffect } from "react";
 
-const defaultUsers: User[] = [
-  {
-    username: "guest",
-    firstName: "Guest",
-    lastName: "User",
-    age: 0,
-    email: "guest@example.com",
-    following: [],
-    favorites: [],
-  },
-  {
-    username: "mockUser",
-    firstName: "Mock",
-    lastName: "User",
-    age: 25,
-    email: "mock@example.com",
-    following: [],
-    favorites: [],
-  },
-];
+const BASE_API = "http://localhost:8080/api"; // Change to your backend URL
 
-function useUser(): UserState {
-  const [users, setUsers] = useLocalStorage<User[]>("users", defaultUsers);
-  const [activeUser, setActiveUser] = useLocalStorage<User | null>(
-    "activeUser",
-    users[0] || defaultUsers[0]
-  );
+function useUser() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [activeUser, setActiveUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // TODO: remove when Login is implemented. Ensure the default user exists in localStorage
-  if (users.length === 0) {
-    setUsers(defaultUsers);
-  }
-
-  // returns false if username already taken
-  const createUser = (user: User): boolean => {
-    if (users.some((u) => u.username === user.username)) {
-      return false;
+  useEffect(() => {
+    async function fetchUsers() {
+      setLoading(true);
+      try {
+        const res = await fetch(`${BASE_API}/users`);
+        if (!res.ok) throw new Error("Failed to fetch users");
+        const data: User[] = await res.json();
+        setUsers(data);
+        setActiveUser(data[0] || null);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    const updatedUsers = [...users, user];
-    setUsers(updatedUsers);
-    return true;
+    fetchUsers();
+  }, []);
+
+  const createUser = async (user: User): Promise<boolean> => {
+    if (users.some((u) => u.username === user.username)) return false;
+
+    try {
+      const res = await fetch(`${BASE_API}/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (!res.ok) throw new Error("Failed to create user");
+      const newUser = await res.json();
+      setUsers((prev) => [...prev, newUser]);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const updateUser = async (updatedUser: User) => {
+    try {
+      const res = await fetch(`${BASE_API}/users/${updatedUser.username}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!res.ok) throw new Error("Failed to update user");
+      const updated = await res.json();
+      setUsers((prev) =>
+        prev.map((u) => (u.username === updated.username ? updated : u))
+      );
+      if (activeUser?.username === updated.username) setActiveUser(updated);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const followUser = (usernameToFollow: string) => {
     if (!activeUser) return;
-
-    if (!users.some((u) => u.username === usernameToFollow)) {
-      console.error("User to follow not found");
-      return;
-    }
-
-    if (activeUser.following.includes(usernameToFollow)) {
-      console.warn("Already following this user");
-      return;
-    }
+    if (!users.find((u) => u.username === usernameToFollow)) return;
+    if (activeUser.following.includes(usernameToFollow)) return;
 
     const updatedUser = {
       ...activeUser,
       following: [...activeUser.following, usernameToFollow],
     };
-
     updateUser(updatedUser);
     setActiveUser(updatedUser);
   };
 
   const unfollowUser = (usernameToUnfollow: string) => {
     if (!activeUser) return;
+
     const updatedUser = {
       ...activeUser,
-      following: activeUser.following.filter(
-        (username) => username !== usernameToUnfollow
-      ),
+      following: activeUser.following.filter((u) => u !== usernameToUnfollow),
     };
-
     updateUser(updatedUser);
     setActiveUser(updatedUser);
-  };
-
-  // Update user in the users list
-  const updateUser = (updatedUser: User) => {
-    const updatedUsers = users.map((user) =>
-      user.username === updatedUser.username ? updatedUser : user
-    );
-    setUsers(updatedUsers);
   };
 
   return {
@@ -95,6 +96,8 @@ function useUser(): UserState {
     followUser,
     unfollowUser,
     updateUser,
+    loading,
+    error,
   };
 }
 

@@ -15,6 +15,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PutMapping("/{username}")
+public User updateUser(@PathVariable String username, @RequestBody User updatedUser) {
+    return userService.updateUser(username, updatedUser);
+}
+
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
