@@ -1,6 +1,8 @@
 package com.Handleliste.backend.models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,13 +15,13 @@ public class Cart {
 
     private String name;
 
-    private String owner;
+private String owner;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
+@OneToMany(cascade = CascadeType.ALL)
+private List<Product> products = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Receipt> receipts;
+@OneToMany(cascade = CascadeType.ALL)
+private List<Receipt> receipts = new ArrayList<>();
 
     // Constructors
     public Cart() {}

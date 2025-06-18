@@ -1,24 +1,50 @@
-import { useCallback, useState } from "react";
-import { useLocalStorage } from "./useLocalStorage";
+import { useCallback, useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 
-const defaultCarts: Cart[] = [
-  {
-    id: "mock-cart-id",
-    name: "Mock User's Cart",
-    products: [],
-    owner: "mockUser",
-    receipts: [],
-  },
-];
-
 export default function useCart() {
-  const { activeUser, updateUser, setActiveUser } = useUserContext();
-  const [carts, setCarts] = useLocalStorage<Cart[]>(
-    "shoppingCarts",
-    defaultCarts
-  );
+  const { activeUser, setActiveUser } = useUserContext();
+  const [carts, setCarts] = useState<Cart[]>([]);
   const [activeCartId, setActiveCartId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeUser) {
+      const mockUser: User = {
+        username: "testuser",
+        favorites: [],
+        following: [],
+      };
+      setActiveUser(mockUser);
+    }
+  }, [activeUser, setActiveUser]);
+
+  useEffect(() => {
+    if (!activeUser) return;
+
+    fetch("/api/carts")
+      .then((res) => {
+        if (!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data)) return;
+
+        const owned = data.filter(
+          (cart: Cart) =>
+            cart.owner.toLowerCase() === activeUser.username.toLowerCase()
+        );
+
+        setCarts(owned);
+
+        if (owned.length > 0) {
+          setActiveCartId(owned[0].id);
+        } else {
+          setActiveCartId(null);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load carts:", err);
+      });
+  }, [activeUser]);
 
   const ownedCarts = (owner: User): Cart[] => {
     return carts.filter(
@@ -26,11 +52,8 @@ export default function useCart() {
     );
   };
 
-  const createNewCart = useCallback(() => {
-    if (!activeUser) {
-      console.error("No active user found.");
-      return;
-    }
+  const createNewCart = useCallback(async () => {
+    if (!activeUser) return;
 
     const name = prompt("Enter cart name")?.trim();
     if (!name) return;
@@ -38,249 +61,359 @@ export default function useCart() {
     const newCart: Cart = {
       id: crypto.randomUUID(),
       name,
+      owner: activeUser.username,
       products: [],
-      owner: activeUser.username,
       receipts: [],
     };
 
-    setCarts((prev) => [...prev, newCart]);
-    setActiveCartId(newCart.id);
-  }, [activeUser, setCarts, setActiveCartId]);
+    try {
+      const response = await fetch("/api/carts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCart),
+      });
 
-  const copyCart = useCallback(() => {
-    if (!activeUser) {
-      console.error("No active user found.");
-      return;
+      if (!response.ok) throw new Error("Failed to create cart");
+
+      setCarts((prev) => [...prev, newCart]);
+      setActiveCartId(newCart.id);
+    } catch (error) {
+      console.error(error);
     }
-
-    if (!activeCartId) {
-      console.error("No active cart ID set.");
-      return;
-    }
-
-    const activeCart = carts.find((cart) => cart.id === activeCartId);
-    if (!activeCart) {
-      console.error("No active cart found.");
-      return;
-    }
-
-    const name = prompt("Enter cart name")?.trim();
-    if (!name) return;
-
-    const newCart: Cart = {
-      id: crypto.randomUUID(),
-      name,
-      products: activeCart.products || [],
-      owner: activeUser.username,
-      receipts: [],
-    };
-    console.log("Creating copy of:", activeCart);
-    setCarts((prev) => [...prev, newCart]);
-    setActiveCartId(newCart.id);
-  }, [activeUser, activeCartId, carts]);
+  }, [activeUser]);
 
   const deleteCart = useCallback(
-    (id: string) => {
-      setCarts((prev) => prev.filter((cart) => cart.id !== id));
-      if (id === activeCartId) setActiveCartId(null);
+    async (id: string) => {
+      try {
+        const res = await fetch(`/api/carts/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!res.ok) throw new Error("Failed to delete cart");
+
+        setCarts((prev) => prev.filter((cart) => cart.id !== id));
+        if (id === activeCartId) setActiveCartId(null);
+      } catch (err) {
+        console.error(err);
+      }
     },
-    [setCarts, activeCartId, setActiveCartId]
+    [activeCartId]
   );
 
-  const addProduct = useCallback(
-    (cartId: string, product: Product) => {
-      setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                products: cart.products.some((p) => p.id === product.id)
-                  ? cart.products.map((p) =>
-                      p.id === product.id
-                        ? { ...p, quantity: (p.quantity ?? 1) + 1 }
-                        : p
-                    )
-                  : [...cart.products, { ...product, quantity: 1 }],
-              }
-            : cart
-        )
+  const copyCart = useCallback(() => {
+    if (!activeUser || !activeCartId) return;
+
+    const activeCart = carts.find((cart) => cart.id === activeCartId);
+    if (!activeCart) return;
+
+    const name = prompt("Enter cart name")?.trim();
+    if (!name) return;
+
+    const newCart: Cart = {
+      id: crypto.randomUUID(),
+      name,
+      owner: activeUser.username,
+      products: activeCart.products || [],
+      receipts: [],
+    };
+
+    fetch("/api/carts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newCart),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to copy cart");
+        setCarts((prev) => [...prev, newCart]);
+        setActiveCartId(newCart.id);
+      })
+      .catch((err) => console.error(err));
+  }, [activeUser, activeCartId, carts]);
+  const addProduct = async (product: Product) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const existingProduct = cart.products.find((p) => p.id === product.id);
+    let updatedProducts;
+
+    if (existingProduct) {
+      // Increment quantity if product already exists
+      updatedProducts = cart.products.map((p) =>
+        p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
       );
-    },
-    [setCarts]
-  );
+    } else {
+      // Add new product with quantity 1
+      updatedProducts = [...cart.products, { ...product, quantity: 1 }];
+    }
 
-  const removeProduct = useCallback(
-    (cartId: string, productId: string) => {
+    const updatedCart = { ...cart, products: updatedProducts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to update cart");
+
       setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                products: cart.products.filter((p) => p.id !== productId),
-              }
-            : cart
-        )
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
       );
-    },
-    [setCarts]
-  );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const incrementProduct = useCallback(
-    (cartId: string, productId: string) => {
+  const removeProduct = async (productId: string) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedProducts = cart.products.filter((p) => p.id !== productId);
+    const updatedCart = { ...cart, products: updatedProducts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to update cart");
+
       setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                products: cart.products.map((p) =>
-                  p.id === productId ? { ...p, quantity: p.quantity + 1 } : p
-                ),
-              }
-            : cart
-        )
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
       );
-    },
-    [setCarts]
-  );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const decrementProduct = useCallback(
-    (cartId: string, productId: string) => {
+  const incrementProduct = async (productId: string) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedProducts = cart.products.map((p) =>
+      p.id === productId ? { ...p, quantity: p.quantity + 1 } : p
+    );
+
+    const updatedCart = { ...cart, products: updatedProducts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to update cart");
+
       setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                products: cart.products.map((p) =>
-                  p.id === productId
-                    ? { ...p, quantity: Math.max(1, p.quantity - 1) }
-                    : p
-                ),
-              }
-            : cart
-        )
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
       );
-    },
-    [setCarts]
-  );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const clearCart = useCallback(
-    (cartId: string) => {
-      if (!activeCartId) return;
+  const decrementProduct = async (productId: string) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedProducts = cart.products
+      .map((p) => (p.id === productId ? { ...p, quantity: p.quantity - 1 } : p))
+      .filter((p) => p.quantity > 0); // remove if quantity <= 0
+
+    const updatedCart = { ...cart, products: updatedProducts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to update cart");
+
       setCarts((prev) =>
-        prev.map((cart) =>
-          cartId === activeCartId ? { ...cart, products: [] } : cart
-        )
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
       );
-    },
-    [setCarts, activeCartId]
-  );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const favoriteCart = (cartId: string) => {
+  const clearCart = async () => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedCart = { ...cart, products: [], receipts: [] };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to clear cart");
+
+      setCarts((prev) =>
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const favoriteCart = async (cartId: string) => {
     if (!activeUser) return;
-    if (!carts.find((cart) => cart.id === cartId)) {
-      console.log("Favorite failed: cart not found");
-      return;
-    }
 
-    if (activeUser?.favorites.includes(cartId)) {
-      console.log("Cart is already favorited");
-      return;
-    }
+    if (activeUser.favorites.includes(cartId)) return; // already favorited
 
     const updatedUser = {
       ...activeUser,
-      favorites: [...(activeUser.favorites || []), cartId],
+      favorites: [...activeUser.favorites, cartId],
     };
 
-    updateUser(updatedUser);
-    setActiveUser(updatedUser);
+    try {
+      const res = await fetch(`/api/users/${activeUser.username}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!res.ok) throw new Error("Failed to favorite cart");
+
+      setActiveUser(updatedUser);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const unFavoriteCart = (cartId: string) => {
+  const unFavoriteCart = async (cartId: string) => {
     if (!activeUser) return;
-    if (!carts.find((cart) => cart.id === cartId)) {
-      console.log("Favorite failed: cart not found");
-      return;
-    }
-
-    if (!activeUser?.favorites.includes(cartId)) {
-      console.log("Cart is not favorited");
-      return;
-    }
 
     const updatedUser = {
       ...activeUser,
-      favorites: activeUser.favorites.filter(
-        (cartIdToUnFavorite) => cartId !== cartIdToUnFavorite
-      ),
+      favorites: activeUser.favorites.filter((id) => id !== cartId),
     };
-    updateUser(updatedUser);
-    setActiveUser(updatedUser);
+
+    try {
+      const res = await fetch(`/api/users/${activeUser.username}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!res.ok) throw new Error("Failed to unfavorite cart");
+
+      setActiveUser(updatedUser);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const addReceipt = useCallback(
-    (cartId: string, receipt: Receipt) => {
-      setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? { ...cart, receipts: [...cart.receipts, receipt] }
-            : cart
-        )
-      );
-    },
-    [setCarts]
-  );
+  const addReceipt = async (receipt: Receipt) => {
+    if (!activeUser || !activeCartId) return;
 
-  const removeReceipt = useCallback(
-    (cartId: string, receiptTitle: string) => {
-      setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                receipts: cart.receipts.filter((r) => r.title !== receiptTitle),
-              }
-            : cart
-        )
-      );
-    },
-    [setCarts]
-  );
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
 
-  const updateReceipt = useCallback(
-    (cartId: string, updatedReceipt: Receipt) => {
+    const updatedReceipts = [...cart.receipts, receipt];
+    const updatedCart = { ...cart, receipts: updatedReceipts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to add receipt");
+
       setCarts((prev) =>
-        prev.map((cart) =>
-          cart.id === cartId
-            ? {
-                ...cart,
-                receipts: cart.receipts.map((r) =>
-                  r.title === updatedReceipt.title ? updatedReceipt : r
-                ),
-              }
-            : cart
-        )
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
       );
-    },
-    [setCarts]
-  );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const removeReceipt = async (receiptTitle: string) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedReceipts = cart.receipts.filter(
+      (r) => r.title !== receiptTitle
+    );
+
+    const updatedCart = { ...cart, receipts: updatedReceipts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to remove receipt");
+
+      setCarts((prev) =>
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateReceipt = async (updatedReceipt: Receipt) => {
+    if (!activeUser || !activeCartId) return;
+
+    const cart = carts.find((c) => c.id === activeCartId);
+    if (!cart) return;
+
+    const updatedReceipts = cart.receipts.map((r) =>
+      r.title === updatedReceipt.title ? updatedReceipt : r
+    );
+
+    const updatedCart = { ...cart, receipts: updatedReceipts };
+
+    try {
+      const res = await fetch(`/api/carts/${activeCartId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCart),
+      });
+      if (!res.ok) throw new Error("Failed to update receipt");
+
+      setCarts((prev) =>
+        prev.map((c) => (c.id === activeCartId ? updatedCart : c))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return {
-    addReceipt,
-    removeReceipt,
-    updateReceipt,
-    createNewCart,
-    copyCart,
-    deleteCart,
     carts,
-    ownedCarts,
     activeCartId,
     setActiveCartId,
+    ownedCarts,
+    createNewCart,
+    deleteCart,
+    copyCart,
+    addProduct,
+    removeProduct,
     incrementProduct,
     decrementProduct,
     clearCart,
-    removeProduct,
-    addProduct,
+    addReceipt,
+    removeReceipt,
+    updateReceipt,
     favoriteCart,
     unFavoriteCart,
   };

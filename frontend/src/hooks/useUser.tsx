@@ -26,7 +26,7 @@ function useUser() {
     }
 
     fetchUsers();
-  }, []);
+  }, []); // only run once on mount
 
   const createUser = async (user: User): Promise<boolean> => {
     if (users.some((u) => u.username === user.username)) return false;

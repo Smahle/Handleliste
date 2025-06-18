@@ -21,7 +21,6 @@ export function useFetchProducts(
       if (sortPrice) params.append("sort", sortPrice);
 
       const url = `${BASE_URL}products?${params.toString()}`;
-      console.log("Fetching from:", url);
 
       try {
         const response = await fetch(url, {
@@ -40,7 +39,6 @@ export function useFetchProducts(
         }
 
         const result = await response.json();
-        console.log("API result:", result);
         setData(result.data || []);
         setError(null);
       } catch (err: any) {

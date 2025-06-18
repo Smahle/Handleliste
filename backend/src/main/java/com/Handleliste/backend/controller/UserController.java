@@ -16,9 +16,9 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-public User updateUser(@PathVariable String username, @RequestBody User updatedUser) {
-    return userService.updateUser(username, updatedUser);
-}
+    public User updateUser(@PathVariable String username, @RequestBody User updatedUser) {
+        return userService.updateUser(username, updatedUser);
+    }
 
     @GetMapping
     public List<User> getAllUsers() {

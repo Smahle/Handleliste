@@ -38,6 +38,10 @@ export default function ProductSearch({
     }
   }, [products]);
 
+  useEffect(() => {
+    console.log(activeCart?.name + "activeCart");
+  }, []);
+
   const retryFetch = () => {
     setRetryTrigger((prev) => prev + 1);
   };
